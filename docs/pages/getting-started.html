@@ -131,16 +131,16 @@
           <p>Let's see what this thing can actually do. I'll show you three workflows you'll use constantly:</p>
 
           <h3>Run a Code Review</h3>
-          <p>This is the big one. Type <code>/workflows:review</code> and watch it spawn 10+ specialized reviewers:</p>
+          <p>This is the big one. Type <code>/review</code> and watch it spawn 10+ specialized reviewers:</p>
           <div class="card-code-block">
             <pre><code># Review a PR by number
-/workflows:review 123
+/review 123
 
 # Review the current branch
-/workflows:review
+/review
 
 # Review a specific branch
-/workflows:review feature/my-feature</code></pre>
+/review feature/my-feature</code></pre>
           </div>
 
           <h3>Use a Specialized Agent</h3>
@@ -331,11 +331,11 @@ claude agent git-history-analyzer "Show changes to user model"</code></pre>
 
           <h3>Running Commands</h3>
           <div class="card-code-block">
-            <pre><code># Workflow commands (prefix: /workflows:)
-/workflows:plan
-/workflows:review 123
-/workflows:work
-/workflows:codify
+            <pre><code># Workflow commands
+/plan
+/review 123
+/work
+/codify
 
 # Utility commands
 /changelog
@@ -344,7 +344,7 @@ claude agent git-history-analyzer "Show changes to user model"</code></pre>
           </div>
 
           <h3>The Review Workflow</h3>
-          <p>Let me show you what happens when you run <code>/workflows:review</code>. Here's the sequence:</p>
+          <p>Let me show you what happens when you run <code>/review</code>. Here's the sequence:</p>
           <ol>
             <li><strong>Detection</strong> - Figures out what you want reviewed (PR number, branch name, or current changes)</li>
             <li><strong>Isolation</strong> - Spins up a git worktree so the review doesn't mess with your working directory</li>
@@ -406,10 +406,10 @@ skill: gemini-imagegen
           <h3>Basic Review</h3>
           <div class="card-code-block">
             <pre><code># Review a PR
-/workflows:review 123
+/review 123
 
 # Review current branch
-/workflows:review</code></pre>
+/review</code></pre>
           </div>
 
           <h3>Understanding Findings</h3>

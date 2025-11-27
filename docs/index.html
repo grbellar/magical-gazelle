@@ -21,6 +21,106 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="css/style.css" rel="stylesheet" type="text/css" />
   <script src="js/main.js" type="text/javascript" defer></script>
+
+  <!-- Pillar styles (inline for reliability) -->
+  <style>
+    .philosophy-pillars {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xxl);
+    }
+    @media (min-width: 768px) {
+      .philosophy-pillars { grid-template-columns: repeat(2, 1fr); }
+    }
+    .pillar {
+      display: flex;
+      gap: var(--space-l);
+      padding: var(--space-xl);
+      background: var(--color-background);
+      border-radius: var(--radius-l);
+      border: 1.5px solid transparent;
+      background-image: linear-gradient(var(--color-background), var(--color-background)), linear-gradient(135deg, var(--color-accent-light), var(--color-border));
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .pillar:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-accent);
+      box-shadow: 0 8px 24px rgba(129, 140, 248, 0.2);
+    }
+    .pillar-icon {
+      flex-shrink: 0;
+      width: 72px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+      border-radius: var(--radius-l);
+      font-size: 36px;
+      color: var(--color-on-accent);
+      box-shadow: 0 8px 20px rgba(129, 140, 248, 0.3);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .pillar:hover .pillar-icon {
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(129, 140, 248, 0.5);
+    }
+    .pillar-content h3 {
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+    }
+    .pillar-tagline {
+      margin: 0 0 var(--space-m) 0;
+      font-size: 16px;
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+      font-style: italic;
+    }
+    .pillar-description {
+      margin: 0 0 var(--space-l) 0;
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    .pillar-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-s);
+    }
+    .tool-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 12px;
+      background-color: var(--color-surface-hover);
+      color: var(--color-text-secondary);
+      border-radius: var(--radius-s);
+      border: 1px solid var(--color-border);
+      transition: all 0.25s ease;
+      font-weight: 500;
+    }
+    .tool-tag:hover {
+      background: linear-gradient(135deg, var(--color-accent-lighter), var(--color-surface-hover));
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+    @media (max-width: 767px) {
+      .pillar { flex-direction: column; text-align: center; }
+      .pillar-icon { margin: 0 auto; }
+      .pillar-tools { justify-content: center; }
+    }
+  </style>
 </head>
 
 <body>
@@ -37,9 +137,6 @@
         <a href="#skills" class="nav-link">Skills</a>
         <a href="#mcp-servers" class="nav-link">MCP Servers</a>
         <a href="pages/getting-started.html" class="nav-link">Docs</a>
-        <div class="button-group stacked margin-top-l mobile-only">
-          <a href="#install" class="button primary">Install Plugin</a>
-        </div>
       </nav>
       <div class="button-group">
         <a href="https://github.com/EveryInc/every-marketplace" class="button ghost compact hide-on-mobile">
@@ -127,7 +224,7 @@
               <h3>Plan</h3>
               <p class="pillar-tagline">Stop starting over from scratch</p>
               <p class="pillar-description">
-                You know that moment when you open a ticket and think "how did we solve this last time?" The framework-docs-researcher already knows. The git-history-analyzer remembers what worked in March. Run <code>/workflows:plan</code> and three research agents work in parallel—one reading docs, one analyzing your repo's history, one finding community patterns. In 60 seconds, you have a plan built on institutional memory instead of starting cold.
+                You know that moment when you open a ticket and think "how did we solve this last time?" The framework-docs-researcher already knows. The git-history-analyzer remembers what worked in March. Run <code>/plan</code> and three research agents work in parallel—one reading docs, one analyzing your repo's history, one finding community patterns. In 60 seconds, you have a plan built on institutional memory instead of starting cold.
               </p>
               <div class="pillar-tools">
                 <span class="tool-tag">framework-docs-researcher</span>
@@ -144,11 +241,11 @@
               <h3>Delegate</h3>
               <p class="pillar-tagline">Work with experts who never forget</p>
               <p class="pillar-description">
-                The <code>security-sentinel</code> has checked 10,000 PRs for SQL injection. The <code>kieran-rails-reviewer</code> never approves a controller with business logic. They don't get tired, don't skip Friday afternoon reviews, don't forget the conventions you agreed on in March. Run <code>/workflows:work</code> and watch your plan execute with quality gates that actually enforce your standards—every single time.
+                The <code>security-sentinel</code> has checked 10,000 PRs for SQL injection. The <code>kieran-rails-reviewer</code> never approves a controller with business logic. They don't get tired, don't skip Friday afternoon reviews, don't forget the conventions you agreed on in March. Run <code>/work</code> and watch your plan execute with quality gates that actually enforce your standards—every single time.
               </p>
               <div class="pillar-tools">
                 <span class="tool-tag">23 specialized agents</span>
-                <span class="tool-tag">/workflows:work</span>
+                <span class="tool-tag">/work</span>
                 <span class="tool-tag">dhh-ruby-style skill</span>
                 <span class="tool-tag">git-worktree skill</span>
               </div>
@@ -161,7 +258,7 @@
               <h3>Assess</h3>
               <p class="pillar-tagline">Get twelve opinions without twelve meetings</p>
               <p class="pillar-description">
-                Type <code>/workflows:review PR#123</code> and go get coffee. When you come back, you'll have a security audit (did you sanitize that user input?), performance analysis (N+1 spotted on line 47), architecture review (this breaks the pattern from v2.3), data integrity check (that migration will fail in production), and eight more specialized reviews. All running in parallel. All categorized by severity. All stored as actionable P1/P2/P3 todos you can knock out in order.
+                Type <code>/review PR#123</code> and go get coffee. When you come back, you'll have a security audit (did you sanitize that user input?), performance analysis (N+1 spotted on line 47), architecture review (this breaks the pattern from v2.3), data integrity check (that migration will fail in production), and eight more specialized reviews. All running in parallel. All categorized by severity. All stored as actionable P1/P2/P3 todos you can knock out in order.
               </p>
               <div class="pillar-tools">
                 <span class="tool-tag">security-sentinel</span>
@@ -178,10 +275,10 @@
               <h3>Codify</h3>
               <p class="pillar-tagline">Make sure you never solve the same bug twice</p>
               <p class="pillar-description">
-                Remember that CORS issue you debugged for three hours last month? Neither do I. That's the problem. Run <code>/workflows:codify</code> right after you fix something and it captures the solution as searchable documentation with YAML frontmatter. Next time someone hits the same issue, they grep for "CORS production" and find your answer in five seconds instead of re-debugging for three hours. That's how you compound.
+                Remember that CORS issue you debugged for three hours last month? Neither do I. That's the problem. Run <code>/codify</code> right after you fix something and it captures the solution as searchable documentation with YAML frontmatter. Next time someone hits the same issue, they grep for "CORS production" and find your answer in five seconds instead of re-debugging for three hours. That's how you compound.
               </p>
               <div class="pillar-tools">
-                <span class="tool-tag">/workflows:codify</span>
+                <span class="tool-tag">/codify</span>
                 <span class="tool-tag">codify-docs skill</span>
                 <span class="tool-tag">file-todos skill</span>
               </div>
@@ -429,7 +526,7 @@
             <i class="fa-solid fa-terminal color-accent"></i> 18 Powerful Commands
           </h2>
           <p class="paragraph m secondary">
-            Slash commands that replace entire workflows. <code>/workflows:review</code> is your code review committee. <code>/workflows:plan</code> is your research team. <code>/triage</code> sorts 50 todos in the time it takes you to read five. Each one automates hours of work into a single line.
+            Slash commands that replace entire workflows. <code>/review</code> is your code review committee. <code>/plan</code> is your research team. <code>/triage</code> sorts 50 todos in the time it takes you to read five. Each one automates hours of work into a single line.
           </p>
         </div>
 
@@ -439,28 +536,28 @@
           <div class="grid columns-2">
             <div class="command-card">
               <div class="command-header">
-                <code class="command-name">/workflows:plan</code>
+                <code class="command-name">/plan</code>
                 <span class="command-type-badge">core</span>
               </div>
               <p class="command-description">Create comprehensive implementation plans with research agents and stakeholder analysis.</p>
             </div>
             <div class="command-card">
               <div class="command-header">
-                <code class="command-name">/workflows:review</code>
+                <code class="command-name">/review</code>
                 <span class="command-type-badge">core</span>
               </div>
               <p class="command-description">Run exhaustive code reviews using 12 or more parallel agents, ultra-thinking, and worktrees.</p>
             </div>
             <div class="command-card">
               <div class="command-header">
-                <code class="command-name">/workflows:work</code>
+                <code class="command-name">/work</code>
                 <span class="command-type-badge">core</span>
               </div>
               <p class="command-description">Execute work items systematically with progress tracking and validation.</p>
             </div>
             <div class="command-card">
               <div class="command-header">
-                <code class="command-name">/workflows:codify</code>
+                <code class="command-name">/codify</code>
                 <span class="command-type-badge">core</span>
               </div>
               <p class="command-description">Document solved problems for the knowledge base. Turn learnings into reusable patterns.</p>
@@ -798,7 +895,7 @@
               <h3>Ship Faster</h3>
               <div class="card-code-block">
                 <pre><code># Run a 12-agent code review
-/workflows:review PR#123
+/review PR#123
 
 # Get a security audit
 claude agent security-sentinel

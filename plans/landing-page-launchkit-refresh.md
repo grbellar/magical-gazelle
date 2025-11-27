@@ -41,7 +41,7 @@ Review and enhance the `/docs/index.html` landing page using LaunchKit elements 
 
 **Potential Improvements:**
 - Add `→` arrow to "Install Plugin" button
-- Consider adding animated terminal GIF below buttons showing `/workflows:review` in action
+- Consider adding animated terminal GIF below buttons showing `/review` in action
 
 ### 2. Stats Section (lines 81-104)
 

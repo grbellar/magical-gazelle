@@ -72,7 +72,7 @@
       <article class="docs-article">
         <h1><i class="fa-solid fa-terminal color-accent"></i> Command Reference</h1>
         <p class="lead">
-          Here's the thing about slash commands: they're workflows you'd spend 20 minutes doing manually, compressed into one line. Type <code>/workflows:plan</code> and watch three agents launch in parallel to research your codebase while you grab coffee. That's the point—automation that actually saves time, not busywork dressed up as productivity.
+          Here's the thing about slash commands: they're workflows you'd spend 20 minutes doing manually, compressed into one line. Type <code>/plan</code> and watch three agents launch in parallel to research your codebase while you grab coffee. That's the point—automation that actually saves time, not busywork dressed up as productivity.
         </p>
 
         <!-- Workflow Commands -->
@@ -82,7 +82,7 @@
 
           <div class="command-detail" id="workflows-plan">
             <div class="command-detail-header">
-              <code class="command-detail-name">/workflows:plan</code>
+              <code class="command-detail-name">/plan</code>
             </div>
             <p class="command-detail-description">
               You've got a feature request and a blank page. This command turns "we need OAuth" into a structured plan that actually tells you what to build—researched, reviewed, and ready to execute.
@@ -116,14 +116,14 @@
               </div>
             </div>
             <div class="card-code-block">
-              <pre><code>/workflows:plan Add OAuth integration for third-party auth
-/workflows:plan Fix N+1 query in user dashboard</code></pre>
+              <pre><code>/plan Add OAuth integration for third-party auth
+/plan Fix N+1 query in user dashboard</code></pre>
             </div>
           </div>
 
           <div class="command-detail" id="workflows-review">
             <div class="command-detail-header">
-              <code class="command-detail-name">/workflows:review</code>
+              <code class="command-detail-name">/review</code>
             </div>
             <p class="command-detail-description">
               Twelve specialized reviewers examine your PR in parallel—security, performance, architecture, patterns. It's like code review by committee, except the committee finishes in two minutes instead of two days.
@@ -154,16 +154,16 @@
               </div>
             </div>
             <div class="card-code-block">
-              <pre><code>/workflows:review 42
-/workflows:review https://github.com/owner/repo/pull/42
-/workflows:review feature-branch-name
-/workflows:review latest</code></pre>
+              <pre><code>/review 42
+/review https://github.com/owner/repo/pull/42
+/review feature-branch-name
+/review latest</code></pre>
             </div>
           </div>
 
           <div class="command-detail" id="workflows-work">
             <div class="command-detail-header">
-              <code class="command-detail-name">/workflows:work</code>
+              <code class="command-detail-name">/work</code>
             </div>
             <p class="command-detail-description">
               Point this at a plan file and watch it execute—reading requirements, setting up environment, running tests, creating commits, opening PRs. It's the "just build the thing" button you wish you always had.
@@ -203,14 +203,14 @@
               </li>
             </ol>
             <div class="card-code-block">
-              <pre><code>/workflows:work plans/user-authentication.md
-/workflows:work todos/042-ready-p1-performance-issue.md</code></pre>
+              <pre><code>/work plans/user-authentication.md
+/work todos/042-ready-p1-performance-issue.md</code></pre>
             </div>
           </div>
 
           <div class="command-detail" id="workflows-codify">
             <div class="command-detail-header">
-              <code class="command-detail-name">/workflows:codify</code>
+              <code class="command-detail-name">/codify</code>
             </div>
             <p class="command-detail-description">
               Just fixed a gnarly bug? This captures the solution before you forget it. Seven agents analyze what you did, why it worked, and how to prevent it next time. Your future self will thank you.
@@ -236,8 +236,8 @@
             <h4>Auto-Triggers</h4>
             <p>Phrases: "that worked", "it's fixed", "working now", "problem solved"</p>
             <div class="card-code-block">
-              <pre><code>/workflows:codify
-/workflows:codify N+1 query optimization</code></pre>
+              <pre><code>/codify
+/codify N+1 query optimization</code></pre>
             </div>
           </div>
         </section>

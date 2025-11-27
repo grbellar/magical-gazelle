@@ -100,7 +100,7 @@ Major reorganization consolidating agents, commands, and skills from multiple so
 - `/prime` - Prime/setup command
 - `/create-agent-skill` - Create or edit Claude Code skills
 - `/heal-skill` - Fix skill documentation issues
-- `/workflows:codify` - Document solved problems for knowledge base
+- `/codify` - Document solved problems for knowledge base
 
 **New Skills (10)**
 - `andrew-kane-gem-writer` - Write Ruby gems following Andrew Kane's patterns
@@ -125,7 +125,7 @@ Major reorganization consolidating agents, commands, and skills from multiple so
 
 **Commands Restructured**
 - Workflow commands moved to `commands/workflows/` subdirectory
-- `/plan`, `/review`, `/work` now accessed as `/workflows:plan`, `/workflows:review`, `/workflows:work`
+- `/plan`, `/review`, `/work`, `/codify` accessible via short names (autocomplete) or full path
 
 ### Summary
 

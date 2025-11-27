@@ -67,14 +67,14 @@ Agents are organized into categories for easier discovery.
 
 ### Workflow Commands
 
-Access via `/workflows:command`:
+Core workflow commands (use the short form for autocomplete):
 
 | Command | Description |
 |---------|-------------|
-| `/workflows:plan` | Create implementation plans |
-| `/workflows:review` | Run comprehensive code reviews |
-| `/workflows:work` | Execute work items systematically |
-| `/workflows:codify` | Document solved problems for knowledge base |
+| `/plan` | Create implementation plans |
+| `/review` | Run comprehensive code reviews |
+| `/work` | Execute work items systematically |
+| `/codify` | Document solved problems for knowledge base |
 
 ### Utility Commands
 
