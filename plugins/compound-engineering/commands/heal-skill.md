@@ -1,6 +1,6 @@
 ---
 name: heal-skill
-description: Heal skill documentation by applying corrections discovered during execution with approval workflow
+description: Fix incorrect SKILL.md files when a skill has wrong instructions or outdated API references
 argument-hint: [optional: specific issue to fix]
 allowed-tools: [Read, Edit, Bash(ls:*), Bash(git:*)]
 ---
