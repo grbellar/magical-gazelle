@@ -1,6 +1,6 @@
 ---
 name: agent-native-architecture
-description: Build AI agents using prompt-native architecture where features are defined in prompts, not code. Use when creating autonomous agents, designing MCP servers, implementing self-modifying systems, or adopting the "trust the agent's intelligence" philosophy.
+description: This skill should be used when building AI agents using prompt-native architecture where features are defined in prompts, not code. Use it when creating autonomous agents, designing MCP servers, implementing self-modifying systems, or adopting the "trust the agent's intelligence" philosophy.
 ---
 
 <essential_principles>
@@ -72,11 +72,11 @@ What aspect of agent native architecture do you need help with?
 <routing>
 | Response | Action |
 |----------|--------|
-| 1, "design", "architecture", "plan" | Read references/architecture-patterns.md |
-| 2, "tool", "mcp", "primitive" | Read references/mcp-tool-design.md |
-| 3, "prompt", "system prompt", "behavior" | Read references/system-prompt-design.md |
-| 4, "self-modify", "evolve", "git" | Read references/self-modification.md |
-| 5, "review", "refactor", "existing" | Read references/refactoring-to-prompt-native.md |
+| 1, "design", "architecture", "plan" | Read [architecture-patterns.md](./references/architecture-patterns.md) |
+| 2, "tool", "mcp", "primitive" | Read [mcp-tool-design.md](./references/mcp-tool-design.md) |
+| 3, "prompt", "system prompt", "behavior" | Read [system-prompt-design.md](./references/system-prompt-design.md) |
+| 4, "self-modify", "evolve", "git" | Read [self-modification.md](./references/self-modification.md) |
+| 5, "review", "refactor", "existing" | Read [refactoring-to-prompt-native.md](./references/refactoring-to-prompt-native.md) |
 
 **After reading the reference, apply those patterns to the user's specific context.**
 </routing>
@@ -123,11 +123,11 @@ query({
 
 All references in `references/`:
 
-**Architecture:** architecture-patterns.md
-**Tool Design:** mcp-tool-design.md
-**Prompts:** system-prompt-design.md
-**Self-Modification:** self-modification.md
-**Refactoring:** refactoring-to-prompt-native.md
+- **Architecture:** [architecture-patterns.md](./references/architecture-patterns.md)
+- **Tool Design:** [mcp-tool-design.md](./references/mcp-tool-design.md)
+- **Prompts:** [system-prompt-design.md](./references/system-prompt-design.md)
+- **Self-Modification:** [self-modification.md](./references/self-modification.md)
+- **Refactoring:** [refactoring-to-prompt-native.md](./references/refactoring-to-prompt-native.md)
 </reference_index>
 
 <anti_patterns>

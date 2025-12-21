@@ -5,6 +5,19 @@ All notable changes to the compound-engineering plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.15.2] - 2025-12-21
+
+### Fixed
+
+- **All skills** - Fixed spec compliance issues across 13 skills:
+  - Reference files now use proper markdown links (`[file.md](./references/file.md)`) instead of backtick text
+  - Descriptions now use third person ("This skill should be used when...") per skill-creator spec
+  - Affected skills: agent-native-architecture, andrew-kane-gem-writer, compound-docs, create-agent-skills, dhh-rails-style, dhh-ruby-style, dspy-ruby, every-style-editor, file-todos, frontend-design, gemini-imagegen
+
+### Added
+
+- **CLAUDE.md** - Added Skill Compliance Checklist with validation commands for ensuring new skills meet spec requirements
+
 ## [2.15.1] - 2025-12-18
 
 ### Changed
