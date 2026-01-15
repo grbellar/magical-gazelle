@@ -5,6 +5,19 @@ All notable changes to the compound-engineering plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.26.2] - 2026-01-14
+
+### Changed
+
+- **`/test-browser` command** - Clarified to use agent-browser CLI exclusively
+  - Added explicit "CRITICAL: Use agent-browser CLI Only" section
+  - Added warning: "DO NOT use Chrome MCP tools (mcp__claude-in-chrome__*)"
+  - Added Step 0: Verify agent-browser installation before testing
+  - Added full CLI reference section at bottom
+  - Added Next.js route mapping patterns
+
+---
+
 ## [2.26.1] - 2026-01-14
 
 ### Changed

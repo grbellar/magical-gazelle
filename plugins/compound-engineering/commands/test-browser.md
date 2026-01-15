@@ -8,6 +8,14 @@ argument-hint: "[PR number, branch name, or 'current' for current branch]"
 
 <command_purpose>Run end-to-end browser tests on pages affected by a PR or branch changes using agent-browser CLI.</command_purpose>
 
+## CRITICAL: Use agent-browser CLI Only
+
+**DO NOT use Chrome MCP tools (mcp__claude-in-chrome__*).**
+
+This command uses the `agent-browser` CLI exclusively. The agent-browser CLI is a Bash-based tool from Vercel that runs headless Chromium. It is NOT the same as Chrome browser automation via MCP.
+
+If you find yourself calling `mcp__claude-in-chrome__*` tools, STOP. Use `agent-browser` Bash commands instead.
+
 ## Introduction
 
 <role>QA Engineer specializing in browser-based end-to-end testing</role>
@@ -21,8 +29,8 @@ This command tests affected pages in a real browser, catching issues that unit t
 ## Prerequisites
 
 <requirements>
-- Local development server running (e.g., `bin/dev`, `rails server`)
-- agent-browser CLI installed
+- Local development server running (e.g., `bin/dev`, `rails server`, `npm run dev`)
+- agent-browser CLI installed (see Setup below)
 - Git repository with changes to test
 </requirements>
 
@@ -36,14 +44,24 @@ command -v agent-browser >/dev/null 2>&1 && echo "Installed" || echo "NOT INSTAL
 **Install if needed:**
 ```bash
 npm install -g agent-browser
-agent-browser install  # Downloads Chromium
+agent-browser install  # Downloads Chromium (~160MB)
 ```
 
 See the `agent-browser` skill for detailed usage.
 
 ## Main Tasks
 
-### 0. Ask Browser Mode
+### 0. Verify agent-browser Installation
+
+Before starting ANY browser testing, verify agent-browser is installed:
+
+```bash
+command -v agent-browser >/dev/null 2>&1 && echo "Ready" || (echo "Installing..." && npm install -g agent-browser && agent-browser install)
+```
+
+If installation fails, inform the user and stop.
+
+### 1. Ask Browser Mode
 
 <ask_browser_mode>
 
@@ -59,7 +77,7 @@ Store the choice and use `--headed` flag when user selects "Headed".
 
 </ask_browser_mode>
 
-### 1. Determine Test Scope
+### 2. Determine Test Scope
 
 <test_target> $ARGUMENTS </test_target>
 
@@ -82,7 +100,7 @@ git diff --name-only main...[branch]
 
 </determine_scope>
 
-### 2. Map Files to Routes
+### 3. Map Files to Routes
 
 <file_to_route_mapping>
 
@@ -97,12 +115,14 @@ Map changed files to testable routes:
 | `app/views/layouts/*` | All pages (test homepage at minimum) |
 | `app/assets/stylesheets/*` | Visual regression on key pages |
 | `app/helpers/*_helper.rb` | Pages using that helper |
+| `src/app/*` (Next.js) | Corresponding routes |
+| `src/components/*` | Pages using those components |
 
 Build a list of URLs to test based on the mapping.
 
 </file_to_route_mapping>
 
-### 3. Verify Server is Running
+### 4. Verify Server is Running
 
 <check_server>
 
@@ -119,18 +139,18 @@ If server is not running, inform user:
 
 Please start your development server:
 - Rails: `bin/dev` or `rails server`
-- Node: `npm run dev`
+- Node/Next.js: `npm run dev`
 
 Then run `/test-browser` again.
 ```
 
 </check_server>
 
-### 4. Test Each Affected Page
+### 5. Test Each Affected Page
 
 <test_pages>
 
-For each affected route:
+For each affected route, use agent-browser CLI commands (NOT Chrome MCP):
 
 **Step 1: Navigate and capture snapshot**
 ```bash
@@ -138,9 +158,10 @@ agent-browser open "http://localhost:3000/[route]"
 agent-browser snapshot -i
 ```
 
-**Step 2: Check for errors** (use headed mode for console inspection)
+**Step 2: For headed mode (visual debugging)**
 ```bash
 agent-browser --headed open "http://localhost:3000/[route]"
+agent-browser --headed snapshot -i
 ```
 
 **Step 3: Verify key elements**
@@ -156,9 +177,15 @@ agent-browser click @e1  # Use ref from snapshot
 agent-browser snapshot -i
 ```
 
+**Step 5: Take screenshots**
+```bash
+agent-browser screenshot page-name.png
+agent-browser screenshot --full page-name-full.png  # Full page
+```
+
 </test_pages>
 
-### 5. Human Verification (When Required)
+### 6. Human Verification (When Required)
 
 <human_verification>
 
@@ -187,7 +214,7 @@ Did it work correctly?
 
 </human_verification>
 
-### 6. Handle Failures
+### 7. Handle Failures
 
 <failure_handling>
 
@@ -226,7 +253,7 @@ When a test fails:
 
 </failure_handling>
 
-### 7. Test Summary
+### 8. Test Summary
 
 <test_summary>
 
@@ -278,13 +305,35 @@ After all tests complete, present summary:
 /test-browser feature/new-dashboard
 ```
 
-## Key agent-browser Commands
+## agent-browser CLI Reference
+
+**ALWAYS use these Bash commands. NEVER use mcp__claude-in-chrome__* tools.**
 
 ```bash
-agent-browser open <url>           # Navigate
-agent-browser snapshot -i          # Interactive elements with refs
-agent-browser click @e1            # Click by ref
+# Navigation
+agent-browser open <url>           # Navigate to URL
+agent-browser back                 # Go back
+agent-browser close                # Close browser
+
+# Snapshots (get element refs)
+agent-browser snapshot -i          # Interactive elements with refs (@e1, @e2, etc.)
+agent-browser snapshot -i --json   # JSON output
+
+# Interactions (use refs from snapshot)
+agent-browser click @e1            # Click element
 agent-browser fill @e1 "text"      # Fill input
-agent-browser screenshot out.png   # Screenshot
-agent-browser --headed open <url>  # Visible browser
+agent-browser type @e1 "text"      # Type without clearing
+agent-browser press Enter          # Press key
+
+# Screenshots
+agent-browser screenshot out.png       # Viewport screenshot
+agent-browser screenshot --full out.png # Full page screenshot
+
+# Headed mode (visible browser)
+agent-browser --headed open <url>      # Open with visible browser
+agent-browser --headed click @e1       # Click in visible browser
+
+# Wait
+agent-browser wait @e1             # Wait for element
+agent-browser wait 2000            # Wait milliseconds
 ```
