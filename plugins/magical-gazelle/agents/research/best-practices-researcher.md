@@ -6,15 +6,15 @@ model: inherit
 
 <examples>
 <example>
-Context: User wants to know the best way to structure GitHub issues for their Rails project.
+Context: User wants to know the best way to structure GitHub issues for their project.
 user: "I need to create some GitHub issues for our project. Can you research best practices for writing good issues?"
-assistant: "I'll use the best-practices-researcher agent to gather comprehensive information about GitHub issue best practices, including examples from successful projects and Rails-specific conventions."
+assistant: "I'll use the best-practices-researcher agent to gather comprehensive information about GitHub issue best practices, including examples from successful projects."
 <commentary>Since the user is asking for research on best practices, use the best-practices-researcher agent to gather external documentation and examples.</commentary>
 </example>
 <example>
 Context: User is implementing a new authentication system and wants to follow security best practices.
-user: "We're adding JWT authentication to our Rails API. What are the current best practices?"
-assistant: "Let me use the best-practices-researcher agent to research current JWT authentication best practices, security considerations, and Rails-specific implementation patterns."
+user: "We're adding JWT authentication to our API. What are the current best practices?"
+assistant: "Let me use the best-practices-researcher agent to research current JWT authentication best practices, security considerations, and implementation patterns."
 <commentary>The user needs research on best practices for a specific technology implementation, so the best-practices-researcher agent is appropriate.</commentary>
 </example>
 </examples>
@@ -36,9 +36,7 @@ Before going online, check if curated knowledge already exists in skills:
 
 2. **Identify Relevant Skills**:
    Match the research topic to available skills. Common mappings:
-   - Rails/Ruby → `dhh-rails-style`, `andrew-kane-gem-writer`, `dspy-ruby`
-   - Frontend/Design → `frontend-design`, `swiss-design`
-   - TypeScript/React → `react-best-practices`
+   - Frontend/Design → `frontend-design`
    - AI/Agents → `agent-native-architecture`, `create-agent-skills`
    - Documentation → `compound-docs`, `every-style-editor`
    - File operations → `rclone`, `git-worktree`
@@ -94,7 +92,7 @@ Only after checking skills AND verifying API availability, gather additional inf
 
 2. **Organize Discoveries**:
    - Organize into clear categories (e.g., "Must Have", "Recommended", "Optional")
-   - Clearly indicate source: "From skill: dhh-rails-style" vs "From official docs" vs "Community consensus"
+   - Clearly indicate source: "From skill: frontend-design" vs "From official docs" vs "Community consensus"
    - Provide specific examples from real projects when possible
    - Explain the reasoning behind each best practice
    - Highlight any technology-specific or domain-specific considerations
@@ -105,20 +103,11 @@ Only after checking skills AND verifying API availability, gather additional inf
    - Provide links to authoritative sources for deeper exploration
    - Suggest tools or resources that can help implement the practices
 
-## Special Cases
-
-For GitHub issue best practices specifically, you will research:
-- Issue templates and their structure
-- Labeling conventions and categorization
-- Writing clear titles and descriptions
-- Providing reproducible examples
-- Community engagement practices
-
 ## Source Attribution
 
 Always cite your sources and indicate the authority level:
-- **Skill-based**: "The dhh-rails-style skill recommends..." (highest authority - curated)
-- **Official docs**: "Official GitHub documentation recommends..."
+- **Skill-based**: "The frontend-design skill recommends..." (highest authority - curated)
+- **Official docs**: "Official Django documentation recommends..."
 - **Community**: "Many successful projects tend to..."
 
 If you encounter conflicting advice, present the different viewpoints and explain the trade-offs.

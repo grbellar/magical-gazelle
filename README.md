@@ -15,12 +15,12 @@ A personal fork of the [Compound Engineering Plugin](https://github.com/EveryInc
 Plan → Work → Review → Compound → Repeat
 ```
 
-| Command | Purpose |
-|---------|---------|
-| `/workflows:plan` | Turn feature ideas into detailed implementation plans |
-| `/workflows:work` | Execute plans with worktrees and task tracking |
-| `/workflows:review` | Multi-agent code review before merging |
-| `/workflows:compound` | Document learnings to make future work easier |
+| Command               | Purpose                                               |
+| --------------------- | ----------------------------------------------------- |
+| `/workflows:plan`     | Turn feature ideas into detailed implementation plans |
+| `/workflows:work`     | Execute plans with worktrees and task tracking        |
+| `/workflows:review`   | Multi-agent code review before merging                |
+| `/workflows:compound` | Document learnings to make future work easier         |
 
 Each cycle compounds: plans inform future plans, reviews catch more issues, patterns get documented.
 
@@ -31,6 +31,7 @@ Each cycle compounds: plans inform future plans, reviews catch more issues, patt
 Traditional development accumulates technical debt. Every feature adds complexity. The codebase becomes harder to work with over time.
 
 Compound engineering inverts this. 80% is in planning and review, 20% is in execution:
+
 - Plan thoroughly before writing code
 - Review to catch issues and capture learnings
 - Codify knowledge so it's reusable
