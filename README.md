@@ -1,82 +1,13 @@
-# Compound Marketplace
+# Magical Gazelle
 
-[![Build Status](https://github.com/EveryInc/compound-engineering-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/EveryInc/compound-engineering-plugin/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@every-env/compound-plugin)](https://www.npmjs.com/package/@every-env/compound-plugin)
+A personal fork of the [Compound Engineering Plugin](https://github.com/EveryInc/compound-engineering-plugin) — AI-powered development tools that make each unit of engineering work easier than the last.
 
-A Claude Code plugin marketplace featuring the **Compound Engineering Plugin** — tools that make each unit of engineering work easier than the last.
-
-## Claude Code Install
+## Install
 
 ```bash
-/plugin marketplace add https://github.com/EveryInc/compound-engineering-plugin
-/plugin install compound-engineering
+/plugin marketplace add https://github.com/grbellar/magical-gazelle
+/plugin install magical-gazelle
 ```
-
-## OpenCode, Codex, Droid, Cursor, Pi & Gemini (experimental) Install
-
-This repo includes a Bun/TypeScript CLI that converts Claude Code plugins to OpenCode, Codex, Factory Droid, Cursor, Pi, and Gemini CLI.
-
-```bash
-# convert the compound-engineering plugin into OpenCode format
-bunx @every-env/compound-plugin install compound-engineering --to opencode
-
-# convert to Codex format
-bunx @every-env/compound-plugin install compound-engineering --to codex
-
-# convert to Factory Droid format
-bunx @every-env/compound-plugin install compound-engineering --to droid
-
-# convert to Cursor format
-bunx @every-env/compound-plugin install compound-engineering --to cursor
-
-# convert to Pi format
-bunx @every-env/compound-plugin install compound-engineering --to pi
-
-# convert to Gemini CLI format
-bunx @every-env/compound-plugin install compound-engineering --to gemini
-```
-
-Local dev:
-
-```bash
-bun run src/index.ts install ./plugins/compound-engineering --to opencode
-```
-
-OpenCode output is written to `~/.config/opencode` by default, with `opencode.json` at the root and `agents/`, `skills/`, and `plugins/` alongside it.
-Codex output is written to `~/.codex/prompts` and `~/.codex/skills`, with each Claude command converted into both a prompt and a skill (the prompt instructs Codex to load the corresponding skill). Generated Codex skill descriptions are truncated to 1024 characters (Codex limit).
-Droid output is written to `~/.factory/` with commands, droids (agents), and skills. Claude tool names are mapped to Factory equivalents (`Bash` → `Execute`, `Write` → `Create`, etc.) and namespace prefixes are stripped from commands.
-Cursor output is written to `.cursor/` with rules (`.mdc`), commands, skills, and `mcp.json`. Agents become "Agent Requested" rules (`alwaysApply: false`) so Cursor's AI activates them on demand. Works with both the Cursor IDE and Cursor CLI (`cursor-agent`) — they share the same `.cursor/` config directory.
-Pi output is written to `~/.pi/agent/` by default with prompts, skills, extensions, and `compound-engineering/mcporter.json` for MCPorter interoperability.
-Gemini output is written to `.gemini/` with skills (from agents), commands (`.toml`), and `settings.json` (MCP servers). Namespaced commands create directory structure (`workflows:plan` → `commands/workflows/plan.toml`). Skills use the identical SKILL.md standard and pass through unchanged.
-
-All provider targets are experimental and may change as the formats evolve.
-
-## Sync Personal Config
-
-Sync your personal Claude Code config (`~/.claude/`) to other AI coding tools:
-
-```bash
-# Sync skills and MCP servers to OpenCode
-bunx @every-env/compound-plugin sync --target opencode
-
-# Sync to Codex
-bunx @every-env/compound-plugin sync --target codex
-
-# Sync to Pi
-bunx @every-env/compound-plugin sync --target pi
-
-# Sync to Droid (skills only)
-bunx @every-env/compound-plugin sync --target droid
-
-# Sync to Cursor (skills + MCP servers)
-bunx @every-env/compound-plugin sync --target cursor
-```
-
-This syncs:
-- Personal skills from `~/.claude/skills/` (as symlinks)
-- MCP servers from `~/.claude/settings.json`
-
-Skills are symlinked (not copied) so changes in Claude Code are reflected immediately.
 
 ## Workflow
 
@@ -107,6 +38,5 @@ Compound engineering inverts this. 80% is in planning and review, 20% is in exec
 
 ## Learn More
 
-- [Full component reference](plugins/compound-engineering/README.md) - all agents, commands, skills
-- [Compound engineering: how Every codes with agents](https://every.to/chain-of-thought/compound-engineering-how-every-codes-with-agents)
-- [The story behind compounding engineering](https://every.to/source-code/my-ai-had-already-fixed-the-code-before-i-saw-it)
+- [Full component reference](plugins/magical-gazelle/README.md) - all agents, commands, skills
+- [Upstream repo](https://github.com/EveryInc/compound-engineering-plugin) - original project by Every
