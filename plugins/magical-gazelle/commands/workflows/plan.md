@@ -112,7 +112,7 @@ Run these agents in parallel:
 
 After all research steps complete, consolidate findings:
 
-- Document relevant file paths from repo research (e.g., `app/services/example_service.rb:42`)
+- Document relevant file paths from repo research (e.g., `app/services/example_service.py:42`)
 - **Include relevant institutional learnings** from `docs/solutions/` (key insights, gotchas to avoid)
 - Note external documentation URLs and best practices (if external research was done)
 - List related issues or PRs discovered
@@ -130,8 +130,8 @@ Think like a product manager - what would make this issue clear and actionable? 
 
 - [ ] Draft clear, searchable issue title using conventional format (e.g., `feat: Add user authentication`, `fix: Cart total calculation`)
 - [ ] Determine issue type: enhancement, bug, refactor
-- [ ] Convert title to filename: add today's date prefix, strip prefix colon, kebab-case, add `-plan` suffix
-  - Example: `feat: Add User Authentication` → `2026-01-21-feat-add-user-authentication-plan.md`
+- [ ] Convert title to filename: add today's date and time prefix (YYYY-MM-DD-HH:MM), strip prefix colon, kebab-case, add `-plan` suffix
+  - Example: `feat: Add User Authentication` → `2026-01-21-14:30-feat-add-user-authentication-plan.md`
   - Keep it descriptive (3-5 words after prefix) so plans are findable by context
 
 **Stakeholder Analysis:**
@@ -477,23 +477,23 @@ def process_user(self, *, user):
 **Filename:** Use the date and kebab-case filename from Step 2 Title & Categorization.
 
 ```
-docs/plans/YYYY-MM-DD-<type>-<descriptive-name>-plan.md
+docs/plans/YYYY-MM-DD-HH:MM-<type>-<descriptive-name>-plan.md
 ```
 
 Examples:
-- ✅ `docs/plans/2026-01-15-feat-user-authentication-flow-plan.md`
-- ✅ `docs/plans/2026-02-03-fix-checkout-race-condition-plan.md`
-- ✅ `docs/plans/2026-03-10-refactor-api-client-extraction-plan.md`
-- ❌ `docs/plans/2026-01-15-feat-thing-plan.md` (not descriptive - what "thing"?)
-- ❌ `docs/plans/2026-01-15-feat-new-feature-plan.md` (too vague - what feature?)
-- ❌ `docs/plans/2026-01-15-feat: user auth-plan.md` (invalid characters - colon and space)
-- ❌ `docs/plans/feat-user-auth-plan.md` (missing date prefix)
+- ✅ `docs/plans/2026-01-15-14:30-feat-user-authentication-flow-plan.md`
+- ✅ `docs/plans/2026-02-03-09:15-fix-checkout-race-condition-plan.md`
+- ✅ `docs/plans/2026-03-10-16:45-refactor-api-client-extraction-plan.md`
+- ❌ `docs/plans/2026-01-15-feat-thing-plan.md` (missing time, not descriptive)
+- ❌ `docs/plans/2026-01-15-14:30-feat-new-feature-plan.md` (too vague - what feature?)
+- ❌ `docs/plans/2026-01-15-14:30-feat: user auth-plan.md` (invalid characters - space in filename)
+- ❌ `docs/plans/feat-user-auth-plan.md` (missing date/time prefix)
 
 ## Post-Generation Options
 
 After writing the plan file, use the **AskUserQuestion tool** to present these options:
 
-**Question:** "Plan ready at `docs/plans/YYYY-MM-DD-<type>-<name>-plan.md`. What would you like to do next?"
+**Question:** "Plan ready at `docs/plans/YYYY-MM-DD-HH:MM-<type>-<name>-plan.md`. What would you like to do next?"
 
 **Options:**
 1. **Open plan in editor** - Open the plan file for review
