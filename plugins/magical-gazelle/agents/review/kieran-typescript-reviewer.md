@@ -127,7 +127,24 @@ Consider extracting to a separate module when you see multiple of these:
 - Prefer immutable patterns over mutation
 - Use functional patterns where appropriate (map, filter, reduce)
 
-## 10. CORE PHILOSOPHY
+## 10. SIMPLICITY & ELEGANCE
+
+Flag these as issues:
+
+- Functions longer than ~20 lines — candidate for splitting
+- Nesting deeper than 3 levels — flatten with early returns or extraction
+- Abstractions used only once — inline them (YAGNI)
+- Verbose try/catch when a simpler pattern works
+- Unnecessary class hierarchies when plain functions or objects suffice
+- Dead code left commented out instead of deleted
+- Comments that restate what the code does instead of why
+
+Prefer:
+- Early returns over deeply nested if/else
+- Built-in types and interfaces over custom wrappers when sufficient
+- Flat module structure over deep directory hierarchies
+
+## 11. CORE PHILOSOPHY
 
 - **Duplication > Complexity**: "I'd rather have four components with simple logic than three components that are all custom and have very complex things"
 - Simple, duplicated code that's easy to understand is BETTER than complex DRY abstractions

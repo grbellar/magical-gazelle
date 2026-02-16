@@ -131,13 +131,11 @@ The skill tells you what to do - follow it. Execute the skill completely."
 
 **Example spawns:**
 ```
-Task general-purpose: "Use the dhh-rails-style skill at ~/.claude/plugins/.../dhh-rails-style. Read SKILL.md and apply it to: [Rails sections of plan]"
-
 Task general-purpose: "Use the frontend-design skill at ~/.claude/plugins/.../frontend-design. Read SKILL.md and apply it to: [UI sections of plan]"
 
 Task general-purpose: "Use the agent-native-architecture skill at ~/.claude/plugins/.../agent-native-architecture. Read SKILL.md and apply it to: [agent/tool sections of plan]"
 
-Task general-purpose: "Use the security-patterns skill at ~/.claude/skills/security-patterns. Read SKILL.md and apply it to: [full plan]"
+Task general-purpose: "Use the compound-docs skill at ~/.claude/plugins/.../compound-docs. Read SKILL.md and apply it to: [documentation sections of plan]"
 ```
 
 **No limit on skill sub-agents. Spawn one for every skill that could possibly be relevant.**
@@ -185,12 +183,12 @@ Each learning file has YAML frontmatter with metadata. Read the first ~20 lines 
 
 ```yaml
 ---
-title: "N+1 Query Fix for Briefs"
+title: "N+1 Query Fix for Reports"
 category: performance-issues
-tags: [activerecord, n-plus-one, includes, eager-loading]
-module: Briefs
+tags: [django, n-plus-one, select-related, prefetch-related]
+module: Reports
 symptom: "Slow page load, multiple queries in logs"
-root_cause: "Missing includes on association"
+root_cause: "Missing select_related on queryset"
 ---
 ```
 
@@ -248,16 +246,16 @@ If NOT relevant after deeper analysis:
 
 **Example filtering:**
 ```
-# Found 15 learning files, plan is about "Rails API caching"
+# Found 15 learning files, plan is about "Django API caching"
 
 # SPAWN (likely relevant):
-docs/solutions/performance-issues/n-plus-one-queries.md      # tags: [activerecord] ✓
+docs/solutions/performance-issues/n-plus-one-queries.md      # tags: [django, queryset] ✓
 docs/solutions/performance-issues/redis-cache-stampede.md    # tags: [caching, redis] ✓
 docs/solutions/configuration-fixes/redis-connection-pool.md  # tags: [redis] ✓
 
 # SKIP (clearly not applicable):
-docs/solutions/deployment-issues/heroku-memory-quota.md      # not about caching
-docs/solutions/frontend-issues/stimulus-race-condition.md    # plan is API, not frontend
+docs/solutions/deployment-issues/memory-quota.md             # not about caching
+docs/solutions/frontend-issues/async-race-condition.md       # plan is API, not frontend
 docs/solutions/authentication-issues/jwt-expiry.md           # plan has no auth
 ```
 
@@ -480,14 +478,14 @@ After writing the enhanced plan, use the **AskUserQuestion tool** to present the
 
 **Options:**
 1. **View diff** - Show what was added/changed
-2. **Run `/technical_review`** - Get feedback from reviewers on enhanced plan
+2. **Run `/workflows:review`** - Get feedback from reviewers on enhanced plan
 3. **Start `/workflows:work`** - Begin implementing this enhanced plan
 4. **Deepen further** - Run another round of research on specific sections
 5. **Revert** - Restore original plan (if backup exists)
 
 Based on selection:
 - **View diff** → Run `git diff [plan_path]` or show before/after
-- **`/technical_review`** → Call the /technical_review command with the plan file path
+- **`/workflows:review`** → Call the /workflows:review command with the plan file path
 - **`/workflows:work`** → Call the /workflows:work command with the plan file path
 - **Deepen further** → Ask which sections need more research, then re-run those agents
 - **Revert** → Restore from git or backup

@@ -1,5 +1,14 @@
 # Project Name
 
+## Philosophy
+
+- Write the simplest solution that works. No cleverness for its own sake.
+- Flat is better than nested — avoid deep indentation and control flow.
+- Three similar lines of code > a premature abstraction.
+- If a function needs a comment explaining what it does, rename it.
+- Delete dead code. Never comment it out.
+- Fewer files with clear purpose > many tiny files.
+
 ## Stack
 
 - Python 3.13+

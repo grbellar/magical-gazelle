@@ -137,7 +137,24 @@ Consider extracting to a separate module when you see multiple of these:
 - Use walrus operator `:=` for assignments in expressions when it improves readability
 - Prefer `pathlib` over `os.path` for file operations
 
-## 11. CORE PHILOSOPHY
+## 11. SIMPLICITY & ELEGANCE
+
+Flag these as issues:
+
+- Functions longer than ~20 lines — candidate for splitting
+- Nesting deeper than 3 levels — flatten with early returns or extraction
+- Abstractions used only once — inline them (YAGNI)
+- Verbose try/except when a simpler pattern works
+- Unnecessary base classes or inheritance when composition suffices
+- Dead code left commented out instead of deleted
+- Comments that restate what the code does instead of why
+
+Prefer:
+- Early returns over deeply nested if/else
+- Built-in data structures over custom wrappers when sufficient
+- Flat module structure over deep package hierarchies
+
+## 12. CORE PHILOSOPHY
 
 - **Explicit > Implicit**: "Readability counts" - follow the Zen of Python
 - **Duplication > Complexity**: Simple, duplicated code is BETTER than complex DRY abstractions

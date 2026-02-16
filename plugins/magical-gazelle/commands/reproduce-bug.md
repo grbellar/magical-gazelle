@@ -13,8 +13,8 @@ Look at github issue #$ARGUMENTS and read the issue description and comments.
 
 Run the following agents in parallel to investigate the bug:
 
-1. Task rails-console-explorer(issue_description)
-2. Task appsignal-log-investigator(issue_description)
+1. Task repo-research-analyst(issue_description)
+2. Task bug-reproduction-validator(issue_description)
 
 Think about the places it could go wrong looking at the codebase. Look for logging output we can look for.
 
@@ -29,19 +29,19 @@ If the bug is UI-related or involves user flows, use Playwright to visually repr
 ### Step 1: Verify Server is Running
 
 ```
-mcp__plugin_compound-engineering_pw__browser_navigate({ url: "http://localhost:3000" })
-mcp__plugin_compound-engineering_pw__browser_snapshot({})
+agent-browser open http://localhost:8000
+agent-browser snapshot -i
 ```
 
-If server not running, inform user to start `bin/dev`.
+If server not running, inform user to start their dev server.
 
 ### Step 2: Navigate to Affected Area
 
 Based on the issue description, navigate to the relevant page:
 
 ```
-mcp__plugin_compound-engineering_pw__browser_navigate({ url: "http://localhost:3000/[affected_route]" })
-mcp__plugin_compound-engineering_pw__browser_snapshot({})
+agent-browser open http://localhost:8000/[affected_route]
+agent-browser snapshot -i
 ```
 
 ### Step 3: Capture Screenshots
@@ -49,7 +49,7 @@ mcp__plugin_compound-engineering_pw__browser_snapshot({})
 Take screenshots at each step of reproducing the bug:
 
 ```
-mcp__plugin_compound-engineering_pw__browser_take_screenshot({ filename: "bug-[issue]-step-1.png" })
+agent-browser screenshot bug-[issue]-step-1.png
 ```
 
 ### Step 4: Follow User Flow
@@ -65,7 +65,7 @@ Reproduce the exact steps from the issue:
 
 3. **Check for console errors:**
    ```
-   mcp__plugin_compound-engineering_pw__browser_console_messages({ level: "error" })
+   agent-browser snapshot -i  # Check for error states
    ```
 
 ### Step 5: Capture Bug State
@@ -77,14 +77,14 @@ When you reproduce the bug:
 3. Document the exact steps that triggered it
 
 ```
-mcp__plugin_compound-engineering_pw__browser_take_screenshot({ filename: "bug-[issue]-reproduced.png" })
+agent-browser screenshot bug-[issue]-reproduced.png
 ```
 
 ## Phase 3: Document Findings
 
 **Reference Collection:**
 
-- [ ] Document all research findings with specific file paths (e.g., `app/services/example_service.rb:42`)
+- [ ] Document all research findings with specific file paths (e.g., `app/services/example_service.py:42`)
 - [ ] Include screenshots showing the bug reproduction
 - [ ] List console errors if any
 - [ ] Document the exact reproduction steps

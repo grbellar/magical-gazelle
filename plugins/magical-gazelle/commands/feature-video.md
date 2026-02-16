@@ -21,7 +21,7 @@ This command creates professional video walkthroughs of features for PR document
 ## Prerequisites
 
 <requirements>
-- Local development server running (e.g., `bin/dev`, `rails server`)
+- Local development server running
 - agent-browser CLI installed
 - Git repository with a PR to document
 - `ffmpeg` installed (for video conversion)
@@ -52,7 +52,7 @@ See the `agent-browser` skill for detailed usage.
 
 Parse the input:
 - First argument: PR number or "current" (defaults to current branch's PR)
-- Second argument: Base URL (defaults to `http://localhost:3000`)
+- Second argument: Base URL (defaults to `http://localhost:8000`)
 
 ```bash
 # Get PR number for current branch if needed
@@ -79,10 +79,10 @@ gh pr view [number] --json files -q '.files[].path'
 
 | File Pattern | Route(s) |
 |-------------|----------|
-| `app/views/users/*` | `/users`, `/users/:id`, `/users/new` |
-| `app/controllers/settings_controller.rb` | `/settings` |
-| `app/javascript/controllers/*_controller.js` | Pages using that Stimulus controller |
-| `app/components/*_component.rb` | Pages rendering that component |
+| `app/views/users/*` or `templates/users/*` | `/users`, `/users/:id`, `/users/new` |
+| `app/views.py` or `app/routes.py` | Routes defined in that module |
+| `src/components/*` | Pages using those components |
+| `static/*` or `assets/*` | Visual regression on key pages |
 
 </gather_context>
 

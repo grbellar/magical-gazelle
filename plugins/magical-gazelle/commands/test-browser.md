@@ -29,7 +29,7 @@ This command tests affected pages in a real browser, catching issues that unit t
 ## Prerequisites
 
 <requirements>
-- Local development server running (e.g., `bin/dev`, `rails server`, `npm run dev`)
+- Local development server running (per project's CLAUDE.md)
 - agent-browser CLI installed (see Setup below)
 - Git repository with changes to test
 </requirements>
@@ -108,15 +108,12 @@ Map changed files to testable routes:
 
 | File Pattern | Route(s) |
 |-------------|----------|
-| `app/views/users/*` | `/users`, `/users/:id`, `/users/new` |
-| `app/controllers/settings_controller.rb` | `/settings` |
-| `app/javascript/controllers/*_controller.js` | Pages using that Stimulus controller |
-| `app/components/*_component.rb` | Pages rendering that component |
-| `app/views/layouts/*` | All pages (test homepage at minimum) |
-| `app/assets/stylesheets/*` | Visual regression on key pages |
-| `app/helpers/*_helper.rb` | Pages using that helper |
+| `app/views/users/*` or `templates/users/*` | `/users`, `/users/:id`, `/users/new` |
+| `app/views.py` or `app/routes.py` | Routes defined in that module |
 | `src/app/*` (Next.js) | Corresponding routes |
 | `src/components/*` | Pages using those components |
+| `static/*` or `assets/*` | Visual regression on key pages |
+| `templates/base*` or `layouts/*` | All pages (test homepage at minimum) |
 
 Build a list of URLs to test based on the mapping.
 
@@ -129,7 +126,7 @@ Build a list of URLs to test based on the mapping.
 Before testing, verify the local server is accessible:
 
 ```bash
-agent-browser open http://localhost:3000
+agent-browser open http://localhost:8000
 agent-browser snapshot -i
 ```
 
@@ -137,9 +134,7 @@ If server is not running, inform user:
 ```markdown
 **Server not running**
 
-Please start your development server:
-- Rails: `bin/dev` or `rails server`
-- Node/Next.js: `npm run dev`
+Please start your development server (per project's CLAUDE.md).
 
 Then run `/test-browser` again.
 ```
@@ -154,13 +149,13 @@ For each affected route, use agent-browser CLI commands (NOT Chrome MCP):
 
 **Step 1: Navigate and capture snapshot**
 ```bash
-agent-browser open "http://localhost:3000/[route]"
+agent-browser open "http://localhost:8000/[route]"
 agent-browser snapshot -i
 ```
 
 **Step 2: For headed mode (visual debugging)**
 ```bash
-agent-browser --headed open "http://localhost:3000/[route]"
+agent-browser --headed open "http://localhost:8000/[route]"
 agent-browser --headed snapshot -i
 ```
 
@@ -263,7 +258,7 @@ After all tests complete, present summary:
 ## Browser Test Results
 
 **Test Scope:** PR #[number] / [branch name]
-**Server:** http://localhost:3000
+**Server:** http://localhost:8000
 
 ### Pages Tested: [count]
 
