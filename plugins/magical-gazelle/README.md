@@ -1,6 +1,6 @@
-# Compounding Engineering Plugin
+# Magical Gazelle
 
-AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last.
+A personal fork of the [Compounding Engineering Plugin](https://github.com/EveryInc/compound-engineering-plugin) — AI-powered development tools that get smarter with every use.
 
 ## Components
 
@@ -200,8 +200,16 @@ The `agent-browser` skill provides comprehensive documentation on usage.
 
 ## Installation
 
+### 1. Add the marketplace
+
 ```bash
-claude /plugin install compound-engineering
+claude /install-plugin https://github.com/grbellar/my-compound-engineering-plugin
+```
+
+### 2. Install the plugin
+
+```bash
+claude /install-plugin magical-gazelle
 ```
 
 ## Known Issues

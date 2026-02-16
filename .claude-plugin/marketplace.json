@@ -1,8 +1,8 @@
 {
-  "name": "every-marketplace",
+  "name": "grbellar-marketplace",
   "owner": {
-    "name": "Kieran Klaassen",
-    "url": "https://github.com/kieranklaassen"
+    "name": "Grant Bellar",
+    "url": "https://github.com/grbellar"
   },
   "metadata": {
     "description": "Plugin marketplace for Claude Code extensions",
@@ -10,17 +10,16 @@
   },
   "plugins": [
     {
-      "name": "compound-engineering",
+      "name": "magical-gazelle",
       "description": "AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last. Includes 29 specialized agents, 22 commands, and 19 skills.",
       "version": "2.34.0",
       "author": {
-        "name": "Kieran Klaassen",
-        "url": "https://github.com/kieranklaassen",
-        "email": "kieran@every.to"
+        "name": "Grant Bellar",
+        "url": "https://github.com/grbellar"
       },
-      "homepage": "https://github.com/EveryInc/compound-engineering-plugin",
+      "homepage": "https://github.com/grbellar/my-compound-engineering-plugin",
       "tags": ["ai-powered", "compound-engineering", "workflow-automation", "code-review", "quality", "knowledge-management", "image-generation"],
-      "source": "./plugins/compound-engineering"
+      "source": "./plugins/magical-gazelle"
     },
     {
       "name": "coding-tutor",
