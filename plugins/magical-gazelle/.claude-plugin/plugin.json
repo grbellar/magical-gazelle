@@ -1,7 +1,7 @@
 {
   "name": "magical-gazelle",
   "version": "2.34.0",
-  "description": "AI-powered development tools. 25 agents, 22 commands, 16 skills, 1 MCP server for code review, research, design, and workflow automation.",
+  "description": "AI-powered development tools. 24 agents, 22 commands, 16 skills, 1 MCP server for code review, research, design, and workflow automation.",
   "author": {
     "name": "Grant Bellar",
     "url": "https://github.com/grbellar"

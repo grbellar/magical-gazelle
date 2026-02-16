@@ -6,7 +6,7 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 | Component | Count |
 |-----------|-------|
-| Agents | 25 |
+| Agents | 24 |
 | Commands | 22 |
 | Skills | 16 |
 | MCP Servers | 1 |
@@ -15,7 +15,7 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 Agents are organized into categories for easier discovery.
 
-### Review (13)
+### Review (12)
 
 | Agent | Description |
 |-------|-------------|
@@ -26,11 +26,10 @@ Agents are organized into categories for easier discovery.
 | `data-migration-expert` | Validate ID mappings match production, check for swapped values |
 | `deployment-verification-agent` | Create Go/No-Go deployment checklists for risky data changes |
 | `julik-frontend-races-reviewer` | Review JavaScript/Stimulus code for race conditions |
-| `kieran-python-reviewer` | Python code review with strict conventions |
-| `kieran-typescript-reviewer` | TypeScript code review with strict conventions |
+| `kieran-python-reviewer` | Python code review with strict conventions and testing standards |
+| `kieran-typescript-reviewer` | TypeScript code review with strict conventions and testing standards |
 | `pattern-recognition-specialist` | Analyze code for patterns and anti-patterns |
 | `performance-oracle` | Performance analysis and optimization |
-| `schema-drift-detector` | Detect unrelated schema.rb changes in PRs |
 | `security-sentinel` | Security audits and vulnerability assessments |
 
 ### Research (5)
