@@ -203,7 +203,7 @@ The `agent-browser` skill provides comprehensive documentation on usage.
 ### 1. Add the marketplace
 
 ```bash
-claude /install-plugin https://github.com/grbellar/my-compound-engineering-plugin
+claude /install-plugin https://github.com/grbellar/magical-gazelle
 ```
 
 ### 2. Install the plugin
