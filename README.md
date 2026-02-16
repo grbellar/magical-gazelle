@@ -18,7 +18,7 @@ Plan → Work → Review → Compound → Repeat
 | Command               | Purpose                                               |
 | --------------------- | ----------------------------------------------------- |
 | `/workflows:plan`     | Turn feature ideas into detailed implementation plans |
-| `/workflows:work`     | Execute plans with worktrees and task tracking        |
+| `/workflows:work`     | Execute plans with branching and task tracking        |
 | `/workflows:review`   | Multi-agent code review before merging                |
 | `/workflows:compound` | Document learnings to make future work easier         |
 
