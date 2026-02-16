@@ -7,7 +7,7 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 | Component   | Count |
 | ----------- | ----- |
 | Agents      | 24    |
-| Commands    | 22    |
+| Commands    | 21    |
 | Skills      | 16    |
 | MCP Servers | 1     |
 
@@ -92,7 +92,6 @@ Core workflow commands use `workflows:` prefix to avoid collisions with built-in
 | `/resolve_todo_parallel` | Resolve todos in parallel                                       |
 | `/triage`                | Triage and prioritize issues                                    |
 | `/test-browser`          | Run browser tests on PR-affected pages                          |
-| `/xcode-test`            | Build and test iOS apps on simulator                            |
 | `/feature-video`         | Record video walkthroughs and add to PR description             |
 
 ## Skills

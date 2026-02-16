@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "magical-gazelle",
-      "description": "AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last. Includes 24 specialized agents, 22 commands, and 16 skills.",
+      "description": "AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last. Includes 24 specialized agents, 21 commands, and 16 skills.",
       "version": "2.34.0",
       "author": {
         "name": "Grant Bellar",
