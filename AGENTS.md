@@ -10,17 +10,23 @@ This repository contains a Bun/TypeScript CLI that converts Claude Code plugins 
 - **Output Paths:** Keep OpenCode output at `opencode.json` and `.opencode/{agents,skills,plugins}`.
 - **ASCII-first:** Use ASCII unless the file already contains Unicode.
 
-## Adding a New Target Provider (e.g., Codex)
+## Supported Targets
+
+- **OpenCode** (`opencode`) - Default target
+- **Codex** (`codex`) - OpenAI Codex format
+- **Pi** (`pi`) - Pi agent format
+
+## Adding a New Target Provider
 
 Use this checklist when introducing a new target provider:
 
 1. **Define the target entry**
    - Add a new handler in `src/targets/index.ts` with `implemented: false` until complete.
-   - Use a dedicated writer module (e.g., `src/targets/codex.ts`).
+   - Use a dedicated writer module (e.g., `src/targets/newprovider.ts`).
 
 2. **Define types and mapping**
    - Add provider-specific types under `src/types/`.
-   - Implement conversion logic in `src/converters/` (from Claude → provider).
+   - Implement conversion logic in `src/converters/` (from Claude to provider).
    - Keep mappings explicit: tools, permissions, hooks/events, model naming.
 
 3. **Wire the CLI**
@@ -35,14 +41,3 @@ Use this checklist when introducing a new target provider:
 
 5. **Docs**
    - Update README with the new `--to` option and output locations.
-
-## When to Add a Provider
-
-Add a new provider when at least one of these is true:
-
-- A real user/workflow needs it now.
-- The target format is stable and documented.
-- There’s a clear mapping for tools/permissions/hooks.
-- You can write fixtures + tests that validate the mapping.
-
-Avoid adding a provider if the target spec is unstable or undocumented.

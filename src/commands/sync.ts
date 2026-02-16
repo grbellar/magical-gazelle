@@ -5,11 +5,9 @@ import { loadClaudeHome } from "../parsers/claude-home"
 import { syncToOpenCode } from "../sync/opencode"
 import { syncToCodex } from "../sync/codex"
 import { syncToPi } from "../sync/pi"
-import { syncToDroid } from "../sync/droid"
-import { syncToCursor } from "../sync/cursor"
 import { expandHome } from "../utils/resolve-home"
 
-const validTargets = ["opencode", "codex", "pi", "droid", "cursor"] as const
+const validTargets = ["opencode", "codex", "pi"] as const
 type SyncTarget = (typeof validTargets)[number]
 
 function isValidTarget(value: string): value is SyncTarget {
@@ -38,23 +36,19 @@ function resolveOutputRoot(target: SyncTarget): string {
       return path.join(os.homedir(), ".codex")
     case "pi":
       return path.join(os.homedir(), ".pi", "agent")
-    case "droid":
-      return path.join(os.homedir(), ".factory")
-    case "cursor":
-      return path.join(process.cwd(), ".cursor")
   }
 }
 
 export default defineCommand({
   meta: {
     name: "sync",
-    description: "Sync Claude Code config (~/.claude/) to OpenCode, Codex, Pi, Droid, or Cursor",
+    description: "Sync Claude Code config (~/.claude/) to OpenCode, Codex, or Pi",
   },
   args: {
     target: {
       type: "string",
       required: true,
-      description: "Target: opencode | codex | pi | droid | cursor",
+      description: "Target: opencode | codex | pi",
     },
     claudeHome: {
       type: "string",
@@ -73,7 +67,7 @@ export default defineCommand({
     // Warn about potential secrets in MCP env vars
     if (hasPotentialSecrets(config.mcpServers)) {
       console.warn(
-        "⚠️  Warning: MCP servers contain env vars that may include secrets (API keys, tokens).\n" +
+        "Warning: MCP servers contain env vars that may include secrets (API keys, tokens).\n" +
         "   These will be copied to the target config. Review before sharing the config file.",
       )
     }
@@ -94,14 +88,8 @@ export default defineCommand({
       case "pi":
         await syncToPi(config, outputRoot)
         break
-      case "droid":
-        await syncToDroid(config, outputRoot)
-        break
-      case "cursor":
-        await syncToCursor(config, outputRoot)
-        break
     }
 
-    console.log(`✓ Synced to ${args.target}: ${outputRoot}`)
+    console.log(`Done. Synced to ${args.target}: ${outputRoot}`)
   },
 })

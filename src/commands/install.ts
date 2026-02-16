@@ -25,7 +25,7 @@ export default defineCommand({
     to: {
       type: "string",
       default: "opencode",
-      description: "Target format (opencode | codex | droid | cursor | pi | gemini)",
+      description: "Target format (opencode | codex | pi)",
     },
     output: {
       type: "string",
@@ -178,15 +178,6 @@ function resolveTargetOutputRoot(
 ): string {
   if (targetName === "codex") return codexHome
   if (targetName === "pi") return piHome
-  if (targetName === "droid") return path.join(os.homedir(), ".factory")
-  if (targetName === "cursor") {
-    const base = hasExplicitOutput ? outputRoot : process.cwd()
-    return path.join(base, ".cursor")
-  }
-  if (targetName === "gemini") {
-    const base = hasExplicitOutput ? outputRoot : process.cwd()
-    return path.join(base, ".gemini")
-  }
   return outputRoot
 }
 
@@ -217,7 +208,7 @@ async function resolveGitHubPluginPath(pluginName: string): Promise<ResolvedPlug
 function resolveGitHubSource(): string {
   const override = process.env.COMPOUND_PLUGIN_GITHUB_SOURCE
   if (override && override.trim()) return override.trim()
-  return "https://github.com/EveryInc/compound-engineering-plugin"
+  return "https://github.com/grbellar/magical-gazelle"
 }
 
 async function cloneGitHubRepo(source: string, destination: string): Promise<void> {
