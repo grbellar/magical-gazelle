@@ -57,13 +57,37 @@ Your review approach follows these principles:
 - Use modern Python 3.10+ type syntax: `list[str]` not `List[str]`
 - Leverage union types with `|` operator: `str | None` not `Optional[str]`
 
-## 4. TESTING AS QUALITY INDICATOR
+## 4. TESTING STANDARDS
 
 For every complex function, ask:
 
 - "How would I test this?"
 - "If it's hard to test, what should be extracted?"
 - Hard-to-test code = Poor structure that needs refactoring
+
+**Framework & conventions:**
+- Use pytest (not unittest)
+- Use `conftest.py` and pytest fixtures for test data and setup
+- Use `@pytest.mark.parametrize` for testing multiple inputs
+- Organize tests to mirror source structure: `src/foo/bar.py` → `tests/foo/test_bar.py`
+
+**What to test:**
+- Test observable behavior, not implementation details
+- Don't over-mock — test real integration where possible
+- Mock only at system boundaries (external APIs, databases, file I/O)
+- 🔴 FAIL: Mocking internal methods to test implementation
+- ✅ PASS: Testing inputs → outputs with real objects
+
+**When to test:**
+- Tests ship with features — same commit, not deferred
+- Security fixes ALWAYS include a regression test
+- Bug fixes include a test that would have caught the bug
+- New public functions/classes require tests
+
+**What NOT to test:**
+- Don't test framework behavior (e.g., don't test that SQLAlchemy saves)
+- Don't test private methods directly — test through public interfaces
+- Don't aim for 100% coverage — focus on critical paths and edge cases
 
 ## 5. CRITICAL DELETIONS & REGRESSIONS
 

@@ -6,16 +6,16 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 | Component | Count |
 |-----------|-------|
-| Agents | 29 |
+| Agents | 25 |
 | Commands | 22 |
-| Skills | 19 |
+| Skills | 16 |
 | MCP Servers | 1 |
 
 ## Agents
 
 Agents are organized into categories for easier discovery.
 
-### Review (15)
+### Review (13)
 
 | Agent | Description |
 |-------|-------------|
@@ -25,9 +25,7 @@ Agents are organized into categories for easier discovery.
 | `data-integrity-guardian` | Database migrations and data integrity |
 | `data-migration-expert` | Validate ID mappings match production, check for swapped values |
 | `deployment-verification-agent` | Create Go/No-Go deployment checklists for risky data changes |
-| `dhh-rails-reviewer` | Rails review from DHH's perspective |
 | `julik-frontend-races-reviewer` | Review JavaScript/Stimulus code for race conditions |
-| `kieran-rails-reviewer` | Rails code review with strict conventions |
 | `kieran-python-reviewer` | Python code review with strict conventions |
 | `kieran-typescript-reviewer` | TypeScript code review with strict conventions |
 | `pattern-recognition-specialist` | Analyze code for patterns and anti-patterns |
@@ -53,21 +51,14 @@ Agents are organized into categories for easier discovery.
 | `design-iterator` | Iteratively refine UI through systematic design iterations |
 | `figma-design-sync` | Synchronize web implementations with Figma designs |
 
-### Workflow (5)
+### Workflow (4)
 
 | Agent | Description |
 |-------|-------------|
 | `bug-reproduction-validator` | Systematically reproduce and validate bug reports |
 | `every-style-editor` | Edit content to conform to Every's style guide |
-| `lint` | Run linting and code quality checks on Ruby and ERB files |
 | `pr-comment-resolver` | Address PR comments and implement fixes |
 | `spec-flow-analyzer` | Analyze user flows and identify gaps in specifications |
-
-### Docs (1)
-
-| Agent | Description |
-|-------|-------------|
-| `ankane-readme-writer` | Create READMEs following Ankane-style template for Ruby gems |
 
 ## Commands
 
@@ -117,11 +108,8 @@ Core workflow commands use `workflows:` prefix to avoid collisions with built-in
 
 | Skill | Description |
 |-------|-------------|
-| `andrew-kane-gem-writer` | Write Ruby gems following Andrew Kane's patterns |
 | `compound-docs` | Capture solved problems as categorized documentation |
 | `create-agent-skills` | Expert guidance for creating Claude Code skills |
-| `dhh-rails-style` | Write Ruby/Rails code in DHH's 37signals style |
-| `dspy-ruby` | Build type-safe LLM applications with DSPy.rb |
 | `frontend-design` | Create production-grade frontend interfaces |
 | `skill-creator` | Guide for creating effective Claude Code skills |
 
