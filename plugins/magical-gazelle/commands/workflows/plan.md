@@ -162,7 +162,7 @@ After planning the issue structure, run SpecFlow Analyzer to validate and refine
 
 Select how comprehensive you want the issue to be, simpler is mostly better.
 
-#### 📄 MINIMAL (Quick Issue)
+#### MINIMAL (Quick Issue)
 
 **Best for:** Simple bugs, small improvements, clear features
 
@@ -197,14 +197,13 @@ date: YYYY-MM-DD
 
 ## MVP
 
-### test.rb
+### example_service.py
 
-```ruby
-class Test
-  def initialize
-    @name = "test"
-  end
-end
+```python
+class ExampleService:
+    def __init__(self, *, repo, logger):
+        self.repo = repo
+        self.logger = logger
 ```
 
 ## References
@@ -213,7 +212,7 @@ end
 - Documentation: [relevant_docs_url]
 ````
 
-#### 📋 MORE (Standard Issue)
+#### MORE (Standard Issue)
 
 **Best for:** Most features, complex bugs, team collaboration
 
@@ -276,7 +275,7 @@ date: YYYY-MM-DD
 - Related PRs: #[pr_number]
 ```
 
-#### 📚 A LOT (Comprehensive Issue)
+#### A LOT (Comprehensive Issue)
 
 **Best for:** Major features, architectural changes, complex integrations
 
@@ -420,7 +419,7 @@ Apply best practices for clarity and actionability, making the issue easy to sca
 - [ ] Add screenshots/mockups if UI-related (drag & drop or use image hosting)
 - [ ] Use task lists (- [ ]) for trackable items that can be checked off
 - [ ] Add collapsible sections for lengthy logs or optional details using `<details>` tags
-- [ ] Apply appropriate emoji for visual scanning (🐛 bug, ✨ feature, 📚 docs, ♻️ refactor)
+- [ ] Use clear prefixes for visual scanning (bug, feature, docs, refactor)
 
 **Cross-Referencing:**
 
@@ -436,13 +435,11 @@ Apply best practices for clarity and actionability, making the issue easy to sca
 # Good example with syntax highlighting and line references
 
 
-```ruby
-# app/services/user_service.rb:42
-def process_user(user)
-
-# Implementation here
-
-end
+```python
+# app/services/user_service.py:42
+def process_user(self, *, user):
+    # Implementation here
+    pass
 ```
 
 # Collapsible error logs
@@ -501,7 +498,7 @@ After writing the plan file, use the **AskUserQuestion tool** to present these o
 **Options:**
 1. **Open plan in editor** - Open the plan file for review
 2. **Run `/deepen-plan`** - Enhance each section with parallel research agents (best practices, performance, UI)
-3. **Run `/technical_review`** - Technical feedback from code-focused reviewers (DHH, Kieran, Simplicity)
+3. **Run `/workflows:review`** - Technical feedback from configured review agents
 4. **Review and refine** - Improve the document through structured self-review
 5. **Start `/workflows:work`** - Begin implementing this plan locally
 6. **Start `/workflows:work` on remote** - Begin implementing in Claude Code on the web (use `&` to run in background)
@@ -510,7 +507,7 @@ After writing the plan file, use the **AskUserQuestion tool** to present these o
 Based on selection:
 - **Open plan in editor** → Run `open docs/plans/<plan_filename>.md` to open the file in the user's default editor
 - **`/deepen-plan`** → Call the /deepen-plan command with the plan file path to enhance with research
-- **`/technical_review`** → Call the /technical_review command with the plan file path
+- **`/workflows:review`** → Call the /workflows:review command with the plan file path
 - **Review and refine** → Load `document-review` skill.
 - **`/workflows:work`** → Call the /workflows:work command with the plan file path
 - **`/workflows:work` on remote** → Run `/workflows:work docs/plans/<plan_filename>.md &` to start work in background for Claude Code web
@@ -519,7 +516,7 @@ Based on selection:
 
 **Note:** If running `/workflows:plan` with ultrathink enabled, automatically run `/deepen-plan` after plan creation for maximum depth and grounding.
 
-Loop back to options after Simplify or Other changes until user selects `/workflows:work` or `/technical_review`.
+Loop back to options after Simplify or Other changes until user selects `/workflows:work` or `/workflows:review`.
 
 ## Issue Creation
 
@@ -549,6 +546,6 @@ When user selects "Create Issue", detect their project tracker from CLAUDE.md:
 
 5. **After creation:**
    - Display the issue URL
-   - Ask if they want to proceed to `/workflows:work` or `/technical_review`
+   - Ask if they want to proceed to `/workflows:work` or `/workflows:review`
 
 NEVER CODE! Just research and write the plan.

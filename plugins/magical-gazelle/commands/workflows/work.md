@@ -221,12 +221,12 @@ This command takes a work document (plan, specification, or todo file) and execu
 
    **Step 1: Start dev server** (if not running)
    ```bash
-   bin/dev  # Run in background
+   # Use project's dev server command (per CLAUDE.md)
    ```
 
    **Step 2: Capture screenshots with agent-browser CLI**
    ```bash
-   agent-browser open http://localhost:3000/[route]
+   agent-browser open http://localhost:[port]/[route]
    agent-browser snapshot -i
    agent-browser screenshot output.png
    ```
@@ -252,7 +252,7 @@ This command takes a work document (plan, specification, or todo file) and execu
    ```bash
    git push -u origin feature-branch-name
 
-   gh pr create --title "Feature: [Description]" --body "$(cat <<'EOF'
+   gh pr create --title "feat(scope): description" --body "$(cat <<'EOF'
    ## Summary
    - What was built
    - Why it was needed
@@ -415,7 +415,7 @@ Before creating PR, verify:
 - [ ] All clarifying questions asked and answered
 - [ ] All TodoWrite tasks marked completed
 - [ ] Tests pass (run project's test command)
-- [ ] Linting passes (use linting-agent)
+- [ ] Linting passes (run linter per CLAUDE.md)
 - [ ] Code follows existing patterns
 - [ ] Figma designs match implementation (if applicable)
 - [ ] Before/after screenshots captured and uploaded (for UI changes)

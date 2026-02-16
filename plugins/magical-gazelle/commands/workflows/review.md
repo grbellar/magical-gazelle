@@ -446,7 +446,7 @@ After creating all todo files, present comprehensive summary:
 | Indicator | Project Type |
 |-----------|--------------|
 | `*.xcodeproj`, `*.xcworkspace`, `Package.swift` (iOS) | iOS/macOS |
-| `Gemfile`, `package.json`, `app/views/*`, `*.html.*` | Web |
+| `pyproject.toml`, `package.json`, `templates/*`, `*.html` | Web |
 | Both iOS files AND web files | Hybrid (test both) |
 
 </detect_project_type>
@@ -469,7 +469,7 @@ After presenting the Summary Report, offer appropriate testing based on project 
 2. No - skip
 ```
 
-**For Hybrid Projects (e.g., Rails + Hotwire Native):**
+**For Hybrid Projects (e.g., Web + iOS):**
 ```markdown
 **"Want to run end-to-end tests?"**
 1. Web only - run `/test-browser`
