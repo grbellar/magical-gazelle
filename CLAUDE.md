@@ -2,6 +2,8 @@
 
 Personal fork of [compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin). AI-powered development tools for Python/TypeScript workflows.
 
+**Philosophy**: See [PHILOSOPHY.md](./PHILOSOPHY.md) for the compound engineering principles that guide this project — the main loop (Plan -> Work -> Review -> Compound), the AI development ladder, and the core belief that each unit of work should make subsequent work easier.
+
 ## Repository Structure
 
 ```
