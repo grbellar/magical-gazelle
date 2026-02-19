@@ -173,9 +173,17 @@ agent-browser snapshot -i
 ```
 
 **Step 5: Take screenshots**
+
+First, ensure the screenshots directory exists and is gitignored:
 ```bash
-agent-browser screenshot page-name.png
-agent-browser screenshot --full page-name-full.png  # Full page
+mkdir -p browser-screenshots
+grep -qxF 'browser-screenshots/' .gitignore 2>/dev/null || echo 'browser-screenshots/' >> .gitignore
+```
+
+Then take screenshots into that directory:
+```bash
+agent-browser screenshot browser-screenshots/page-name.png
+agent-browser screenshot --full browser-screenshots/page-name-full.png  # Full page
 ```
 
 </test_pages>
@@ -216,7 +224,7 @@ Did it work correctly?
 When a test fails:
 
 1. **Document the failure:**
-   - Screenshot the error state: `agent-browser screenshot error.png`
+   - Screenshot the error state: `agent-browser screenshot browser-screenshots/error.png`
    - Note the exact reproduction steps
 
 2. **Ask user how to proceed:**

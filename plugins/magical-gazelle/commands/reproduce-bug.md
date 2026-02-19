@@ -49,7 +49,8 @@ agent-browser snapshot -i
 Take screenshots at each step of reproducing the bug:
 
 ```
-agent-browser screenshot bug-[issue]-step-1.png
+mkdir -p browser-screenshots && grep -qxF 'browser-screenshots/' .gitignore 2>/dev/null || echo 'browser-screenshots/' >> .gitignore
+agent-browser screenshot browser-screenshots/bug-[issue]-step-1.png
 ```
 
 ### Step 4: Follow User Flow
@@ -77,7 +78,7 @@ When you reproduce the bug:
 3. Document the exact steps that triggered it
 
 ```
-agent-browser screenshot bug-[issue]-reproduced.png
+agent-browser screenshot browser-screenshots/bug-[issue]-reproduced.png
 ```
 
 ## Phase 3: Document Findings

@@ -66,22 +66,23 @@ Recommended viewport sizes for reference:
 1. First, get element references with `agent-browser snapshot -i`
 2. Find the ref for your target element (e.g., @e1, @e2)
 3. Use `agent-browser scrollintoview @e1` to focus on specific elements
-4. Take screenshot: `agent-browser screenshot output.png`
+4. Ensure dir exists: `mkdir -p browser-screenshots && grep -qxF 'browser-screenshots/' .gitignore 2>/dev/null || echo 'browser-screenshots/' >> .gitignore`
+5. Take screenshot: `agent-browser screenshot browser-screenshots/output.png`
 
 ### Viewport Screenshots
 
 For focused screenshots:
 1. Use `agent-browser scrollintoview @e1` to scroll element into view
-2. Take viewport screenshot: `agent-browser screenshot output.png`
+2. Take viewport screenshot: `agent-browser screenshot browser-screenshots/output.png`
 
 ### Example Workflow
 
 ```bash
 1. agent-browser open [url]
 2. agent-browser snapshot -i  # Get refs
-3. agent-browser screenshot output.png
+3. agent-browser screenshot browser-screenshots/output.png
 4. [analyze and implement changes]
-5. agent-browser screenshot output-v2.png
+5. agent-browser screenshot browser-screenshots/output-v2.png
 6. [repeat...]
 ```
 

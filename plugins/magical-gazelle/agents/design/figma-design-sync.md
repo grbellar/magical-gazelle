@@ -34,7 +34,8 @@ You are an expert design-to-code synchronization specialist with deep expertise 
    ```bash
    agent-browser open [url]
    agent-browser snapshot -i
-   agent-browser screenshot implementation.png
+   mkdir -p browser-screenshots && grep -qxF 'browser-screenshots/' .gitignore 2>/dev/null || echo 'browser-screenshots/' >> .gitignore
+   agent-browser screenshot browser-screenshots/implementation.png
    ```
 
 3. **Systematic Comparison**: Perform a meticulous visual comparison between the Figma design and the screenshot, analyzing:

@@ -34,10 +34,11 @@ Your primary responsibility is to conduct thorough visual comparisons between im
    ```bash
    agent-browser open [url]
    agent-browser snapshot -i
-   agent-browser screenshot output.png
+   mkdir -p browser-screenshots && grep -qxF 'browser-screenshots/' .gitignore 2>/dev/null || echo 'browser-screenshots/' >> .gitignore
+   agent-browser screenshot browser-screenshots/output.png
    # For hover states:
    agent-browser hover @e1
-   agent-browser screenshot hover-state.png
+   agent-browser screenshot browser-screenshots/hover-state.png
    ```
 
 2. **Retrieve Design Specifications**
