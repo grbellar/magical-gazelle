@@ -76,10 +76,12 @@ Run these agents **in parallel** to gather local context:
 
 - Task repo-research-analyst(feature_description)
 - Task learnings-researcher(feature_description)
+- Task test-plan-analyst(feature_description) — plan mode: scans codebase for test infrastructure, maps affected code to test files, proposes specific test cases
 
 **What to look for:**
 - **Repo research:** existing patterns, CLAUDE.md guidance, technology familiarity, pattern consistency
 - **Learnings:** documented solutions in `docs/solutions/` that might apply (gotchas, patterns, lessons learned)
+- **Test plan:** test framework/conventions used, existing test files for affected code, specific test cases to write, edge cases grounded in actual code patterns
 
 These findings inform the next step.
 
@@ -114,6 +116,7 @@ After all research steps complete, consolidate findings:
 
 - Document relevant file paths from repo research (e.g., `app/services/example_service.py:42`)
 - **Include relevant institutional learnings** from `docs/solutions/` (key insights, gotchas to avoid)
+- **Use test-plan-analyst output to populate the Testing section** of the chosen template (must-test items, edge cases, affected existing tests)
 - Note external documentation URLs and best practices (if external research was done)
 - List related issues or PRs discovered
 - Capture CLAUDE.md conventions
@@ -157,10 +160,16 @@ After planning the issue structure, run SpecFlow Analyzer to validate and refine
 - [ ] Review SpecFlow analysis results
 - [ ] Incorporate any identified gaps or edge cases into the issue
 - [ ] Update acceptance criteria based on SpecFlow findings
+- [ ] Feed edge cases into the Testing section (see templates below)
 
 ### 4. Choose Implementation Detail Level
 
 Select how comprehensive you want the issue to be, simpler is mostly better.
+
+**Testing section is required in all levels.** Every plan introduces functionality or fixes behavior — identify the specific tests needed. The only exception is pure documentation or configuration changes with no runtime behavior. When populating the Testing section:
+- List the core behaviors that must have tests (happy paths, key workflows)
+- List edge cases specific to this change (not generic testing advice)
+- For bug fixes: include a test that reproduces the bug and verifies the fix
 
 #### MINIMAL (Quick Issue)
 
@@ -194,6 +203,11 @@ date: YYYY-MM-DD
 ## Context
 
 [Any critical information]
+
+## Testing
+
+- [ ] [Key behavior that must be tested]
+- [ ] [Edge case specific to this change]
 
 ## MVP
 
@@ -258,7 +272,18 @@ date: YYYY-MM-DD
 
 - [ ] Detailed requirement 1
 - [ ] Detailed requirement 2
-- [ ] Testing requirements
+
+## Testing
+
+### Must Test
+
+- [ ] [Core functionality that must have tests]
+- [ ] [Another key behavior]
+
+### Edge Cases
+
+- [ ] [Edge case specific to this feature]
+- [ ] [Boundary condition or failure mode]
 
 ## Success Metrics
 
@@ -354,6 +379,23 @@ date: YYYY-MM-DD
 - [ ] Performance targets
 - [ ] Security requirements
 - [ ] Accessibility standards
+
+## Testing
+
+### Must Test
+
+- [ ] [Core functionality that must have tests]
+- [ ] [Another key behavior]
+
+### Edge Cases
+
+- [ ] [Edge case specific to this feature]
+- [ ] [Boundary condition or failure mode]
+- [ ] [Concurrency or timing scenario, if applicable]
+
+### Affected Existing Tests
+
+- [List any existing test files that may need updating]
 
 ### Quality Gates
 
@@ -457,7 +499,7 @@ def process_user(self, *, user):
 - [ ] Account for accelerated development with AI pair programming
 - [ ] Include prompts or instructions that worked well during research
 - [ ] Note which AI tools were used for initial exploration (Claude, Copilot, etc.)
-- [ ] Emphasize comprehensive testing given rapid implementation
+- [ ] Ensure Testing section covers edge cases given rapid implementation
 - [ ] Document any AI-generated code that needs human review
 
 ### 6. Final Review & Submission

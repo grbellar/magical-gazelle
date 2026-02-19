@@ -78,7 +78,7 @@ This command takes a work document (plan, specification, or todo file) and execu
    - Use TodoWrite to break plan into actionable tasks
    - Include dependencies between tasks
    - Prioritize based on what needs to be done first
-   - Include testing and quality check tasks
+   - **Create a dedicated test task for each item in the plan's Testing section** (Must Test + Edge Cases)
    - Keep tasks specific and completable
 
 ### Phase 2: Execute
@@ -93,7 +93,7 @@ This command takes a work document (plan, specification, or todo file) and execu
      - Read any referenced files from the plan
      - Look for similar patterns in codebase
      - Implement following existing conventions
-     - Write tests for new functionality
+     - Write tests (cover plan's Testing section items + any new behavior)
      - Run tests after changes
      - Mark task as completed in TodoWrite
      - Mark off the corresponding checkbox in the plan file ([ ] → [x])
@@ -139,11 +139,12 @@ This command takes a work document (plan, specification, or todo file) and execu
    - Follow project coding standards (see CLAUDE.md)
    - When in doubt, grep for similar implementations
 
-4. **Test Continuously**
-   - Run relevant tests after each significant change
-   - Don't wait until the end to test
+4. **Write and Run Tests**
+   - **Always write tests for new functionality** — this is not optional. If the plan has a Testing section, implement every test listed there. If the plan lacks a Testing section, identify and write tests yourself.
+   - Write tests alongside implementation, not after. When you implement a service, write its tests in the same task before moving on.
+   - Run the full relevant test suite after each significant change
    - Fix failures immediately
-   - Add new tests for new functionality
+   - For bug fixes: write the failing test first, then fix the bug
 
 5. **Figma Design Sync** (if applicable)
 
@@ -181,6 +182,7 @@ This command takes a work document (plan, specification, or todo file) and execu
 
 3. **Final Validation**
    - All TodoWrite tasks marked completed
+   - All items in the plan's Testing section have corresponding tests
    - All tests pass
    - Linting passes
    - Code follows existing patterns
@@ -228,9 +230,10 @@ This command takes a work document (plan, specification, or todo file) and execu
    **Step 2: Capture screenshots with agent-browser CLI**
 
    ```bash
+   mkdir -p browser-screenshots && grep -qxF 'browser-screenshots/' .gitignore 2>/dev/null || echo 'browser-screenshots/' >> .gitignore
    agent-browser open http://localhost:[port]/[route]
    agent-browser snapshot -i
-   agent-browser screenshot output.png
+   agent-browser screenshot browser-screenshots/output.png
    ```
 
    See the `agent-browser` skill for detailed usage.
@@ -240,7 +243,7 @@ This command takes a work document (plan, specification, or todo file) and execu
    ```bash
    skill: imgup
    # Then upload each screenshot:
-   imgup -h pixhost screenshot.png  # pixhost works without API key
+   imgup -h pixhost browser-screenshots/output.png  # pixhost works without API key
    # Alternative hosts: catbox, imagebin, beeimg
    ```
 
@@ -396,16 +399,16 @@ See the `orchestrating-swarms` skill for detailed swarm patterns and best practi
 - Load those references and follow them
 - Don't reinvent - match what exists
 
-### Test As You Go
+### Tests Ship With Features
 
-- Run tests after each change, not at the end
-- Fix failures immediately
-- Continuous testing prevents big surprises
+- Every new behavior gets a test — write tests alongside implementation, not after
+- Use the plan's Testing section as your checklist: implement every must-test and edge case listed
+- For bug fixes: write the failing test first, then fix the code
+- Run tests after each change, fix failures immediately
 
 ### Quality is Built In
 
 - Follow existing patterns
-- Write tests for new code
 - Run linting before pushing
 - Use reviewer agents for complex/risky changes only
 
@@ -421,6 +424,7 @@ Before creating PR, verify:
 
 - [ ] All clarifying questions asked and answered
 - [ ] All TodoWrite tasks marked completed
+- [ ] Tests written for all new functionality (plan's Testing section fully covered)
 - [ ] Tests pass (run project's test command)
 - [ ] Linting passes (run linter per CLAUDE.md)
 - [ ] Code follows existing patterns
@@ -447,7 +451,7 @@ For most features: tests + linting + following patterns is sufficient.
 - **Analysis paralysis** - Don't overthink, read the plan and execute
 - **Skipping clarifying questions** - Ask now, not after building wrong thing
 - **Ignoring plan references** - The plan has links for a reason
-- **Testing at the end** - Test continuously or suffer later
+- **Skipping tests or deferring them** - Write tests alongside implementation, not after
 - **Forgetting TodoWrite** - Track progress or lose track of what's done
 - **80% done syndrome** - Finish the feature, don't move on early
 - **Over-reviewing simple changes** - Save reviewer agents for complex work

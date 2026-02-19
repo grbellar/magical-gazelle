@@ -79,6 +79,7 @@ Additionally, always run these regardless of settings:
 
 - Task agent-native-reviewer(PR content) - Verify new features are agent-accessible
 - Task learnings-researcher(PR content) - Search docs/solutions/ for past issues related to this PR's modules and patterns
+- Task test-plan-analyst(PR diff) - Review mode: verify changed behavior has corresponding tests, flag coverage gaps
 
 </parallel_tasks>
 
@@ -474,3 +475,4 @@ Any **🔴 P1 (CRITICAL)** findings must be addressed before merging the PR. Pre
 ```
 
 ```
+````

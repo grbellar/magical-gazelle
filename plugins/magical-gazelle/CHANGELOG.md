@@ -5,6 +5,24 @@ All notable changes to the magical-gazelle plugin will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-02-19
+
+### Added
+
+- New `test-plan-analyst` research agent — scans codebases to identify specific tests needed for proposed changes (plan mode) or verify test coverage gaps (review mode)
+- Testing section added to all plan templates (MINIMAL, MORE, A LOT) in workflows:plan
+- test-plan-analyst integrated into workflows:plan Step 1 (parallel local research)
+- test-plan-analyst integrated into workflows:review (always-run agents)
+
+### Changed
+
+- workflows:plan now requires a Testing section in all plan levels with specific test cases and edge cases
+- workflows:plan SpecFlow step now feeds edge cases into the Testing section
+- workflows:work "Test Continuously" rewritten as "Write and Run Tests" — test writing is non-optional and plan-driven
+- workflows:work "Test As You Go" principle renamed to "Tests Ship With Features"
+- workflows:work Quality Checklist now requires plan's Testing section to be fully covered
+- workflows:work Final Validation checks all plan Testing items have corresponding tests
+
 ## [3.0.1] - 2026-02-17
 
 ### Changed

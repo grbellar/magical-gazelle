@@ -6,7 +6,7 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 | Component   | Count |
 | ----------- | ----- |
-| Agents      | 24    |
+| Agents      | 25    |
 | Commands    | 21    |
 | Skills      | 16    |
 | MCP Servers | 1     |
@@ -32,15 +32,16 @@ Agents are organized into categories for easier discovery.
 | `performance-oracle`             | Performance analysis and optimization                                |
 | `security-sentinel`              | Security audits and vulnerability assessments                        |
 
-### Research (5)
+### Research (6)
 
-| Agent                       | Description                                                |
-| --------------------------- | ---------------------------------------------------------- |
-| `best-practices-researcher` | Gather external best practices and examples                |
-| `framework-docs-researcher` | Research framework documentation and best practices        |
-| `git-history-analyzer`      | Analyze git history and code evolution                     |
-| `learnings-researcher`      | Search institutional learnings for relevant past solutions |
-| `repo-research-analyst`     | Research repository structure and conventions              |
+| Agent                       | Description                                                           |
+| --------------------------- | --------------------------------------------------------------------- |
+| `best-practices-researcher` | Gather external best practices and examples                           |
+| `framework-docs-researcher` | Research framework documentation and best practices                   |
+| `git-history-analyzer`      | Analyze git history and code evolution                                |
+| `learnings-researcher`      | Search institutional learnings for relevant past solutions            |
+| `repo-research-analyst`     | Research repository structure and conventions                         |
+| `test-plan-analyst`         | Scan codebase to identify tests needed for proposed changes or review |
 
 ### Design (3)
 
