@@ -12,7 +12,7 @@
     {
       "name": "magical-gazelle",
       "description": "AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last. Includes 25 specialized agents, 21 commands, and 16 skills.",
-      "version": "3.1.0",
+      "version": "3.1.1",
       "author": {
         "name": "Grant Bellar",
         "url": "https://github.com/grbellar"
