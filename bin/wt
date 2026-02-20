@@ -259,7 +259,7 @@ echo ""
 # Start the dev server in the background, capturing its output too
 echo ""
 echo "Starting dev server in background..."
-rm -f "$WORKTREE_DIR/.dev-port"
+rm -f "$WORKTREE_DIR/.dev-port" "$WORKTREE_DIR/.start-log"
 (cd "$WORKTREE_DIR" && bash worktree-start.sh) >> "$WORKTREE_DIR/.start-log" 2>&1 &
 
 # Wait until the server signals it's ready
