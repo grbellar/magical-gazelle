@@ -72,7 +72,26 @@ if [ "$MODE" = "clean" ]; then
     -h "$SB_HOST" -p "$SB_PORT" -U "$SB_USER" -d postgres \
     -tAc "SELECT id FROM storage.buckets WHERE id LIKE 'all-files-%'")
 
-  # Find orphaned git worktrees (directories named django-* that aren't registered)
+  # Find worktrees whose branch has been merged into dev
+  STALE_WORKTREES=()
+  current_wt=""
+  while IFS= read -r line; do
+    case "$line" in
+      worktree\ *)
+        current_wt="${line#worktree }"
+        ;;
+      branch\ *)
+        if [ "$current_wt" != "$REPO_ROOT" ]; then
+          branch="${line#branch refs/heads/}"
+          if git merge-base --is-ancestor "$branch" dev 2>/dev/null; then
+            STALE_WORKTREES+=("$current_wt")
+          fi
+        fi
+        ;;
+    esac
+  done < <(git worktree list --porcelain)
+
+  # Find unregistered sibling dirs
   REGISTERED_DIRS=$(git worktree list --porcelain | grep '^worktree ' | awk '{print $2}')
 
   ORPHAN_DBS=()
@@ -82,7 +101,7 @@ if [ "$MODE" = "clean" ]; then
   for db in $ALL_DBS; do
     slug="${db#wt_}"
     found=false
-    for active in "${ACTIVE_SLUGS[@]}"; do
+    for active in ${ACTIVE_SLUGS[@]+"${ACTIVE_SLUGS[@]}"}; do
       [ "$slug" = "$active" ] && found=true && break
     done
     $found || ORPHAN_DBS+=("$db")
@@ -91,7 +110,7 @@ if [ "$MODE" = "clean" ]; then
   for bucket in $ALL_BUCKETS; do
     slug="${bucket#all-files-}"
     found=false
-    for active in "${ACTIVE_SLUGS[@]}"; do
+    for active in ${ACTIVE_SLUGS[@]+"${ACTIVE_SLUGS[@]}"}; do
       [ "$slug" = "$active" ] && found=true && break
     done
     $found || ORPHAN_BUCKETS+=("$bucket")
@@ -107,28 +126,29 @@ if [ "$MODE" = "clean" ]; then
     fi
   done
 
-  if [ ${#ORPHAN_DBS[@]} -eq 0 ] && [ ${#ORPHAN_BUCKETS[@]} -eq 0 ] && [ ${#ORPHAN_DIRS[@]} -eq 0 ]; then
+  if [ ${#ORPHAN_DBS[@]} -eq 0 ] && [ ${#ORPHAN_BUCKETS[@]} -eq 0 ] && [ ${#ORPHAN_DIRS[@]} -eq 0 ] && [ ${#STALE_WORKTREES[@]} -eq 0 ]; then
     echo "  Nothing to clean up."
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     exit 0
   fi
 
   echo ""
-  [ ${#ORPHAN_DBS[@]} -gt 0 ]      && printf '  databases : %s\n' "${ORPHAN_DBS[@]}"
-  [ ${#ORPHAN_BUCKETS[@]} -gt 0 ]  && printf '  buckets   : %s\n' "${ORPHAN_BUCKETS[@]}"
-  [ ${#ORPHAN_DIRS[@]} -gt 0 ]     && printf '  dirs      : %s\n' "${ORPHAN_DIRS[@]}"
+  [ ${#ORPHAN_DBS[@]} -gt 0 ]      && printf '  databases : %s\n' "${ORPHAN_DBS[@]}" || true
+  [ ${#ORPHAN_BUCKETS[@]} -gt 0 ]  && printf '  buckets   : %s\n' "${ORPHAN_BUCKETS[@]}" || true
+  [ ${#ORPHAN_DIRS[@]} -gt 0 ]     && printf '  dirs      : %s\n' "${ORPHAN_DIRS[@]}" || true
+  [ ${#STALE_WORKTREES[@]} -gt 0 ] && printf '  worktrees : %s\n' "${STALE_WORKTREES[@]}" || true
   echo ""
   read -r -p "Delete all of the above? [y/N] " confirm
   [[ "$confirm" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 0; }
 
-  for db in "${ORPHAN_DBS[@]}"; do
+  for db in ${ORPHAN_DBS[@]+"${ORPHAN_DBS[@]}"}; do
     echo "→ Dropping database '$db'..."
     PGPASSWORD="$SB_PASS" psql \
       -h "$SB_HOST" -p "$SB_PORT" -U "$SB_USER" -d postgres \
       -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE);" > /dev/null
   done
 
-  for bucket in "${ORPHAN_BUCKETS[@]}"; do
+  for bucket in ${ORPHAN_BUCKETS[@]+"${ORPHAN_BUCKETS[@]}"}; do
     echo "→ Deleting bucket '$bucket'..."
     PGPASSWORD="$SB_PASS" psql \
       -h "$SB_HOST" -p "$SB_PORT" -U "$SB_USER" -d postgres \
@@ -138,9 +158,15 @@ DELETE FROM storage.buckets WHERE id = '$bucket';
 SQL
   done
 
-  for dir in "${ORPHAN_DIRS[@]}"; do
+  for dir in ${ORPHAN_DIRS[@]+"${ORPHAN_DIRS[@]}"}; do
     echo "→ Removing directory '$dir'..."
     rm -rf "$dir"
+  done
+
+  for wt in ${STALE_WORKTREES[@]+"${STALE_WORKTREES[@]}"}; do
+    echo "→ Removing worktree '$wt'..."
+    pgrep -f "$wt" | xargs kill 2>/dev/null || true
+    git worktree remove --force "$wt"
   done
 
   echo ""
@@ -153,13 +179,20 @@ WORKTREE_DIR="$(dirname "$REPO_ROOT")/${REPO_NAME}-${SLUG}"
 
 # ── rm: tear down DB/bucket then remove the git worktree ────────────────────
 if [ "$MODE" = "rm" ]; then
+  # If not found, try stripping repo name prefix (e.g. "django-testtt" → "testtt")
   if [ ! -d "$WORKTREE_DIR" ]; then
-    echo "Error: worktree not found at $WORKTREE_DIR"
-    exit 1
+    STRIPPED=$(echo "$BRANCH" | sed "s/^${REPO_NAME}-//")
+    ALT_SLUG=$(echo "$STRIPPED" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-|-$//g')
+    ALT_DIR="$(dirname "$REPO_ROOT")/${REPO_NAME}-${ALT_SLUG}"
+    if [ -d "$ALT_DIR" ]; then
+      WORKTREE_DIR="$ALT_DIR"
+    else
+      echo "Error: worktree not found at $WORKTREE_DIR"
+      exit 1
+    fi
   fi
-  (cd "$WORKTREE_DIR" && bash worktree-teardown.sh)
-  echo ""
   echo "→ Removing git worktree..."
+  pgrep -f "$WORKTREE_DIR" | xargs kill 2>/dev/null || true
   git worktree remove --force "$WORKTREE_DIR"
   echo "✓ Worktree removed"
   exit 0
