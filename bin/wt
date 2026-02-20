@@ -6,7 +6,7 @@
 #   wt c <branch>        create worktree and open Claude Code
 #   wt o <branch>        create worktree and open Codex
 #   wt rm <branch>       tear down worktree (DB, bucket, git worktree)
-#   wt garbage           find and delete orphaned DBs, buckets, and worktrees
+#   wt clean             find and delete orphaned DBs, buckets, and worktrees
 set -euo pipefail
 
 SB_HOST="127.0.0.1"
@@ -19,12 +19,12 @@ BRANCH=""
 
 case $# in
   0)
-    echo "Usage: wt [c|o|rm|garbage] <branch-name>"
+    echo "Usage: wt [c|o|rm|clean] <branch-name>"
     exit 1
     ;;
   1)
-    if [ "$1" = "garbage" ]; then
-      MODE="garbage"
+    if [ "$1" = "clean" ]; then
+      MODE="clean"
     else
       BRANCH="$1"
     fi
@@ -33,11 +33,11 @@ case $# in
     case "$1" in
       c|o) MODE="$1"; BRANCH="$2" ;;
       rm)  MODE="rm"; BRANCH="$2" ;;
-      *) echo "Unknown mode '$1'. Use 'c', 'o', 'rm', or 'garbage'."; exit 1 ;;
+      *) echo "Unknown mode '$1'. Use 'c', 'o', 'rm', or 'clean'."; exit 1 ;;
     esac
     ;;
   *)
-    echo "Usage: wt [c|o|rm|garbage] <branch-name>"
+    echo "Usage: wt [c|o|rm|clean] <branch-name>"
     exit 1
     ;;
 esac
@@ -50,9 +50,9 @@ fi
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_NAME=$(basename "$REPO_ROOT")
 
-# ── garbage: find and remove orphaned DBs, buckets, and worktrees ────────────
-if [ "$MODE" = "garbage" ]; then
-  echo "━━━ Taking out the garbage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+# ── clean: find and remove orphaned DBs, buckets, and worktrees ──────────────
+if [ "$MODE" = "clean" ]; then
+  echo "━━━ Cleaning up ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
   # Build set of slugs for all active worktrees (underscore form for DB/bucket)
   ACTIVE_SLUGS=()
@@ -144,7 +144,7 @@ SQL
   done
 
   echo ""
-  echo "━━━ Garbage collected ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "━━━ Clean complete ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   exit 0
 fi
 
@@ -218,7 +218,7 @@ case "$MODE" in
     exec claude --dangerously-skip-permissions --model claude-opus-4-6 "$CONTEXT"
     ;;
   o)
-    echo "Opening Codex (codex-5.3)..."
-    exec codex --model codex-5.3 "$CONTEXT"
+    echo "Opening Codex (gpt-codex-5.3)..."
+    exec codex --model gpt-codex-5.3 "$CONTEXT"
     ;;
 esac
