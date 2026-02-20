@@ -5,6 +5,14 @@ All notable changes to the magical-gazelle plugin will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-02-20
+
+### Added
+
+- New `ui-auditor` design agent — audits running web apps for UI inconsistencies (spacing, typography, alignment, visual hierarchy, color/contrast, overflow, consistency) against an opinionated best practice rubric
+- New `ui-audit` skill — slash command entry point (`/ui-audit <url>`) with support for responsive audits, custom wait times, and design-iterator handoff for fixes
+- UI audit rubric reference file with 8 categories, severity levels, and specific checks grounded in WCAG 2.1, 8pt grid, Gestalt principles, and Nielsen's heuristics
+
 ## [3.1.2] - 2026-02-20
 
 ### Changed

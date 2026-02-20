@@ -6,9 +6,9 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 | Component   | Count |
 | ----------- | ----- |
-| Agents      | 25    |
+| Agents      | 26    |
 | Commands    | 21    |
-| Skills      | 16    |
+| Skills      | 17    |
 | MCP Servers | 1     |
 
 ## Agents
@@ -43,13 +43,14 @@ Agents are organized into categories for easier discovery.
 | `repo-research-analyst`     | Research repository structure and conventions                         |
 | `test-plan-analyst`         | Scan codebase to identify tests needed for proposed changes or review |
 
-### Design (3)
+### Design (4)
 
-| Agent                            | Description                                                |
-| -------------------------------- | ---------------------------------------------------------- |
-| `design-implementation-reviewer` | Verify UI implementations match Figma designs              |
-| `design-iterator`                | Iteratively refine UI through systematic design iterations |
-| `figma-design-sync`              | Synchronize web implementations with Figma designs         |
+| Agent                            | Description                                                          |
+| -------------------------------- | -------------------------------------------------------------------- |
+| `design-implementation-reviewer` | Verify UI implementations match Figma designs                        |
+| `design-iterator`                | Iteratively refine UI through systematic design iterations           |
+| `figma-design-sync`              | Synchronize web implementations with Figma designs                   |
+| `ui-auditor`                     | Audit running apps for UI inconsistencies against best practice rubric |
 
 ### Workflow (4)
 
@@ -99,9 +100,10 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 
 ### Architecture & Design
 
-| Skill                       | Description                                      |
-| --------------------------- | ------------------------------------------------ |
-| `agent-native-architecture` | Build AI agents using prompt-native architecture |
+| Skill                       | Description                                                  |
+| --------------------------- | ------------------------------------------------------------ |
+| `agent-native-architecture` | Build AI agents using prompt-native architecture             |
+| `ui-audit`                  | Audit running apps for UI inconsistencies and best practices |
 
 ### Development Tools
 
