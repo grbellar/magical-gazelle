@@ -260,7 +260,7 @@ echo ""
 echo ""
 echo "Starting dev server in background..."
 rm -f "$WORKTREE_DIR/.dev-port"
-(cd "$WORKTREE_DIR" && bash worktree-start.sh) 2>&1 | tee "$WORKTREE_DIR/.start-log" &
+(cd "$WORKTREE_DIR" && bash worktree-start.sh) >> "$WORKTREE_DIR/.start-log" 2>&1 &
 
 # Wait until the server signals it's ready
 until [ -f "$WORKTREE_DIR/.dev-port" ]; do
@@ -273,6 +273,7 @@ echo "Dev server ready — http://127.0.0.1:$PORT/"
 CONTEXT="Worktree setup complete for branch '$BRANCH'.
 
 Dev server is running at http://127.0.0.1:$PORT/
+Dev server logs: tail -f .start-log
 To sign in: navigate to /accounts/login/ and click 'Dev sign in (admin@admin.com)'.
 
 === Setup output ===
