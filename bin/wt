@@ -1,0 +1,224 @@
+#!/usr/bin/env bash
+# wt — manage isolated git worktrees
+#
+# Usage:
+#   wt <branch>          create worktree and open Claude Code (default)
+#   wt c <branch>        create worktree and open Claude Code
+#   wt o <branch>        create worktree and open Codex
+#   wt rm <branch>       tear down worktree (DB, bucket, git worktree)
+#   wt garbage           find and delete orphaned DBs, buckets, and worktrees
+set -euo pipefail
+
+SB_HOST="127.0.0.1"
+SB_PORT="54322"
+SB_USER="postgres"
+SB_PASS="postgres"
+
+MODE="c"
+BRANCH=""
+
+case $# in
+  0)
+    echo "Usage: wt [c|o|rm|garbage] <branch-name>"
+    exit 1
+    ;;
+  1)
+    if [ "$1" = "garbage" ]; then
+      MODE="garbage"
+    else
+      BRANCH="$1"
+    fi
+    ;;
+  2)
+    case "$1" in
+      c|o) MODE="$1"; BRANCH="$2" ;;
+      rm)  MODE="rm"; BRANCH="$2" ;;
+      *) echo "Unknown mode '$1'. Use 'c', 'o', 'rm', or 'garbage'."; exit 1 ;;
+    esac
+    ;;
+  *)
+    echo "Usage: wt [c|o|rm|garbage] <branch-name>"
+    exit 1
+    ;;
+esac
+
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+  echo "Error: not a git repository"
+  exit 1
+fi
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+REPO_NAME=$(basename "$REPO_ROOT")
+
+# ── garbage: find and remove orphaned DBs, buckets, and worktrees ────────────
+if [ "$MODE" = "garbage" ]; then
+  echo "━━━ Taking out the garbage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+  # Build set of slugs for all active worktrees (underscore form for DB/bucket)
+  ACTIVE_SLUGS=()
+  while IFS= read -r line; do
+    branch="${line#branch refs/heads/}"
+    slug=$(echo "$branch" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/_/g' | sed -E 's/^_|_$//g')
+    ACTIVE_SLUGS+=("$slug")
+  done < <(git worktree list --porcelain | grep '^branch ')
+
+  # Find all wt_* databases
+  ALL_DBS=$(PGPASSWORD="$SB_PASS" psql \
+    -h "$SB_HOST" -p "$SB_PORT" -U "$SB_USER" -d postgres \
+    -tAc "SELECT datname FROM pg_database WHERE datname LIKE 'wt_%'")
+
+  # Find all all-files-* buckets
+  ALL_BUCKETS=$(PGPASSWORD="$SB_PASS" psql \
+    -h "$SB_HOST" -p "$SB_PORT" -U "$SB_USER" -d postgres \
+    -tAc "SELECT id FROM storage.buckets WHERE id LIKE 'all-files-%'")
+
+  # Find orphaned git worktrees (directories named django-* that aren't registered)
+  REGISTERED_DIRS=$(git worktree list --porcelain | grep '^worktree ' | awk '{print $2}')
+
+  ORPHAN_DBS=()
+  ORPHAN_BUCKETS=()
+  ORPHAN_DIRS=()
+
+  for db in $ALL_DBS; do
+    slug="${db#wt_}"
+    found=false
+    for active in "${ACTIVE_SLUGS[@]}"; do
+      [ "$slug" = "$active" ] && found=true && break
+    done
+    $found || ORPHAN_DBS+=("$db")
+  done
+
+  for bucket in $ALL_BUCKETS; do
+    slug="${bucket#all-files-}"
+    found=false
+    for active in "${ACTIVE_SLUGS[@]}"; do
+      [ "$slug" = "$active" ] && found=true && break
+    done
+    $found || ORPHAN_BUCKETS+=("$bucket")
+  done
+
+  # Check for sibling dirs matching django-* that aren't registered worktrees
+  PARENT=$(dirname "$REPO_ROOT")
+  for dir in "$PARENT"/"$REPO_NAME"-*/; do
+    [ -d "$dir" ] || continue
+    dir="${dir%/}"
+    if ! echo "$REGISTERED_DIRS" | grep -qF "$dir"; then
+      ORPHAN_DIRS+=("$dir")
+    fi
+  done
+
+  if [ ${#ORPHAN_DBS[@]} -eq 0 ] && [ ${#ORPHAN_BUCKETS[@]} -eq 0 ] && [ ${#ORPHAN_DIRS[@]} -eq 0 ]; then
+    echo "  Nothing to clean up."
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    exit 0
+  fi
+
+  echo ""
+  [ ${#ORPHAN_DBS[@]} -gt 0 ]      && printf '  databases : %s\n' "${ORPHAN_DBS[@]}"
+  [ ${#ORPHAN_BUCKETS[@]} -gt 0 ]  && printf '  buckets   : %s\n' "${ORPHAN_BUCKETS[@]}"
+  [ ${#ORPHAN_DIRS[@]} -gt 0 ]     && printf '  dirs      : %s\n' "${ORPHAN_DIRS[@]}"
+  echo ""
+  read -r -p "Delete all of the above? [y/N] " confirm
+  [[ "$confirm" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 0; }
+
+  for db in "${ORPHAN_DBS[@]}"; do
+    echo "→ Dropping database '$db'..."
+    PGPASSWORD="$SB_PASS" psql \
+      -h "$SB_HOST" -p "$SB_PORT" -U "$SB_USER" -d postgres \
+      -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE);" > /dev/null
+  done
+
+  for bucket in "${ORPHAN_BUCKETS[@]}"; do
+    echo "→ Deleting bucket '$bucket'..."
+    PGPASSWORD="$SB_PASS" psql \
+      -h "$SB_HOST" -p "$SB_PORT" -U "$SB_USER" -d postgres \
+      -v ON_ERROR_STOP=0 <<SQL > /dev/null
+DELETE FROM storage.objects WHERE bucket_id = '$bucket';
+DELETE FROM storage.buckets WHERE id = '$bucket';
+SQL
+  done
+
+  for dir in "${ORPHAN_DIRS[@]}"; do
+    echo "→ Removing directory '$dir'..."
+    rm -rf "$dir"
+  done
+
+  echo ""
+  echo "━━━ Garbage collected ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  exit 0
+fi
+
+SLUG=$(echo "$BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-|-$//g')
+WORKTREE_DIR="$(dirname "$REPO_ROOT")/${REPO_NAME}-${SLUG}"
+
+# ── rm: tear down DB/bucket then remove the git worktree ────────────────────
+if [ "$MODE" = "rm" ]; then
+  if [ ! -d "$WORKTREE_DIR" ]; then
+    echo "Error: worktree not found at $WORKTREE_DIR"
+    exit 1
+  fi
+  (cd "$WORKTREE_DIR" && bash worktree-teardown.sh)
+  echo ""
+  echo "→ Removing git worktree..."
+  git worktree remove --force "$WORKTREE_DIR"
+  echo "✓ Worktree removed"
+  exit 0
+fi
+
+SETUP_LOG=$(mktemp)
+
+# Create the worktree — new branch from dev first, fall back to existing branch
+echo "Creating worktree at $WORKTREE_DIR..."
+if ! git worktree add -b "$BRANCH" "$WORKTREE_DIR" dev 2>/dev/null; then
+  if ! git worktree add "$WORKTREE_DIR" "$BRANCH" 2>/dev/null; then
+    echo "Error: could not create worktree. Is this branch already checked out?"
+    exit 1
+  fi
+  echo "  Checked out existing branch '$BRANCH'"
+else
+  echo "  Created new branch '$BRANCH' from dev"
+fi
+
+# Run setup, capturing output while still printing it
+echo ""
+(cd "$WORKTREE_DIR" && bash worktree-setup.sh) 2>&1 | tee "$SETUP_LOG"
+
+# Start the dev server in the background, capturing its output too
+echo ""
+echo "Starting dev server in background..."
+rm -f "$WORKTREE_DIR/.dev-port"
+(cd "$WORKTREE_DIR" && bash worktree-start.sh) 2>&1 | tee "$WORKTREE_DIR/.start-log" &
+
+# Wait until the server signals it's ready
+until [ -f "$WORKTREE_DIR/.dev-port" ]; do
+  sleep 0.3
+done
+PORT=$(cat "$WORKTREE_DIR/.dev-port")
+echo "Dev server ready — http://127.0.0.1:$PORT/"
+
+# Build context to pass as the AI editor's initial message
+CONTEXT="Worktree setup complete for branch '$BRANCH'.
+
+Dev server is running at http://127.0.0.1:$PORT/
+To sign in: navigate to /accounts/login/ and click 'Dev sign in (admin@admin.com)'.
+
+=== Setup output ===
+$(cat "$SETUP_LOG")
+
+=== Server log ===
+$(cat "$WORKTREE_DIR/.start-log")"
+
+rm -f "$SETUP_LOG"
+
+cd "$WORKTREE_DIR"
+
+case "$MODE" in
+  c)
+    echo "Opening Claude Code (opus-4-6)..."
+    exec claude --dangerously-skip-permissions --model claude-opus-4-6 "$CONTEXT"
+    ;;
+  o)
+    echo "Opening Codex (codex-5.3)..."
+    exec codex --model codex-5.3 "$CONTEXT"
+    ;;
+esac
