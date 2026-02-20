@@ -191,6 +191,9 @@ SQL
     if [ -f "$wt/worktree-teardown.sh" ]; then
       (cd "$wt" && bash worktree-teardown.sh)
     fi
+    if [ -f "$wt/.dev-port" ]; then
+      lsof -ti :"$(cat "$wt/.dev-port")" | xargs kill 2>/dev/null || true
+    fi
     pgrep -f "$wt" | xargs kill 2>/dev/null || true
     git worktree remove --force "$wt"
     echo "→ Deleting branch '$wt_branch'..."
@@ -241,6 +244,12 @@ if [ "$MODE" = "rm" ]; then
     (cd "$WORKTREE_DIR" && bash worktree-teardown.sh)
   fi
 
+  # Kill dev server by port (most reliable), then fall back to path-based matching
+  if [ -f "$WORKTREE_DIR/.dev-port" ]; then
+    DEV_PORT=$(cat "$WORKTREE_DIR/.dev-port")
+    echo "→ Stopping dev server on port $DEV_PORT..."
+    lsof -ti :"$DEV_PORT" | xargs kill 2>/dev/null || true
+  fi
   pgrep -f "$WORKTREE_DIR" | xargs kill 2>/dev/null || true
   echo "→ Removing worktree..."
   git worktree remove --force "$WORKTREE_DIR"
