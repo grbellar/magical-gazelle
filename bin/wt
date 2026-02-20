@@ -84,6 +84,18 @@ if [ "$MODE" = "clean" ]; then
         if [ "$current_wt" != "$REPO_ROOT" ]; then
           branch="${line#branch refs/heads/}"
           if git merge-base --is-ancestor "$branch" dev 2>/dev/null; then
+            # Skip if worktree has uncommitted changes
+            if [ -n "$(git -C "$current_wt" status --porcelain 2>/dev/null)" ]; then
+              continue
+            fi
+            # Skip if processes are running in the worktree
+            if pgrep -f "$current_wt" > /dev/null 2>&1; then
+              continue
+            fi
+            # Skip if branch has unpushed commits
+            if [ -n "$(git -C "$current_wt" log @{upstream}..HEAD --oneline 2>/dev/null)" ]; then
+              continue
+            fi
             STALE_WORKTREES+=("$current_wt")
           fi
         fi
@@ -95,7 +107,8 @@ if [ "$MODE" = "clean" ]; then
   STALE_BRANCHES=()
   while IFS= read -r b; do
     b="${b#"${b%%[![:space:]]*}"}"  # trim leading whitespace
-    b="${b#\* }"                    # strip current branch marker
+    # Skip current branch (*) and branches checked out in worktrees (+)
+    case "$b" in "* "*|"+ "*) continue ;; esac
     [ "$b" = "dev" ] || [ "$b" = "main" ] || STALE_BRANCHES+=("$b")
   done < <(git branch --merged dev 2>/dev/null)
 
