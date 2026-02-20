@@ -181,12 +181,12 @@ SQL
     pgrep -f "$wt" | xargs kill 2>/dev/null || true
     git worktree remove --force "$wt"
     echo "→ Deleting branch '$wt_branch'..."
-    git branch -d "$wt_branch" 2>/dev/null || true
+    git branch -D "$wt_branch" 2>/dev/null || true
   done
 
   for b in ${STALE_BRANCHES[@]+"${STALE_BRANCHES[@]}"}; do
     echo "→ Deleting branch '$b'..."
-    git branch -d "$b" 2>/dev/null || true
+    git branch -D "$b" 2>/dev/null || true
   done
 
   echo ""
@@ -232,7 +232,7 @@ if [ "$MODE" = "rm" ]; then
   echo "→ Removing worktree..."
   git worktree remove --force "$WORKTREE_DIR"
   echo "→ Deleting branch '$WT_BRANCH'..."
-  git branch -d "$WT_BRANCH" 2>/dev/null || true
+  git branch -D "$WT_BRANCH" 2>/dev/null || true
 
   echo "✓ Done"
   exit 0
