@@ -91,6 +91,14 @@ if [ "$MODE" = "clean" ]; then
     esac
   done < <(git worktree list --porcelain)
 
+  # Find branches merged into dev (excluding dev itself and main)
+  STALE_BRANCHES=()
+  while IFS= read -r b; do
+    b="${b#"${b%%[![:space:]]*}"}"  # trim leading whitespace
+    b="${b#\* }"                    # strip current branch marker
+    [ "$b" = "dev" ] || [ "$b" = "main" ] || STALE_BRANCHES+=("$b")
+  done < <(git branch --merged dev 2>/dev/null)
+
   # Find unregistered sibling dirs
   REGISTERED_DIRS=$(git worktree list --porcelain | grep '^worktree ' | awk '{print $2}')
 
@@ -126,7 +134,7 @@ if [ "$MODE" = "clean" ]; then
     fi
   done
 
-  if [ ${#ORPHAN_DBS[@]} -eq 0 ] && [ ${#ORPHAN_BUCKETS[@]} -eq 0 ] && [ ${#ORPHAN_DIRS[@]} -eq 0 ] && [ ${#STALE_WORKTREES[@]} -eq 0 ]; then
+  if [ ${#ORPHAN_DBS[@]} -eq 0 ] && [ ${#ORPHAN_BUCKETS[@]} -eq 0 ] && [ ${#ORPHAN_DIRS[@]} -eq 0 ] && [ ${#STALE_WORKTREES[@]} -eq 0 ] && [ ${#STALE_BRANCHES[@]} -eq 0 ]; then
     echo "  Nothing to clean up."
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     exit 0
@@ -137,9 +145,10 @@ if [ "$MODE" = "clean" ]; then
   [ ${#ORPHAN_BUCKETS[@]} -gt 0 ]  && printf '  buckets   : %s\n' "${ORPHAN_BUCKETS[@]}" || true
   [ ${#ORPHAN_DIRS[@]} -gt 0 ]     && printf '  dirs      : %s\n' "${ORPHAN_DIRS[@]}" || true
   [ ${#STALE_WORKTREES[@]} -gt 0 ] && printf '  worktrees : %s\n' "${STALE_WORKTREES[@]}" || true
+  [ ${#STALE_BRANCHES[@]} -gt 0 ] && printf '  branches  : %s\n' "${STALE_BRANCHES[@]}" || true
   echo ""
-  read -r -p "Delete all of the above? [y/N] " confirm
-  [[ "$confirm" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 0; }
+  read -r -p "Delete all of the above? [yes/N] " confirm
+  [[ "$confirm" =~ ^[Yy][Ee][Ss]$ ]] || { echo "Aborted."; exit 0; }
 
   for db in ${ORPHAN_DBS[@]+"${ORPHAN_DBS[@]}"}; do
     echo "→ Dropping database '$db'..."
@@ -165,8 +174,19 @@ SQL
 
   for wt in ${STALE_WORKTREES[@]+"${STALE_WORKTREES[@]}"}; do
     echo "→ Removing worktree '$wt'..."
+    wt_branch=$(cd "$wt" && git branch --show-current)
+    if [ -f "$wt/worktree-teardown.sh" ]; then
+      (cd "$wt" && bash worktree-teardown.sh)
+    fi
     pgrep -f "$wt" | xargs kill 2>/dev/null || true
     git worktree remove --force "$wt"
+    echo "→ Deleting branch '$wt_branch'..."
+    git branch -d "$wt_branch" 2>/dev/null || true
+  done
+
+  for b in ${STALE_BRANCHES[@]+"${STALE_BRANCHES[@]}"}; do
+    echo "→ Deleting branch '$b'..."
+    git branch -d "$b" 2>/dev/null || true
   done
 
   echo ""
@@ -191,10 +211,30 @@ if [ "$MODE" = "rm" ]; then
       exit 1
     fi
   fi
-  echo "→ Removing git worktree..."
+
+  WT_BRANCH=$(cd "$WORKTREE_DIR" && git branch --show-current)
+  WT_SLUG=$(echo "$WT_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/_/g' | sed -E 's/^_|_$//g')
+
+  echo ""
+  echo "  worktree : $WORKTREE_DIR"
+  echo "  branch   : $WT_BRANCH"
+  echo "  database : wt_${WT_SLUG}"
+  echo "  bucket   : all-files-${WT_SLUG}"
+  echo ""
+  read -r -p "Delete all of the above? [yes/N] " confirm
+  [[ "$confirm" =~ ^[Yy][Ee][Ss]$ ]] || { echo "Aborted."; exit 0; }
+
+  if [ -f "$WORKTREE_DIR/worktree-teardown.sh" ]; then
+    (cd "$WORKTREE_DIR" && bash worktree-teardown.sh)
+  fi
+
   pgrep -f "$WORKTREE_DIR" | xargs kill 2>/dev/null || true
+  echo "→ Removing worktree..."
   git worktree remove --force "$WORKTREE_DIR"
-  echo "✓ Worktree removed"
+  echo "→ Deleting branch '$WT_BRANCH'..."
+  git branch -d "$WT_BRANCH" 2>/dev/null || true
+
+  echo "✓ Done"
   exit 0
 fi
 
