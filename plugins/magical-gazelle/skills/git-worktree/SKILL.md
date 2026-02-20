@@ -68,7 +68,7 @@ If neither script exists, handle setup manually (copy `.env`, install deps, etc.
 
 ## Workflow Integration
 
-### With `/workflows:work`
+### With `/mg:work`
 
 When starting feature work from the default branch, choose:
 
@@ -77,7 +77,7 @@ When starting feature work from the default branch, choose:
 
 After creating a worktree, check for `worktree-setup.sh` and run it. If not present, handle setup manually.
 
-### With `/workflows:review`
+### With `/mg:review`
 
 If already on the target branch, just review. If on a different branch with uncommitted work:
 

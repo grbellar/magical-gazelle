@@ -64,15 +64,15 @@ Agents are organized into categories for easier discovery.
 
 ### Workflow Commands
 
-Core workflow commands use `workflows:` prefix to avoid collisions with built-in commands:
+Core workflow commands use `mg:` prefix to avoid collisions with built-in commands:
 
 | Command                 | Description                                         |
 | ----------------------- | --------------------------------------------------- |
-| `/workflows:brainstorm` | Explore requirements and approaches before planning |
-| `/workflows:plan`       | Create implementation plans                         |
-| `/workflows:review`     | Run comprehensive code reviews                      |
-| `/workflows:work`       | Execute work items systematically                   |
-| `/workflows:compound`   | Document solved problems to compound team knowledge |
+| `/mg:brainstorm` | Explore requirements and approaches before planning |
+| `/mg:plan`       | Create implementation plans                         |
+| `/mg:review`     | Run comprehensive code reviews                      |
+| `/mg:work`       | Execute work items systematically                   |
+| `/mg:compound`   | Document solved problems to compound team knowledge |
 
 ### Utility Commands
 
