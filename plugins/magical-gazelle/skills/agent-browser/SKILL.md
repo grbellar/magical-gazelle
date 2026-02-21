@@ -83,6 +83,25 @@ agent-browser scroll down 500              # Scroll (up/down/left/right)
 agent-browser scrollintoview @e1           # Scroll element into view
 ```
 
+### Browser Settings
+
+```bash
+agent-browser set viewport 1440 900       # Set viewport dimensions
+agent-browser set device "iPhone 15 Pro"   # Emulate device
+agent-browser set media dark               # Dark mode
+agent-browser set media light              # Light mode
+agent-browser set geo 40.7 -74.0           # Set geolocation
+agent-browser set offline on               # Simulate offline
+```
+
+### Cookies
+
+```bash
+agent-browser cookies get                  # List all cookies
+agent-browser cookies set --name sid --value abc123 --domain localhost --path /
+agent-browser cookies clear                # Clear all cookies
+```
+
 ### Get Information
 
 ```bash
@@ -111,6 +130,48 @@ agent-browser pdf output.pdf                  # Save as PDF
 agent-browser wait @e1              # Wait for element
 agent-browser wait 2000             # Wait milliseconds
 agent-browser wait "text"           # Wait for text to appear
+```
+
+## Gotchas
+
+- **Global options go BEFORE the subcommand**: `agent-browser --headed open URL` (not `agent-browser open URL --headed`)
+- **Viewport is a setting, not a flag**: Use `agent-browser set viewport 1440 900`, not `--viewport`
+- **Always re-snapshot after navigation** or DOM changes — refs are invalidated by page updates
+- **Login redirects**: If `open` lands on a login page, use `snapshot -i` to find form elements, fill credentials, and click submit
+
+## Authentication Patterns
+
+### Login form
+
+```bash
+agent-browser open http://localhost:3000
+agent-browser snapshot -i                    # Find login form refs
+agent-browser fill @e1 "user@example.com"    # Email field
+agent-browser fill @e2 "password"            # Password field
+agent-browser click @e3                      # Submit button
+agent-browser wait 2000
+agent-browser snapshot -i                    # Verify logged in
+```
+
+### Cookies (bypass login)
+
+```bash
+agent-browser open http://localhost:3000
+agent-browser cookies set --name sessionid --value abc123 --domain localhost --path /
+agent-browser reload                         # Reload with cookie
+```
+
+### Auth headers
+
+```bash
+agent-browser --headers '{"Authorization": "Bearer token123"}' open http://localhost:3000
+```
+
+### Persistent sessions (auto-save/restore state)
+
+```bash
+agent-browser --session-name myapp open http://localhost:3000
+# State (cookies, localStorage) persists across runs
 ```
 
 ## Semantic Locators (Alternative to Refs)

@@ -39,7 +39,7 @@ The audit evaluates 8 categories of UI quality. For the full checklist with seve
 
 ## Workflow
 
-1. **Open URL** with agent-browser. Wait for page readiness.
+1. **Open URL** with agent-browser. If redirected to a login page, use `snapshot -i` to find login elements, click through, and verify the target page loads. Set viewport with `agent-browser set viewport 1440 900`.
 2. **Capture screenshots** at desktop (1440x900). If `--responsive`, also at mobile and tablet.
 3. **Take accessibility snapshot** for DOM structure analysis.
 4. **Read source files** when identifiable from component structure.
@@ -108,6 +108,5 @@ To trigger: "Fix the issues found in the audit" or accept the handoff offer afte
 ## Limitations (v1)
 
 - Single URL per invocation. Multi-page audits require running the command multiple times.
-- No authentication support. Navigate to the correct page state before auditing.
 - Screenshots are not annotated with bounding boxes — issues are described in text.
 - No diff mode against previous audits.
