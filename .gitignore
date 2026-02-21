@@ -2,4 +2,6 @@
 *.log
 node_modules/
 .codex/
+.opencode/
+opencode.json
 todos/
