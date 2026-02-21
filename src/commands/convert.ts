@@ -40,6 +40,11 @@ export default defineCommand({
       alias: "pi-home",
       description: "Write Pi output to this Pi root (ex: ~/.pi/agent or ./.pi)",
     },
+    openCodeHome: {
+      type: "string",
+      alias: "opencode-home",
+      description: "Write OpenCode output to this root (ex: ~/.config/opencode)",
+    },
     also: {
       type: "string",
       description: "Comma-separated extra targets to generate (ex: codex)",
@@ -80,6 +85,7 @@ export default defineCommand({
     const outputRoot = resolveOutputRoot(args.output)
     const codexHome = resolveTargetHome(args.codexHome, path.join(os.homedir(), ".codex"))
     const piHome = resolveTargetHome(args.piHome, path.join(os.homedir(), ".pi", "agent"))
+    const openCodeHome = resolveTargetHome(args.openCodeHome, path.join(os.homedir(), ".config", "opencode"))
 
     const options = {
       agentMode: String(args.agentMode) === "primary" ? "primary" : "subagent",
@@ -87,7 +93,8 @@ export default defineCommand({
       permissions: permissions as PermissionMode,
     }
 
-    const primaryOutputRoot = resolveTargetOutputRoot(targetName, outputRoot, codexHome, piHome)
+    const hasExplicitOutput = Boolean(args.output && String(args.output).trim())
+    const primaryOutputRoot = resolveTargetOutputRoot(targetName, outputRoot, codexHome, piHome, openCodeHome, hasExplicitOutput)
     const bundle = target.convert(plugin, options)
     if (!bundle) {
       throw new Error(`Target ${targetName} did not return a bundle.`)
@@ -113,7 +120,7 @@ export default defineCommand({
         console.warn(`Skipping ${extra}: no output returned.`)
         continue
       }
-      const extraRoot = resolveTargetOutputRoot(extra, path.join(outputRoot, extra), codexHome, piHome)
+      const extraRoot = resolveTargetOutputRoot(extra, path.join(outputRoot, extra), codexHome, piHome, openCodeHome, hasExplicitOutput)
       await handler.write(extraRoot, extraBundle)
       console.log(`Converted ${plugin.manifest.name} to ${extra} at ${extraRoot}`)
     }
@@ -140,8 +147,9 @@ function resolveOutputRoot(value: unknown): string {
   return process.cwd()
 }
 
-function resolveTargetOutputRoot(targetName: string, outputRoot: string, codexHome: string, piHome: string): string {
+function resolveTargetOutputRoot(targetName: string, outputRoot: string, codexHome: string, piHome: string, openCodeHome: string, hasExplicitOutput: boolean): string {
   if (targetName === "codex") return codexHome
   if (targetName === "pi") return piHome
+  if (targetName === "opencode" && !hasExplicitOutput) return openCodeHome
   return outputRoot
 }
