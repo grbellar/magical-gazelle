@@ -56,7 +56,7 @@ The following paths are compound-engineering pipeline artifacts and must never b
 - `docs/plans/*.md` — Plan files created by `/mg:plan`. These are living documents that track implementation progress (checkboxes are checked off by `/mg:work`).
 - `docs/solutions/*.md` — Solution documents created during the pipeline.
 
-If a review agent flags any file in these directories for cleanup or removal, discard that finding during synthesis. Do not create a todo for it.
+If a review agent flags any file in these directories for cleanup or removal, discard that finding during synthesis.
 </protected_artifacts>
 
 #### Load Review Agents
@@ -203,9 +203,7 @@ Complete system context map with component interactions
 
 Run the Task code-simplicity-reviewer() to see if we can simplify the code.
 
-### 5. Findings Synthesis and Todo Creation Using file-todos Skill
-
-<critical_requirement> ALL findings MUST be stored in the docs/todos/ directory using the file-todos skill. Create todo files immediately after synthesis - do NOT present findings for user approval first. Use the skill for structured todo management. </critical_requirement>
+### 5. Findings Synthesis and Resolution
 
 #### Step 1: Synthesize All Findings
 
@@ -220,219 +218,85 @@ Remove duplicates, prioritize by severity and impact.
 - [ ] Surface learnings-researcher results: if past solutions are relevant, flag them as "Known Pattern" with links to docs/solutions/ files
 - [ ] Discard any findings that recommend deleting or gitignoring files in `docs/plans/` or `docs/solutions/` (see Protected Artifacts above)
 - [ ] Categorize by type: security, performance, architecture, quality, etc.
-- [ ] Assign severity levels: 🔴 CRITICAL (P1), 🟡 IMPORTANT (P2), 🔵 NICE-TO-HAVE (P3)
+- [ ] Assign severity levels: P1 (Critical), P2 (Important), P3 (Nice-to-Have)
 - [ ] Remove duplicate or overlapping findings
 - [ ] Estimate effort for each finding (Small/Medium/Large)
 
 </synthesis_tasks>
 
-#### Step 2: Create Todo Files Using file-todos Skill
+#### Step 2: Present Numbered Findings
 
-<critical_instruction> Use the file-todos skill to create todo files for ALL findings immediately. Do NOT present findings one-by-one asking for user approval. Create all todo files in parallel using the skill, then summarize results to user. </critical_instruction>
+Present all findings as a numbered list grouped by severity:
 
-**Implementation Options:**
+```markdown
+## Review Findings
 
-**Option A: Direct File Creation (Fast)**
+**Review Target:** PR #XXXX - [PR Title]
+**Branch:** [branch-name]
 
-- Create todo files directly using Write tool
-- All findings in parallel for speed
-- Use standard template from `.claude/skills/file-todos/assets/todo-template.md`
-- Follow naming convention: `{issue_id}-pending-{priority}-{description}.md`
+### P1 - Critical (Blocks Merge)
+1. **[Title]** — `file:line` — [Description]
+2. **[Title]** — `file:line` — [Description]
 
-**Option B: Sub-Agents in Parallel (Recommended for Scale)** For large PRs with 15+ findings, use sub-agents to create finding files in parallel:
+### P2 - Important
+3. **[Title]** — `file:line` — [Description]
+4. **[Title]** — `file:line` — [Description]
 
-```bash
-# Launch multiple finding-creator agents in parallel
-Task() - Create todos for first finding
-Task() - Create todos for second finding
-Task() - Create todos for third finding
-etc. for each finding.
+### P3 - Nice to Have
+5. **[Title]** — `file:line` — [Description]
+6. **[Title]** — `file:line` — [Description]
+
+---
+**Actions:** Reply with numbers and actions, e.g.:
+- `Fix 1, 2, 3` — spawn parallel agents to fix
+- `Fix all` — fix everything
+- `Ignore 5, 6` — drop those findings
+- Mix and match: `Fix 1-3, ignore 5`
 ```
 
-Sub-agents can:
+#### Step 3: User Chooses Actions
 
-- Process multiple findings simultaneously
-- Write detailed todo files with all sections filled
-- Organize findings by severity
-- Create comprehensive Proposed Solutions
-- Add acceptance criteria and work logs
-- Complete much faster than sequential processing
+Wait for the user to respond with which findings to fix, ignore, or otherwise handle. Parse their response for:
 
-**Execution Strategy:**
+- **Fix [numbers]** — queue those findings for parallel fixing
+- **Fix all** — queue all findings for fixing
+- **Ignore [numbers]** — drop those findings, no action needed
 
-1. Synthesize all findings into categories (P1/P2/P3)
-2. Group findings by severity
-3. Launch 3 parallel sub-agents (one per severity level)
-4. Each sub-agent creates its batch of todos using the file-todos skill
-5. Consolidate results and present summary
+#### Step 4: Execute Fixes in Parallel
 
-**Process (Using file-todos Skill):**
+For each finding marked "fix", spawn a `pr-comment-resolver` agent in parallel (same pattern as `resolve-pr-parallel` skill). Each agent receives:
 
-1. For each finding:
-   - Determine severity (P1/P2/P3)
-   - Write detailed Problem Statement and Findings
-   - Create 2-3 Proposed Solutions with pros/cons/effort/risk
-   - Estimate effort (Small/Medium/Large)
-   - Add acceptance criteria and work log
-
-2. Use file-todos skill for structured todo management:
-
-   ```bash
-   skill: file-todos
-   ```
-
-   The skill provides:
-   - Template location: `.claude/skills/file-todos/assets/todo-template.md`
-   - Naming convention: `{issue_id}-{status}-{priority}-{description}.md`
-   - YAML frontmatter structure: status, priority, issue_id, tags, dependencies
-   - All required sections: Problem Statement, Findings, Solutions, etc.
-
-3. Create todo files in parallel:
-
-   ```bash
-   {next_id}-pending-{priority}-{description}.md
-   ```
-
-4. Examples:
-
-   ```
-   001-pending-p1-path-traversal-vulnerability.md
-   002-pending-p1-api-response-validation.md
-   003-pending-p2-concurrency-limit.md
-   004-pending-p3-unused-parameter.md
-   ```
-
-5. Follow template structure from file-todos skill: `.claude/skills/file-todos/assets/todo-template.md`
-
-**Todo File Structure (from template):**
-
-Each todo must include:
-
-- **YAML frontmatter**: status, priority, issue_id, tags, dependencies
-- **Problem Statement**: What's broken/missing, why it matters
-- **Findings**: Discoveries from agents with evidence/location
-- **Proposed Solutions**: 2-3 options, each with pros/cons/effort/risk
-- **Recommended Action**: (Filled during triage, leave blank initially)
-- **Technical Details**: Affected files, components, database changes
-- **Acceptance Criteria**: Testable checklist items
-- **Work Log**: Dated record with actions and learnings
-- **Resources**: Links to PR, issues, documentation, similar patterns
-
-**File naming convention:**
+- The finding title and description
+- The file path and line number
+- The full context of what needs to change
 
 ```
-{issue_id}-{status}-{priority}-{description}.md
-
-Examples:
-- 001-pending-p1-security-vulnerability.md
-- 002-pending-p2-performance-optimization.md
-- 003-pending-p3-code-cleanup.md
+Task pr-comment-resolver("Fix: [finding title]. File: [path:line]. Issue: [description]. Apply the fix and verify it works.")
 ```
 
-**Status values:**
+Launch all fix agents in parallel for speed.
 
-- `pending` - New findings, needs triage/decision
-- `ready` - Approved by manager, ready to work
-- `complete` - Work finished
+#### Step 5: Commit and Report
 
-**Priority values:**
+After all fix agents complete:
 
-- `p1` - Critical (blocks merge, security/data issues)
-- `p2` - Important (should fix, architectural/performance)
-- `p3` - Nice-to-have (enhancements, cleanup)
+1. Review the changes made by each agent
+2. Commit the fixes
+3. Report results:
 
-**Tagging:** Always add `code-review` tag, plus: `security`, `performance`, `architecture`, `quality`, etc.
+```markdown
+## Review Complete
 
-#### Step 3: Summary Report
+**Fixed:** [count] findings
+**Ignored:** [count] findings
 
-After creating all todo files, present comprehensive summary:
+### Fixes Applied:
+- [Finding 1 title] — fixed in [file]
+- [Finding 2 title] — fixed in [file]
 
-````markdown
-## ✅ Code Review Complete
-
-**Review Target:** PR #XXXX - [PR Title] **Branch:** [branch-name]
-
-### Findings Summary:
-
-- **Total Findings:** [X]
-- **🔴 CRITICAL (P1):** [count] - BLOCKS MERGE
-- **🟡 IMPORTANT (P2):** [count] - Should Fix
-- **🔵 NICE-TO-HAVE (P3):** [count] - Enhancements
-
-### Created Todo Files:
-
-**P1 - Critical (BLOCKS MERGE):**
-
-- `001-pending-p1-{finding}.md` - {description}
-- `002-pending-p1-{finding}.md` - {description}
-
-**P2 - Important:**
-
-- `003-pending-p2-{finding}.md` - {description}
-- `004-pending-p2-{finding}.md` - {description}
-
-**P3 - Nice-to-Have:**
-
-- `005-pending-p3-{finding}.md` - {description}
-
-### Review Agents Used:
-
-- kieran-python-reviewer
-- security-sentinel
-- performance-oracle
-- architecture-strategist
-- agent-native-reviewer
-- [other agents]
-
-### Next Steps:
-
-1. **Address P1 Findings**: CRITICAL - must be fixed before merge
-   - Review each P1 todo in detail
-   - Implement fixes or request exemption
-   - Verify fixes before merging PR
-
-2. **Triage All Todos**:
-   ```bash
-   ls docs/todos/*-pending-*.md  # View all pending todos
-   /triage                  # Use slash command for interactive triage
-   ```
-````
-
-3. **Work on Approved Todos**:
-
-   ```bash
-   /resolve_todo_parallel  # Fix all approved items efficiently
-   ```
-
-4. **Track Progress**:
-   - Rename file when status changes: pending → ready → complete
-   - Update Work Log as you work
-   - Commit todos: `git add docs/todos/ && git commit -m "refactor: add code review findings"`
-
-### Severity Breakdown:
-
-**🔴 P1 (Critical - Blocks Merge):**
-
-- Security vulnerabilities
-- Data corruption risks
-- Breaking changes
-- Critical architectural issues
-
-**🟡 P2 (Important - Should Fix):**
-
-- Performance issues
-- Significant architectural concerns
-- Major code quality problems
-- Reliability issues
-
-**🔵 P3 (Nice-to-Have):**
-
-- Minor improvements
-- Code cleanup
-- Optimization opportunities
-- Documentation updates
-
-````
+### Ignored:
+- [Finding 5 title] — user chose to skip
+```
 
 ### 7. End-to-End Testing (Optional)
 
@@ -453,7 +317,7 @@ After presenting the Summary Report, offer browser testing:
 Spawn a subagent to run browser tests (preserves main context):
 
 ```
-Task general-purpose("Run /test-browser for PR #[number]. Test all affected pages, check for console errors, handle failures by creating todos and fixing.")
+Task general-purpose("Run /test-browser for PR #[number]. Test all affected pages, check for console errors, handle failures by fixing.")
 ```
 
 The subagent will:
@@ -463,14 +327,13 @@ The subagent will:
 3. Check for console errors
 4. Test critical interactions
 5. Pause for human verification on OAuth/email/payment flows
-6. Create P1 todos for any failures
-7. Fix and retry until all tests pass
+6. Fix any failures and retry until all tests pass
 
 **Standalone:** `/test-browser [PR number]`
 
-### Important: P1 Findings Block Merge
+### 8. Important: P1 Findings Block Merge
 
-Any **🔴 P1 (CRITICAL)** findings must be addressed before merging the PR. Present these prominently and ensure they're resolved before accepting the PR.
+Any **P1 (Critical)** findings must be addressed before merging the PR. Present these prominently and ensure they're resolved before accepting the PR.
 
 ```
 

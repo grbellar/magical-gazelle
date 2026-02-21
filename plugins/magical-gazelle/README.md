@@ -7,8 +7,8 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 | Component   | Count |
 | ----------- | ----- |
 | Agents      | 26    |
-| Commands    | 21    |
-| Skills      | 17    |
+| Commands    | 19    |
+| Skills      | 16    |
 | MCP Servers | 1     |
 
 ## Agents
@@ -91,8 +91,6 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | `/reproduce-bug`         | Reproduce bugs using logs and console                           |
 | `/resolve_parallel`      | Resolve TODO comments in parallel                               |
 | `/resolve_pr_parallel`   | Resolve PR comments in parallel                                 |
-| `/resolve_todo_parallel` | Resolve todos in parallel                                       |
-| `/triage`                | Triage and prioritize issues                                    |
 | `/test-browser`          | Run browser tests on PR-affected pages                          |
 | `/feature-video`         | Record video walkthroughs and add to PR description             |
 
@@ -121,7 +119,6 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | `brainstorming`       | Explore requirements and approaches through collaborative dialogue |
 | `document-review`     | Improve documents through structured self-review                   |
 | `every-style-editor`  | Review copy for Every's style guide compliance                     |
-| `file-todos`          | File-based todo tracking system                                    |
 | `git-worktree`        | Manage Git worktrees for parallel development                      |
 | `resolve-pr-parallel` | Resolve PR review comments in parallel                             |
 | `setup`               | Configure which review agents run for your project                 |

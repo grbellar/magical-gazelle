@@ -25,8 +25,7 @@ Wait for both to complete before continuing.
 
 ## Finalize Phase
 
-7. `/compound-engineering:resolve_todo_parallel` — resolve any findings from the review
-8. `/compound-engineering:feature-video` — record the final walkthrough and add to PR
-9. Output `<promise>DONE</promise>` when video is in PR
+7. `/compound-engineering:feature-video` — record the final walkthrough and add to PR
+8. Output `<promise>DONE</promise>` when video is in PR
 
 Start with step 1 now.

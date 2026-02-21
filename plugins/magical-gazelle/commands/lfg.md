@@ -12,9 +12,8 @@ Run these slash commands in order. Do not do anything else.
 3. `/compound-engineering:deepen-plan`
 4. `/mg:work`
 5. `/mg:review`
-6. `/compound-engineering:resolve_todo_parallel`
-7. `/compound-engineering:test-browser`
-8. `/compound-engineering:feature-video`
-9. Output `<promise>DONE</promise>` when video is in PR
+6. `/compound-engineering:test-browser`
+7. `/compound-engineering:feature-video`
+8. Output `<promise>DONE</promise>` when video is in PR
 
 Start with step 1 now.

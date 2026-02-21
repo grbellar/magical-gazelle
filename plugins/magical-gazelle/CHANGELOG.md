@@ -5,6 +5,20 @@ All notable changes to the magical-gazelle plugin will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2026-02-20
+
+### Changed
+
+- `/mg:review` now fixes findings inline instead of creating todo files — synthesize, present numbered findings, user picks actions, parallel agents fix
+- `/lfg` and `/slfg` no longer include a separate resolve step (review handles it)
+- `/test-browser` failure handling simplified to "Fix now" or "Skip" (no todo option)
+
+### Removed
+
+- `file-todos` skill (file-based todo tracking system)
+- `/triage` command
+- `/resolve_todo_parallel` command
+
 ## [3.2.1] - 2026-02-20
 
 ### Improved

@@ -236,8 +236,7 @@ When a test fails:
 
    How to proceed?
    1. Fix now - I'll help debug and fix
-   2. Create todo - Add to docs/todos/ for later
-   3. Skip - Continue testing other pages
+   2. Skip - Continue testing other pages
    ```
 
 3. **If "Fix now":**
@@ -246,11 +245,7 @@ When a test fails:
    - Apply fix
    - Re-run the failing test
 
-4. **If "Create todo":**
-   - Create `{id}-pending-p1-browser-test-{description}.md`
-   - Continue testing
-
-5. **If "Skip":**
+4. **If "Skip":**
    - Log as skipped
    - Continue testing
 
@@ -286,9 +281,6 @@ After all tests complete, present summary:
 
 ### Failures: [count]
 - `/dashboard` - [issue description]
-
-### Created Todos: [count]
-- `005-pending-p1-browser-test-dashboard-error.md`
 
 ### Result: [PASS / FAIL / PARTIAL]
 ```
