@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `/mg:review` now requires tests for every fix — agents must write tests covering the bug or edge case before committing
+- `pr-comment-resolver` agent now includes a dedicated test-writing step in its workflow
+- `resolve-pr-parallel` skill explicitly instructs each fix agent to write tests
 
 ## [3.3.0] - 2026-02-20
 

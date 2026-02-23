@@ -45,13 +45,13 @@ Create a TodoWrite list of all unresolved items grouped by type:
 
 ### 3. Implement (PARALLEL)
 
-Spawn a `pr-comment-resolver` agent for each unresolved item in parallel.
+Spawn a `pr-comment-resolver` agent for each unresolved item in parallel. Each agent must fix the issue **and write a test** covering the bug or edge case.
 
 If there are 3 comments, spawn 3 agents:
 
-1. Task pr-comment-resolver(comment1)
-2. Task pr-comment-resolver(comment2)
-3. Task pr-comment-resolver(comment3)
+1. Task pr-comment-resolver(comment1 + "Write a test covering this fix.")
+2. Task pr-comment-resolver(comment2 + "Write a test covering this fix.")
+3. Task pr-comment-resolver(comment3 + "Write a test covering this fix.")
 
 Always run all in parallel subagents/Tasks for each Todo item.
 

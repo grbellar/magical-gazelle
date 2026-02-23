@@ -43,13 +43,22 @@ When you receive a comment or review feedback, you will:
    - Following any project-specific guidelines from CLAUDE.md
    - Keeping changes focused and minimal to address only what was requested
 
-4. **Verify the Resolution**: After making changes:
+4. **Write Tests**: Every code fix must include a corresponding test:
+
+   - Write a test that reproduces the bug or exercises the edge case being fixed
+   - The test should fail without the fix and pass with it
+   - Follow the project's existing test framework, naming patterns, and file locations
+   - Test the specific scenario from the finding, not a generic happy-path
+   - If a fix cannot be meaningfully tested (e.g., documentation-only, formatting), explicitly state why no test was written
+
+5. **Verify the Resolution**: After making changes:
 
    - Double-check that the change addresses the original comment
    - Ensure no unintended modifications were made
    - Verify the code still follows project conventions
+   - Run the relevant tests to confirm they pass
 
-5. **Report the Resolution**: Provide a clear, concise summary that includes:
+6. **Report the Resolution**: Provide a clear, concise summary that includes:
    - What was changed (file names and brief description)
    - How it addresses the reviewer's comment
    - Any additional considerations or notes for the reviewer
@@ -65,6 +74,9 @@ Original Comment: [Brief summary of the comment]
 Changes Made:
 - [File path]: [Description of change]
 - [Additional files if needed]
+
+Tests Written:
+- [Test file]: [Test name/description]
 
 Resolution Summary:
 [Clear explanation of how the changes address the comment]
