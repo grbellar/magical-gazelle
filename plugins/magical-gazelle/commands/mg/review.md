@@ -269,30 +269,44 @@ For each finding marked "fix", spawn a `pr-comment-resolver` agent in parallel (
 - The finding title and description
 - The file path and line number
 - The full context of what needs to change
+- **Mandatory instruction to write tests**
 
 ```
-Task pr-comment-resolver("Fix: [finding title]. File: [path:line]. Issue: [description]. Apply the fix and verify it works.")
+Task pr-comment-resolver("Fix: [finding title]. File: [path:line]. Issue: [description]. Apply the fix and verify it works. REQUIRED: Write a test that covers this bug or edge case. The test must fail without the fix and pass with it. Place tests in the appropriate test file following the project's existing test conventions.")
 ```
 
 Launch all fix agents in parallel for speed.
+
+<test_requirement>
+**Every fix MUST include a corresponding test.** This is non-negotiable. The test should:
+
+1. **Reproduce the issue** — exercise the exact bug, edge case, or vulnerability that was found
+2. **Verify the fix** — assert the correct behavior after the fix is applied
+3. **Follow project conventions** — use the same test framework, naming patterns, and file locations as existing tests
+4. **Be specific** — test the exact scenario from the finding, not a generic happy-path test
+
+If a finding cannot be meaningfully tested (e.g., documentation-only changes, formatting fixes), the agent must explicitly state why no test was written. This exception should be rare.
+</test_requirement>
 
 #### Step 5: Commit and Report
 
 After all fix agents complete:
 
 1. Review the changes made by each agent
-2. Commit the fixes
-3. Report results:
+2. Run the test suite to confirm all new and existing tests pass
+3. Commit the fixes and tests together
+4. Report results:
 
 ```markdown
 ## Review Complete
 
 **Fixed:** [count] findings
 **Ignored:** [count] findings
+**Tests written:** [count] new tests
 
 ### Fixes Applied:
-- [Finding 1 title] — fixed in [file]
-- [Finding 2 title] — fixed in [file]
+- [Finding 1 title] — fixed in [file] — test: [test file:test name]
+- [Finding 2 title] — fixed in [file] — test: [test file:test name]
 
 ### Ignored:
 - [Finding 5 title] — user chose to skip
