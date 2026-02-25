@@ -5,6 +5,13 @@ All notable changes to the magical-gazelle plugin will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.1] - 2026-02-25
+
+### Removed
+
+- `setup` skill and `magical-gazelle.local.md` per-project config file — reviewer agents are now selected directly in commands without a config layer
+- All references to per-project agent config across `/mg:review`, `/mg:work`, `/mg:compound`
+
 ## [3.4.0] - 2026-02-25
 
 ### Added
