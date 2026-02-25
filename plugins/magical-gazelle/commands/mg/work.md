@@ -180,11 +180,11 @@ This command takes a work document (plan, specification, or todo file) and execu
 
    **Check for flow manifest:**
    ```bash
-   test -f .claude/browser-flows.yml && echo "Manifest found" || echo "No manifest"
+   test -f browser-flows.yml && echo "Manifest found" || echo "No manifest"
    ```
 
    **If manifest exists:**
-   - Read `.claude/browser-flows.yml` for server URL, auth config, and routes
+   - Read `browser-flows.yml` for server URL, auth config, and routes
    - Test routes affected by the changed files
    - Run any flows that touch modified components
 

@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New `/smoke-test` command — full regression testing of every route and user flow in a web app
-- New `browser-flows` skill — defines `.claude/browser-flows.yml` manifest spec for declaring testable routes and user flows per project
+- New `browser-flows` skill — defines `browser-flows.yml` manifest spec for declaring testable routes and user flows per project
 - Browser verification step in `/mg:work` Phase 3 — opens affected pages in browser to verify they load without errors (gated on UI changes)
 
 ### Changed

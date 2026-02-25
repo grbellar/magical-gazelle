@@ -325,7 +325,7 @@ Task general-purpose("Run /smoke-test for the affected pages. Test all routes, c
 
 The subagent will:
 
-1. Read `.claude/browser-flows.yml` if it exists, or auto-discover routes
+1. Read `browser-flows.yml` if it exists, or auto-discover routes
 2. Navigate to each affected page and capture snapshots (using agent-browser CLI)
 3. Check for console errors
 4. Test critical interactions

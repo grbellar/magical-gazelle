@@ -25,7 +25,7 @@ This command tests the entire app the way a human would: visit every page, walk 
 <requirements>
 - Local development server running
 - agent-browser CLI installed
-- `.claude/browser-flows.yml` manifest (recommended but not required)
+- `browser-flows.yml` manifest (recommended but not required)
 </requirements>
 
 ## Setup
@@ -53,11 +53,11 @@ If installation fails, inform the user and stop.
 **Check for flow manifest:**
 
 ```bash
-test -f .claude/browser-flows.yml && echo "Manifest found" || echo "No manifest"
+test -f browser-flows.yml && echo "Manifest found" || echo "No manifest"
 ```
 
 **If manifest exists:**
-- Parse `.claude/browser-flows.yml` for server URL, routes, flows, and auth config
+- Parse `browser-flows.yml` for server URL, routes, flows, and auth config
 - Use this as the test plan
 
 **If no manifest exists:**
@@ -77,7 +77,7 @@ test -f .claude/browser-flows.yml && echo "Manifest found" || echo "No manifest"
   grep -r "router\.\(get\|post\|put\|delete\)" --include="*.js" --include="*.ts" -l 2>/dev/null
   ```
 - Present discovered routes and ask user to confirm or add to the list
-- Offer to create a `.claude/browser-flows.yml` manifest for future runs
+- Offer to create a `browser-flows.yml` manifest for future runs
 
 </load_config>
 
@@ -281,7 +281,7 @@ Present a comprehensive summary:
 
 **App:** [server-url]
 **Date:** [timestamp]
-**Manifest:** [.claude/browser-flows.yml | auto-discovered]
+**Manifest:** [browser-flows.yml | auto-discovered]
 
 ### Route Tests: [passed]/[total]
 

@@ -9,7 +9,7 @@ Define all testable user flows and routes for a project in a single manifest fil
 
 ## Quick Start
 
-Create `.claude/browser-flows.yml` in the project root:
+Create `browser-flows.yml` in the project root:
 
 ```yaml
 server: http://localhost:3000
@@ -35,7 +35,7 @@ Then run `/smoke-test` to test everything.
 
 ## Manifest Spec
 
-The manifest file lives at `.claude/browser-flows.yml` in the project root.
+The manifest file lives at `browser-flows.yml` in the project root.
 
 ### Top-Level Fields
 
