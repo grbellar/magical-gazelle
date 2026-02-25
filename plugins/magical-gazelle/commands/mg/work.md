@@ -174,22 +174,58 @@ This command takes a work document (plan, specification, or todo file) and execu
    # Examples: uv run ruff check ., npm run lint, etc.
    ```
 
-2. **Consider Reviewer Agents** (Optional)
+2. **Browser Verification** (For UI/frontend changes)
+
+   If changes touch views, templates, components, stylesheets, or frontend code, verify in a real browser. Skip this step for backend-only changes (models, migrations, APIs with no UI).
+
+   **Check for flow manifest:**
+   ```bash
+   test -f .claude/browser-flows.yml && echo "Manifest found" || echo "No manifest"
+   ```
+
+   **If manifest exists:**
+   - Read `.claude/browser-flows.yml` for server URL, auth config, and routes
+   - Test routes affected by the changed files
+   - Run any flows that touch modified components
+
+   **If no manifest:**
+   - Map changed files to routes (same logic as `/test-browser`)
+   - Open each affected route and verify it loads correctly
+
+   **For each route, verify:**
+   ```bash
+   agent-browser open [server-url][route]
+   agent-browser snapshot -i                    # Page renders with expected content
+   agent-browser execute "JSON.stringify(window.__errors || [])"  # No console errors
+   agent-browser screenshot browser-screenshots/verify-[route-name].png
+   ```
+
+   - Page loads without errors
+   - Expected content is present (headings, forms, data)
+   - No JavaScript console errors
+   - No visible error messages or broken layouts
+
+   **On failure:** Report the issue to the user immediately. Do not proceed to PR creation with broken pages.
+
+   **CRITICAL:** Use `agent-browser` CLI commands only. Do NOT use `mcp__claude-in-chrome__*` tools.
+
+3. **Consider Reviewer Agents** (Optional)
 
    Use for complex, risky, or large changes. Read agents from `compound-engineering.local.md` frontmatter (`review_agents`). If no settings file, invoke the `setup` skill to create one.
 
    Run configured agents in parallel with Task tool. Present findings and address critical issues.
 
-3. **Final Validation**
+4. **Final Validation**
    - All TodoWrite tasks marked completed
    - All items in the plan's Testing section have corresponding tests
    - All tests pass
    - Linting passes
    - Code follows existing patterns
    - Figma designs match (if applicable)
+   - Browser verification passed (if UI changes)
    - No console errors or warnings
 
-4. **Prepare Operational Validation Plan** (REQUIRED)
+5. **Prepare Operational Validation Plan** (REQUIRED)
    - Add a `## Post-Deploy Monitoring & Validation` section to the PR description for every change.
    - Include concrete:
      - Log queries/search terms
@@ -429,6 +465,7 @@ Before creating PR, verify:
 - [ ] Linting passes (run linter per CLAUDE.md)
 - [ ] Code follows existing patterns
 - [ ] Figma designs match implementation (if applicable)
+- [ ] Browser verification passed — affected pages load without errors (for UI changes)
 - [ ] Before/after screenshots captured and uploaded (for UI changes)
 - [ ] Commit messages follow conventional format
 - [ ] PR description includes Post-Deploy Monitoring & Validation section (or explicit no-impact rationale)

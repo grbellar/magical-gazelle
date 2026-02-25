@@ -7,8 +7,8 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 | Component   | Count |
 | ----------- | ----- |
 | Agents      | 26    |
-| Commands    | 19    |
-| Skills      | 16    |
+| Commands    | 20    |
+| Skills      | 17    |
 | MCP Servers | 1     |
 
 ## Agents
@@ -91,6 +91,7 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | `/reproduce-bug`         | Reproduce bugs using logs and console                           |
 | `/resolve_parallel`      | Resolve TODO comments in parallel                               |
 | `/resolve_pr_parallel`   | Resolve PR comments in parallel                                 |
+| `/smoke-test`            | Full regression test of every route and user flow               |
 | `/test-browser`          | Run browser tests on PR-affected pages                          |
 | `/feature-video`         | Record video walkthroughs and add to PR description             |
 
@@ -137,9 +138,10 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 
 ### Browser Automation
 
-| Skill           | Description                                               |
-| --------------- | --------------------------------------------------------- |
-| `agent-browser` | CLI-based browser automation using Vercel's agent-browser |
+| Skill            | Description                                               |
+| ---------------- | --------------------------------------------------------- |
+| `agent-browser`  | CLI-based browser automation using Vercel's agent-browser |
+| `browser-flows`  | Define testable user flows and routes for regression testing |
 
 ### Image Generation
 

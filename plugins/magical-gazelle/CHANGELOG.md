@@ -5,6 +5,19 @@ All notable changes to the magical-gazelle plugin will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-02-25
+
+### Added
+
+- New `/smoke-test` command — full regression testing of every route and user flow in a web app. Tests all routes for load errors, console errors, and broken layouts. Runs defined user flows end-to-end. Checks server logs. Produces a pass/fail report.
+- New `browser-flows` skill — defines a `.claude/browser-flows.yml` manifest spec for declaring all testable routes and user flows per project. Used by `/smoke-test` for full regression and `/mg:work` for post-change verification.
+- Browser verification step added to `/mg:work` Phase 3 (Quality Check) — after tests and linting pass, the agent now opens affected pages in a browser to verify they load without errors, have expected content, and produce no console errors. Gated on UI/frontend changes.
+
+### Changed
+
+- `/mg:work` Quality Checklist now includes browser verification for UI changes
+- `/mg:work` Final Validation now checks browser verification passed
+
 ## [3.3.1] - 2026-02-23
 
 ### Changed
