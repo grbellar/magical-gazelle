@@ -8,7 +8,7 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 | ----------- | ----- |
 | Agents      | 14    |
 | Commands    | 13    |
-| Skills      | 14    |
+| Skills      | 13    |
 | MCP Servers | 1     |
 
 ## Agents
@@ -100,7 +100,6 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | `brainstorming`       | Explore requirements and approaches through collaborative dialogue |
 | `document-review`     | Improve documents through structured self-review                   |
 | `git-worktree`        | Manage Git worktrees for parallel development                      |
-| `setup`               | Configure which review agents run for your project                 |
 
 ### Multi-Agent Orchestration
 

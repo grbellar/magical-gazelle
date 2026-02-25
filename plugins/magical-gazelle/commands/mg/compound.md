@@ -225,7 +225,7 @@ Based on problem type, these agents can enhance documentation:
 ### When to Invoke
 - **Auto-triggered** (optional): Agents can run post-documentation for enhancement
 - **Manual trigger**: User can invoke agents after /mg:compound completes for deeper review
-- **Customize agents**: Edit `magical-gazelle.local.md` or invoke the `setup` skill to configure which review agents are used across all workflows
+- **Manual trigger**: Invoke specific agents after /mg:compound completes for deeper review
 
 ## Related Commands
 

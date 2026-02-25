@@ -59,12 +59,6 @@ The following paths are magical-gazelle pipeline artifacts and must never be fla
 If a review agent flags any file in these directories for cleanup or removal, discard that finding during synthesis.
 </protected_artifacts>
 
-#### Load Review Agents
-
-Read `magical-gazelle.local.md` in the project root. If found, use `review_agents` from YAML frontmatter. If the markdown body contains review context, pass it to each agent as additional instructions.
-
-If no settings file exists, invoke the `setup` skill to create one. Then read the newly created file and continue.
-
 #### Parallel Agents to review the PR:
 
 <parallel_tasks>

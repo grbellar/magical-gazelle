@@ -16,7 +16,7 @@ magical-gazelle/
 │       │   └── plugin.json       # Plugin metadata
 │       ├── agents/               # 14 specialized AI agents
 │       ├── commands/             # 13 slash commands
-│       ├── skills/               # 14 skills
+│       ├── skills/               # 13 skills
 │       ├── README.md
 │       └── CHANGELOG.md
 ├── src/                          # CLI tool (Bun/TypeScript)

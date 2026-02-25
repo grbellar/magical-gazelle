@@ -211,9 +211,7 @@ This command takes a work document (plan, specification, or todo file) and execu
 
 3. **Consider Reviewer Agents** (Optional)
 
-   Use for complex, risky, or large changes. Read agents from `magical-gazelle.local.md` frontmatter (`review_agents`). If no settings file, invoke the `setup` skill to create one.
-
-   Run configured agents in parallel with Task tool. Present findings and address critical issues.
+   Use for complex, risky, or large changes. Run relevant reviewer agents (python-reviewer, typescript-reviewer, security-sentinel, performance-oracle, data-reviewer) in parallel with Task tool. Present findings and address critical issues.
 
 4. **Final Validation**
    - All TodoWrite tasks marked completed
