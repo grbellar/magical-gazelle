@@ -24,7 +24,7 @@ Plan -> Work -> Review -> Compound -> Repeat
 
 Turn an idea into a blueprint. Research the codebase, research externally, design the solution, validate the plan. The better the plan, the better the result.
 
-Agents involved: `framework-docs-researcher`, `best-practices-researcher`, `repo-research-analyst`, `git-history-analyzer`
+Agents involved: `framework-docs-researcher`, `repo-research-analyst`
 
 ### Work
 

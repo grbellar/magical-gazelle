@@ -74,13 +74,11 @@ First, I need to understand the project's conventions, existing patterns, and an
 
 Run these agents **in parallel** to gather local context:
 
-- Task repo-research-analyst(feature_description)
-- Task learnings-researcher(feature_description)
+- Task repo-research-analyst(feature_description) — searches repo structure, conventions, git history, and docs/solutions/ for past learnings
 - Task test-plan-analyst(feature_description) — plan mode: scans codebase for test infrastructure, maps affected code to test files, proposes specific test cases
 
 **What to look for:**
-- **Repo research:** existing patterns, CLAUDE.md guidance, technology familiarity, pattern consistency
-- **Learnings:** documented solutions in `docs/solutions/` that might apply (gotchas, patterns, lessons learned)
+- **Repo research:** existing patterns, CLAUDE.md guidance, technology familiarity, pattern consistency, documented solutions in `docs/solutions/` that might apply
 - **Test plan:** test framework/conventions used, existing test files for affected code, specific test cases to write, edge cases grounded in actual code patterns
 
 These findings inform the next step.
@@ -107,7 +105,6 @@ Examples:
 
 Run these agents in parallel:
 
-- Task best-practices-researcher(feature_description)
 - Task framework-docs-researcher(feature_description)
 
 ### 1.6. Consolidate Research

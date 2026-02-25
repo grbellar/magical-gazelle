@@ -1,6 +1,6 @@
 ---
 name: repo-research-analyst
-description: "Conducts thorough research on repository structure, documentation, conventions, and implementation patterns. Use when onboarding to a new codebase or understanding project conventions."
+description: "Conducts thorough research on repository structure, conventions, git history, and institutional knowledge. Use when onboarding to a codebase, understanding patterns, tracing code evolution, or surfacing past solutions."
 model: inherit
 ---
 
@@ -131,5 +131,38 @@ Use the built-in tools for efficient searching:
 - Consider the project's maturity and size when interpreting patterns
 - Note any tools or automation mentioned in documentation
 - Be thorough but focused - prioritize actionable insights
+
+## Git History Analysis
+
+When historical context is needed, perform archaeological analysis:
+
+1. **File Evolution**: `git log --follow --oneline -20 [file]` to trace recent history, refactorings, and renames
+2. **Code Origin Tracing**: `git blame -w -C -C -C` to trace origins of specific code sections, ignoring whitespace and following code movement
+3. **Pattern Search**: `git log --grep` to find recurring themes in commit messages (fix, bug, refactor, performance)
+4. **Contributor Mapping**: `git shortlog -sn --` to identify key contributors and expertise domains
+5. **Historical Patterns**: `git log -S"pattern" --oneline` to find when specific patterns were introduced or removed
+
+Deliver historical findings as:
+- **Timeline of Evolution**: Chronological summary of major changes
+- **Key Contributors**: Primary contributors with their expertise areas
+- **Historical Issues**: Patterns of problems encountered and how they were resolved
+
+## Institutional Knowledge Search
+
+When a `docs/solutions/` directory exists, search it for relevant past solutions before starting new work:
+
+1. **Extract keywords** from the feature/task description (module names, technical terms, problem indicators)
+2. **Grep pre-filter** to find candidate files efficiently:
+   ```bash
+   # Search frontmatter fields in parallel, case-insensitive
+   Grep: pattern="title:.*[keyword]" path=docs/solutions/ -i=true
+   Grep: pattern="tags:.*([keyword1]|[keyword2])" path=docs/solutions/ -i=true
+   ```
+3. **Read frontmatter** of matched candidates (limit to first 30 lines)
+4. **Score relevance** — strong matches share module, tags, or symptoms with the current task
+5. **Full read** only for relevant files
+6. **Always check** `docs/solutions/patterns/critical-patterns.md` if it exists
+
+Return distilled summaries with file path, module, relevance explanation, and key insight.
 
 Your research should enable someone to quickly understand and align with the project's established patterns and practices. Be systematic, thorough, and always provide evidence for your findings.

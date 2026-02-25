@@ -6,58 +6,49 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 | Component   | Count |
 | ----------- | ----- |
-| Agents      | 26    |
+| Agents      | 17    |
 | Commands    | 20    |
-| Skills      | 17    |
+| Skills      | 16    |
 | MCP Servers | 1     |
 
 ## Agents
 
 Agents are organized into categories for easier discovery.
 
-### Review (12)
+### Review (7)
 
-| Agent                            | Description                                                          |
-| -------------------------------- | -------------------------------------------------------------------- |
-| `agent-native-reviewer`          | Verify features are agent-native (action + context parity)           |
-| `architecture-strategist`        | Analyze architectural decisions and compliance                       |
-| `code-simplicity-reviewer`       | Final pass for simplicity and minimalism                             |
-| `data-integrity-guardian`        | Database migrations and data integrity                               |
-| `data-migration-expert`          | Validate ID mappings match production, check for swapped values      |
-| `deployment-verification-agent`  | Create Go/No-Go deployment checklists for risky data changes         |
-| `julik-frontend-races-reviewer`  | Review JavaScript/Stimulus code for race conditions                  |
-| `kieran-python-reviewer`         | Python code review with strict conventions and testing standards     |
-| `kieran-typescript-reviewer`     | TypeScript code review with strict conventions and testing standards |
-| `pattern-recognition-specialist` | Analyze code for patterns and anti-patterns                          |
-| `performance-oracle`             | Performance analysis and optimization                                |
-| `security-sentinel`              | Security audits and vulnerability assessments                        |
+| Agent                           | Description                                                               |
+| ------------------------------- | ------------------------------------------------------------------------- |
+| `python-reviewer`               | Python code review for simplicity, Pythonic patterns, and type safety     |
+| `typescript-reviewer`           | TypeScript code review for simplicity, type safety, and async correctness |
+| `data-integrity-guardian`       | Database migrations and data integrity                                    |
+| `data-migration-expert`        | Validate ID mappings match production, check for swapped values           |
+| `deployment-verification-agent` | Create Go/No-Go deployment checklists for risky data changes              |
+| `performance-oracle`            | Performance analysis and optimization                                     |
+| `security-sentinel`             | Security audits and vulnerability assessments                             |
 
-### Research (6)
+### Research (3)
 
-| Agent                       | Description                                                           |
-| --------------------------- | --------------------------------------------------------------------- |
-| `best-practices-researcher` | Gather external best practices and examples                           |
-| `framework-docs-researcher` | Research framework documentation and best practices                   |
-| `git-history-analyzer`      | Analyze git history and code evolution                                |
-| `learnings-researcher`      | Search institutional learnings for relevant past solutions            |
-| `repo-research-analyst`     | Research repository structure and conventions                         |
-| `test-plan-analyst`         | Scan codebase to identify tests needed for proposed changes or review |
+| Agent                       | Description                                                              |
+| --------------------------- | ------------------------------------------------------------------------ |
+| `framework-docs-researcher` | Research framework docs, best practices, and implementation patterns     |
+| `repo-research-analyst`     | Research repo structure, git history, conventions, and past solutions     |
+| `test-plan-analyst`         | Scan codebase to identify tests needed for proposed changes or review    |
 
 ### Design (4)
 
-| Agent                            | Description                                                          |
-| -------------------------------- | -------------------------------------------------------------------- |
-| `design-implementation-reviewer` | Verify UI implementations match Figma designs                        |
-| `design-iterator`                | Iteratively refine UI through systematic design iterations           |
-| `figma-design-sync`              | Synchronize web implementations with Figma designs                   |
+| Agent                            | Description                                                            |
+| -------------------------------- | ---------------------------------------------------------------------- |
+| `design-implementation-reviewer` | Verify UI implementations match Figma designs                          |
+| `design-iterator`                | Iteratively refine UI through systematic design iterations             |
+| `figma-design-sync`              | Synchronize web implementations with Figma designs                     |
 | `ui-auditor`                     | Audit running apps for UI inconsistencies against best practice rubric |
 
-### Workflow (4)
+### Workflow (3)
 
 | Agent                        | Description                                            |
 | ---------------------------- | ------------------------------------------------------ |
 | `bug-reproduction-validator` | Systematically reproduce and validate bug reports      |
-| `every-style-editor`         | Edit content to conform to Every's style guide         |
 | `pr-comment-resolver`        | Address PR comments and implement fixes                |
 | `spec-flow-analyzer`         | Analyze user flows and identify gaps in specifications |
 
@@ -119,7 +110,6 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | --------------------- | ------------------------------------------------------------------ |
 | `brainstorming`       | Explore requirements and approaches through collaborative dialogue |
 | `document-review`     | Improve documents through structured self-review                   |
-| `every-style-editor`  | Review copy for Every's style guide compliance                     |
 | `git-worktree`        | Manage Git worktrees for parallel development                      |
 | `resolve-pr-parallel` | Resolve PR review comments in parallel                             |
 | `setup`               | Configure which review agents run for your project                 |

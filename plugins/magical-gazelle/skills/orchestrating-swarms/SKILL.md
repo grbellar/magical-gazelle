@@ -332,70 +332,42 @@ Task({
 
 // Python code review
 Task({
-  subagent_type: "compound-engineering:review:kieran-python-reviewer",
+  subagent_type: "magical-gazelle:review:python-reviewer",
   description: "Python review",
-  prompt: "Review this Python code for best practices"
-})
-
-// Architecture review
-Task({
-  subagent_type: "compound-engineering:review:architecture-strategist",
-  description: "Architecture review",
-  prompt: "Review the system architecture of the authentication module"
-})
-
-// Code simplicity
-Task({
-  subagent_type: "compound-engineering:review:code-simplicity-reviewer",
-  description: "Simplicity check",
-  prompt: "Check if this implementation can be simplified"
+  prompt: "Review this Python code for best practices and simplicity"
 })
 ```
 
 **All review agents from magical-gazelle:**
-- `agent-native-reviewer` - Ensures features work for agents too
-- `architecture-strategist` - Architectural compliance
-- `code-simplicity-reviewer` - YAGNI and minimalism
+- `python-reviewer` - Python best practices, simplicity, and patterns
+- `typescript-reviewer` - TypeScript best practices, async correctness, and simplicity
 - `data-integrity-guardian` - Database and data safety
 - `data-migration-expert` - Migration validation
 - `deployment-verification-agent` - Pre-deploy checklists
-- `julik-frontend-races-reviewer` - JavaScript race conditions
-- `kieran-python-reviewer` - Python best practices
-- `kieran-typescript-reviewer` - TypeScript best practices
-- `pattern-recognition-specialist` - Design patterns and anti-patterns
 - `performance-oracle` - Performance analysis
 - `security-sentinel` - Security vulnerabilities
 
 ### Research Agents
 ```javascript
-// Best practices research
+// Framework documentation and best practices
 Task({
-  subagent_type: "compound-engineering:research:best-practices-researcher",
+  subagent_type: "magical-gazelle:research:framework-docs-researcher",
   description: "Research auth best practices",
-  prompt: "Research current best practices for JWT authentication in Rails 2024-2026"
+  prompt: "Research current best practices for JWT authentication"
 })
 
-// Framework documentation
+// Repository research, git history, and institutional knowledge
 Task({
-  subagent_type: "compound-engineering:research:framework-docs-researcher",
-  description: "Research Active Storage",
-  prompt: "Gather comprehensive documentation about Active Storage file uploads"
-})
-
-// Git history analysis
-Task({
-  subagent_type: "compound-engineering:research:git-history-analyzer",
-  description: "Analyze auth history",
-  prompt: "Analyze the git history of the authentication module to understand its evolution"
+  subagent_type: "magical-gazelle:research:repo-research-analyst",
+  description: "Research repo patterns",
+  prompt: "Analyze the repository structure, git history, and docs/solutions/ for relevant patterns"
 })
 ```
 
 **All research agents:**
-- `best-practices-researcher` - External best practices
-- `framework-docs-researcher` - Framework documentation
-- `git-history-analyzer` - Code archaeology
-- `learnings-researcher` - Search docs/solutions/
-- `repo-research-analyst` - Repository patterns
+- `framework-docs-researcher` - Framework documentation and best practices
+- `repo-research-analyst` - Repository patterns, git history, and institutional knowledge
+- `test-plan-analyst` - Test coverage analysis
 
 ### Design Agents
 ```javascript
@@ -812,7 +784,7 @@ Task({
 Task({
   team_name: "code-review",
   name: "simplicity",
-  subagent_type: "compound-engineering:review:code-simplicity-reviewer",
+  subagent_type: "magical-gazelle:review:python-reviewer",
   prompt: "Review the PR for unnecessary complexity. Focus on: over-engineering, premature abstraction, YAGNI violations. Send findings to team-lead.",
   run_in_background: true
 })
@@ -852,7 +824,7 @@ TaskUpdate({ taskId: "5", addBlockedBy: ["4"] })
 Task({
   team_name: "feature-pipeline",
   name: "researcher",
-  subagent_type: "compound-engineering:research:best-practices-researcher",
+  subagent_type: "magical-gazelle:research:framework-docs-researcher",
   prompt: "Claim task #1, research best practices, complete it, send findings to team-lead. Then check for more work.",
   run_in_background: true
 })
@@ -929,7 +901,7 @@ Research first, then implement:
 ```javascript
 // 1. Research phase (synchronous, returns results)
 const research = await Task({
-  subagent_type: "compound-engineering:research:best-practices-researcher",
+  subagent_type: "magical-gazelle:research:framework-docs-researcher",
   description: "Research caching patterns",
   prompt: "Research best practices for implementing caching in Rails APIs. Include: cache invalidation strategies, Redis vs Memcached, cache key design."
 })
@@ -1462,7 +1434,7 @@ Task({
 Task({
   team_name: "pr-review-123",
   name: "arch",
-  subagent_type: "compound-engineering:review:architecture-strategist",
+  subagent_type: "magical-gazelle:review:python-reviewer",
   prompt: `Review PR #123 for architectural concerns.
 
   Focus on:
@@ -1513,7 +1485,7 @@ TaskUpdate({ taskId: "5", addBlockedBy: ["4"] })
 Task({
   team_name: "feature-oauth",
   name: "researcher",
-  subagent_type: "compound-engineering:research:best-practices-researcher",
+  subagent_type: "magical-gazelle:research:framework-docs-researcher",
   prompt: "Claim task #1. Research OAuth2 best practices, compare providers, document findings. Mark task complete and send summary to team-lead.",
   run_in_background: true
 })

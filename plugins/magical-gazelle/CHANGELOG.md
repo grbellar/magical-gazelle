@@ -9,14 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New `/smoke-test` command — full regression testing of every route and user flow in a web app. Tests all routes for load errors, console errors, and broken layouts. Runs defined user flows end-to-end. Checks server logs. Produces a pass/fail report.
-- New `browser-flows` skill — defines a `.claude/browser-flows.yml` manifest spec for declaring all testable routes and user flows per project. Used by `/smoke-test` for full regression and `/mg:work` for post-change verification.
-- Browser verification step added to `/mg:work` Phase 3 (Quality Check) — after tests and linting pass, the agent now opens affected pages in a browser to verify they load without errors, have expected content, and produce no console errors. Gated on UI/frontend changes.
+- New `/smoke-test` command — full regression testing of every route and user flow in a web app
+- New `browser-flows` skill — defines `.claude/browser-flows.yml` manifest spec for declaring testable routes and user flows per project
+- Browser verification step in `/mg:work` Phase 3 — opens affected pages in browser to verify they load without errors (gated on UI changes)
 
 ### Changed
 
-- `/mg:work` Quality Checklist now includes browser verification for UI changes
-- `/mg:work` Final Validation now checks browser verification passed
+- **Review agents consolidated from 12 to 7:**
+  - `kieran-python-reviewer` → `python-reviewer` (absorbed `code-simplicity-reviewer` and `pattern-recognition-specialist` — simplicity is now a top-priority concern)
+  - `kieran-typescript-reviewer` → `typescript-reviewer` (absorbed `julik-frontend-races-reviewer` — race condition and async correctness checks built in)
+  - Removed `architecture-strategist`, `agent-native-reviewer` (concerns absorbed into language reviewers)
+- **Research agents consolidated from 6 to 3:**
+  - `repo-research-analyst` now includes git history analysis and institutional knowledge search (absorbed `git-history-analyzer` and `learnings-researcher`)
+  - `framework-docs-researcher` now includes best practices research (absorbed `best-practices-researcher`)
+- **Workflow agents reduced from 4 to 3:** removed `every-style-editor`
+- Removed `every-style-editor` skill
+- Updated all references in `/mg:review`, `/mg:plan`, `/mg:compound`, `/deepen-plan`, `setup` skill, `orchestrating-swarms` skill, and `PHILOSOPHY.md`
 
 ## [3.3.1] - 2026-02-23
 

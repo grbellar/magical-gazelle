@@ -32,8 +32,6 @@ If "Cancel": stop.
 Auto-detect the project stack:
 
 ```bash
-test -f Gemfile && test -f config/routes.rb && echo "rails" || \
-test -f Gemfile && echo "ruby" || \
 test -f tsconfig.json && echo "typescript" || \
 test -f package.json && echo "javascript" || \
 test -f pyproject.toml && echo "python" || \
@@ -55,13 +53,13 @@ options:
 
 ### If Auto-configure → Skip to Step 4 with defaults:
 
-- **Python:** `[kieran-python-reviewer, code-simplicity-reviewer, security-sentinel, performance-oracle, architecture-strategist]`
-- **TypeScript:** `[kieran-typescript-reviewer, code-simplicity-reviewer, security-sentinel, performance-oracle, architecture-strategist]`
-- **General:** `[code-simplicity-reviewer, security-sentinel, performance-oracle, architecture-strategist]`
+- **Python:** `[python-reviewer, security-sentinel, performance-oracle]`
+- **TypeScript:** `[typescript-reviewer, security-sentinel, performance-oracle]`
+- **General:** `[security-sentinel, performance-oracle]`
 
 ### If Customize → Step 3
 
-## Step 3: Customize (3 questions)
+## Step 3: Customize (2 questions)
 
 **a. Stack** — confirm or override:
 
@@ -72,9 +70,9 @@ options:
   - label: "{detected_type} (Recommended)"
     description: "Auto-detected from project files"
   - label: "Python"
-    description: "Python — adds Pythonic pattern and testing reviewer"
+    description: "Python — adds Pythonic pattern, simplicity, and testing reviewer"
   - label: "TypeScript"
-    description: "TypeScript — adds type safety and testing reviewer"
+    description: "TypeScript — adds type safety, async correctness, and testing reviewer"
 ```
 
 Only show options that differ from the detected type.
@@ -90,52 +88,27 @@ options:
     description: "Vulnerability scanning, auth, input validation (security-sentinel)"
   - label: "Performance"
     description: "N+1 queries, memory leaks, complexity (performance-oracle)"
-  - label: "Architecture"
-    description: "Design patterns, SOLID, separation of concerns (architecture-strategist)"
-  - label: "Code simplicity"
-    description: "Over-engineering, YAGNI violations (code-simplicity-reviewer)"
-```
-
-**c. Depth:**
-
-```
-question: "How thorough should reviews be?"
-header: "Depth"
-options:
-  - label: "Thorough (Recommended)"
-    description: "Stack reviewers + all selected focus agents."
-  - label: "Fast"
-    description: "Stack reviewers + code simplicity only. Less context, quicker."
-  - label: "Comprehensive"
-    description: "All above + git history, data integrity, agent-native checks."
+  - label: "Data integrity"
+    description: "Database migrations, data safety, transaction boundaries (data-integrity-guardian)"
 ```
 
 ## Step 4: Build Agent List and Write File
 
 **Stack-specific agents:**
-- Python → `kieran-python-reviewer`
-- TypeScript → `kieran-typescript-reviewer`
+- Python → `python-reviewer`
+- TypeScript → `typescript-reviewer`
 - General → (none)
 
 **Focus area agents:**
 - Security → `security-sentinel`
 - Performance → `performance-oracle`
-- Architecture → `architecture-strategist`
-- Code simplicity → `code-simplicity-reviewer`
-
-**Depth:**
-- Thorough: stack + selected focus areas
-- Fast: stack + `code-simplicity-reviewer` only
-- Comprehensive: all above + `git-history-analyzer, data-integrity-guardian, agent-native-reviewer`
-
-**Plan review agents:** stack-specific reviewer + `code-simplicity-reviewer`.
+- Data integrity → `data-integrity-guardian`
 
 Write `compound-engineering.local.md`:
 
 ```markdown
 ---
 review_agents: [{computed agent list}]
-plan_review_agents: [{computed plan agent list}]
 ---
 
 # Review Context
@@ -155,7 +128,6 @@ Examples:
 Saved to compound-engineering.local.md
 
 Stack:        {type}
-Review depth: {depth}
 Agents:       {count} configured
               {agent list, one per line}
 
