@@ -259,7 +259,7 @@ Wait for the user to respond with which findings to fix, ignore, or otherwise ha
 
 #### Step 4: Execute Fixes in Parallel
 
-For each finding marked "fix", spawn a `pr-comment-resolver` agent in parallel (same pattern as `resolve-pr-parallel` skill). Each agent receives:
+For each finding marked "fix", spawn a `pr-comment-resolver` agent in parallel. Each agent receives:
 
 - The finding title and description
 - The file path and line number

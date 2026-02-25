@@ -7,8 +7,8 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 | Component   | Count |
 | ----------- | ----- |
 | Agents      | 17    |
-| Commands    | 20    |
-| Skills      | 16    |
+| Commands    | 15    |
+| Skills      | 14    |
 | MCP Servers | 1     |
 
 ## Agents
@@ -71,17 +71,11 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | Command                  | Description                                                     |
 | ------------------------ | --------------------------------------------------------------- |
 | `/lfg`                   | Full autonomous engineering workflow                            |
-| `/slfg`                  | Full autonomous workflow with swarm mode for parallel execution |
 | `/deepen-plan`           | Enhance plans with parallel research agents for each section    |
 | `/changelog`             | Create engaging changelogs for recent merges                    |
-| `/create-agent-skill`    | Create or edit Claude Code skills                               |
-| `/generate_command`      | Generate new slash commands                                     |
 | `/heal-skill`            | Fix skill documentation issues                                  |
-| `/sync`                  | Sync Claude Code config across machines                         |
-| `/report-bug`            | Report a bug in the plugin                                      |
 | `/reproduce-bug`         | Reproduce bugs using logs and console                           |
 | `/resolve_parallel`      | Resolve TODO comments in parallel                               |
-| `/resolve_pr_parallel`   | Resolve PR comments in parallel                                 |
 | `/smoke-test`            | Full regression test of every route and user flow               |
 | `/test-browser`          | Run browser tests on PR-affected pages                          |
 | `/feature-video`         | Record video walkthroughs and add to PR description             |
@@ -102,7 +96,6 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | `compound-docs`       | Capture solved problems as categorized documentation |
 | `create-agent-skills` | Expert guidance for creating Claude Code skills      |
 | `frontend-design`     | Create production-grade frontend interfaces          |
-| `skill-creator`       | Guide for creating effective Claude Code skills      |
 
 ### Content & Workflow
 
@@ -111,7 +104,6 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | `brainstorming`       | Explore requirements and approaches through collaborative dialogue |
 | `document-review`     | Improve documents through structured self-review                   |
 | `git-worktree`        | Manage Git worktrees for parallel development                      |
-| `resolve-pr-parallel` | Resolve PR review comments in parallel                             |
 | `setup`               | Configure which review agents run for your project                 |
 
 ### Multi-Agent Orchestration

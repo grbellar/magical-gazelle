@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `every-style-editor` skill
 - Updated all references in `/mg:review`, `/mg:plan`, `/mg:compound`, `/deepen-plan`, `setup` skill, `orchestrating-swarms` skill, and `PHILOSOPHY.md`
 
+### Removed
+
+- Commands: `/slfg`, `/agent-native-audit`, `/create-agent-skill`, `/generate_command`, `/report-bug`
+- Skills: `resolve-pr-parallel`, `skill-creator` (merged into `create-agent-skills`)
+
 ## [3.3.1] - 2026-02-23
 
 ### Changed
