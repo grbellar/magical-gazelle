@@ -14,8 +14,8 @@ magical-gazelle/
 │   └── magical-gazelle/          # The plugin
 │       ├── .claude-plugin/
 │       │   └── plugin.json       # Plugin metadata
-│       ├── agents/               # 17 specialized AI agents
-│       ├── commands/             # 15 slash commands
+│       ├── agents/               # 14 specialized AI agents
+│       ├── commands/             # 13 slash commands
 │       ├── skills/               # 14 skills
 │       ├── README.md
 │       └── CHANGELOG.md

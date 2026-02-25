@@ -312,20 +312,20 @@ Task({
 
 ## Plugin Agent Types
 
-From the `compound-engineering` plugin (examples):
+From the `magical-gazelle` plugin (examples):
 
 ### Review Agents
 ```javascript
 // Security review
 Task({
-  subagent_type: "compound-engineering:review:security-sentinel",
+  subagent_type: "magical-gazelle:review:security-sentinel",
   description: "Security audit",
   prompt: "Audit this PR for security vulnerabilities"
 })
 
 // Performance review
 Task({
-  subagent_type: "compound-engineering:review:performance-oracle",
+  subagent_type: "magical-gazelle:review:performance-oracle",
   description: "Performance check",
   prompt: "Analyze this code for performance bottlenecks"
 })
@@ -341,9 +341,7 @@ Task({
 **All review agents from magical-gazelle:**
 - `python-reviewer` - Python best practices, simplicity, and patterns
 - `typescript-reviewer` - TypeScript best practices, async correctness, and simplicity
-- `data-integrity-guardian` - Database and data safety
-- `data-migration-expert` - Migration validation
-- `deployment-verification-agent` - Pre-deploy checklists
+- `data-reviewer` - Database migrations, data safety, and deployment verification
 - `performance-oracle` - Performance analysis
 - `security-sentinel` - Security vulnerabilities
 
@@ -372,7 +370,7 @@ Task({
 ### Design Agents
 ```javascript
 Task({
-  subagent_type: "compound-engineering:design:figma-design-sync",
+  subagent_type: "magical-gazelle:design:design-reviewer",
   description: "Sync with Figma",
   prompt: "Compare implementation with Figma design at [URL]"
 })
@@ -381,7 +379,7 @@ Task({
 ### Workflow Agents
 ```javascript
 Task({
-  subagent_type: "compound-engineering:workflow:bug-reproduction-validator",
+  subagent_type: "magical-gazelle:workflow:bug-reproduction-validator",
   description: "Validate bug",
   prompt: "Reproduce and validate this reported bug: [description]"
 })
@@ -768,7 +766,7 @@ Teammate({ operation: "spawnTeam", team_name: "code-review" })
 Task({
   team_name: "code-review",
   name: "security",
-  subagent_type: "compound-engineering:review:security-sentinel",
+  subagent_type: "magical-gazelle:review:security-sentinel",
   prompt: "Review the PR for security vulnerabilities. Focus on: SQL injection, XSS, auth bypass. Send findings to team-lead.",
   run_in_background: true
 })
@@ -776,7 +774,7 @@ Task({
 Task({
   team_name: "code-review",
   name: "performance",
-  subagent_type: "compound-engineering:review:performance-oracle",
+  subagent_type: "magical-gazelle:review:performance-oracle",
   prompt: "Review the PR for performance issues. Focus on: N+1 queries, memory leaks, slow algorithms. Send findings to team-lead.",
   run_in_background: true
 })
@@ -1401,7 +1399,7 @@ Teammate({ operation: "spawnTeam", team_name: "pr-review-123", description: "Rev
 Task({
   team_name: "pr-review-123",
   name: "security",
-  subagent_type: "compound-engineering:review:security-sentinel",
+  subagent_type: "magical-gazelle:review:security-sentinel",
   prompt: `Review PR #123 for security vulnerabilities.
 
   Focus on:
@@ -1418,7 +1416,7 @@ Task({
 Task({
   team_name: "pr-review-123",
   name: "perf",
-  subagent_type: "compound-engineering:review:performance-oracle",
+  subagent_type: "magical-gazelle:review:performance-oracle",
   prompt: `Review PR #123 for performance issues.
 
   Focus on:
@@ -1517,7 +1515,7 @@ Task({
 Task({
   team_name: "feature-oauth",
   name: "reviewer",
-  subagent_type: "compound-engineering:review:security-sentinel",
+  subagent_type: "magical-gazelle:review:security-sentinel",
   prompt: "Wait for task #5 to unblock. Review the complete OAuth implementation for security. Send final assessment to team-lead.",
   run_in_background: true
 })

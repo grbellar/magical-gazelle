@@ -150,7 +150,7 @@ This command takes a work document (plan, specification, or todo file) and execu
 
    For UI work with Figma designs:
    - Implement components following design specs
-   - Use figma-design-sync agent iteratively to compare
+   - Use design-reviewer agent iteratively to compare
    - Fix visual differences identified
    - Repeat until implementation matches design
 
@@ -189,7 +189,7 @@ This command takes a work document (plan, specification, or todo file) and execu
    - Run any flows that touch modified components
 
    **If no manifest:**
-   - Map changed files to routes (same logic as `/test-browser`)
+   - Map changed files to routes (same logic as `/smoke-test`)
    - Open each affected route and verify it loads correctly
 
    **For each route, verify:**
@@ -211,7 +211,7 @@ This command takes a work document (plan, specification, or todo file) and execu
 
 3. **Consider Reviewer Agents** (Optional)
 
-   Use for complex, risky, or large changes. Read agents from `compound-engineering.local.md` frontmatter (`review_agents`). If no settings file, invoke the `setup` skill to create one.
+   Use for complex, risky, or large changes. Read agents from `magical-gazelle.local.md` frontmatter (`review_agents`). If no settings file, invoke the `setup` skill to create one.
 
    Run configured agents in parallel with Task tool. Present findings and address critical issues.
 

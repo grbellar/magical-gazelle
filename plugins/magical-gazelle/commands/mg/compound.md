@@ -93,7 +93,7 @@ Based on problem type, optionally invoke specialized agents to review the docume
 
 - **performance_issue** → `performance-oracle`
 - **security_issue** → `security-sentinel`
-- **database_issue** → `data-integrity-guardian`
+- **database_issue** → `data-reviewer`
 - Any code-heavy issue → `python-reviewer` or `typescript-reviewer`
 
 </parallel_tasks>
@@ -217,7 +217,7 @@ Based on problem type, these agents can enhance documentation:
 ### Specific Domain Experts
 - **performance-oracle**: Analyzes performance_issue category solutions
 - **security-sentinel**: Reviews security_issue solutions for vulnerabilities
-- **data-integrity-guardian**: Reviews database_issue migrations and queries
+- **data-reviewer**: Reviews database_issue migrations and queries
 
 ### Enhancement & Documentation
 - **framework-docs-researcher**: Enriches solution with best practices and framework documentation
@@ -225,7 +225,7 @@ Based on problem type, these agents can enhance documentation:
 ### When to Invoke
 - **Auto-triggered** (optional): Agents can run post-documentation for enhancement
 - **Manual trigger**: User can invoke agents after /mg:compound completes for deeper review
-- **Customize agents**: Edit `compound-engineering.local.md` or invoke the `setup` skill to configure which review agents are used across all workflows
+- **Customize agents**: Edit `magical-gazelle.local.md` or invoke the `setup` skill to configure which review agents are used across all workflows
 
 ## Related Commands
 

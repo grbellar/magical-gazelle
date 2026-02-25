@@ -210,6 +210,6 @@ During Phase 3 (Quality Check), `/mg:work` reads this manifest to:
 - Run flows that touch modified components
 - Verify no regressions in related pages
 
-### With `/test-browser`
+### With `/mg:review`
 
-`/test-browser` can use the manifest's auth config and route mappings instead of guessing which routes map to which files.
+During end-to-end testing, `/mg:review` can invoke `/smoke-test` which uses the manifest's auth config and route mappings.

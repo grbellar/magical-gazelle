@@ -15,21 +15,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Review agents consolidated from 12 to 7:**
-  - `kieran-python-reviewer` → `python-reviewer` (absorbed `code-simplicity-reviewer` and `pattern-recognition-specialist` — simplicity is now a top-priority concern)
-  - `kieran-typescript-reviewer` → `typescript-reviewer` (absorbed `julik-frontend-races-reviewer` — race condition and async correctness checks built in)
-  - Removed `architecture-strategist`, `agent-native-reviewer` (concerns absorbed into language reviewers)
+- **Review agents consolidated from 12 to 5:**
+  - `kieran-python-reviewer` → `python-reviewer` (absorbed `code-simplicity-reviewer`, `pattern-recognition-specialist`, `architecture-strategist`)
+  - `kieran-typescript-reviewer` → `typescript-reviewer` (absorbed `julik-frontend-races-reviewer`, `architecture-strategist`)
+  - `data-integrity-guardian` + `data-migration-expert` + `deployment-verification-agent` → `data-reviewer`
 - **Research agents consolidated from 6 to 3:**
   - `repo-research-analyst` now includes git history analysis and institutional knowledge search (absorbed `git-history-analyzer` and `learnings-researcher`)
   - `framework-docs-researcher` now includes best practices research (absorbed `best-practices-researcher`)
+- **Design agents consolidated from 4 to 3:**
+  - `design-implementation-reviewer` + `figma-design-sync` → `design-reviewer`
 - **Workflow agents reduced from 4 to 3:** removed `every-style-editor`
+- Renamed all `compound-engineering` references to `magical-gazelle` (config file, subagent types, plugin paths)
 - Removed `every-style-editor` skill
-- Updated all references in `/mg:review`, `/mg:plan`, `/mg:compound`, `/deepen-plan`, `setup` skill, `orchestrating-swarms` skill, and `PHILOSOPHY.md`
+- Updated all references across commands, skills, and docs
 
 ### Removed
 
-- Commands: `/slfg`, `/agent-native-audit`, `/create-agent-skill`, `/generate_command`, `/report-bug`
-- Skills: `resolve-pr-parallel`, `skill-creator` (merged into `create-agent-skills`)
+- Agents: `agent-native-reviewer`, `architecture-strategist`, `code-simplicity-reviewer`, `pattern-recognition-specialist`, `julik-frontend-races-reviewer`, `git-history-analyzer`, `learnings-researcher`, `best-practices-researcher`, `every-style-editor`, `data-integrity-guardian`, `data-migration-expert`, `deployment-verification-agent`, `design-implementation-reviewer`, `figma-design-sync`
+- Commands: `/slfg`, `/agent-native-audit`, `/create-agent-skill`, `/generate_command`, `/report-bug`, `/deploy-docs`, `/test-browser`
+- Skills: `resolve-pr-parallel`, `skill-creator` (merged into `create-agent-skills`), `every-style-editor`
 
 ## [3.3.1] - 2026-02-23
 

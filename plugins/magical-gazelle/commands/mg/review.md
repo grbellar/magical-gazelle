@@ -51,7 +51,7 @@ Ensure that the code is ready for analysis (either in worktree or on current bra
 #### Protected Artifacts
 
 <protected_artifacts>
-The following paths are compound-engineering pipeline artifacts and must never be flagged for deletion, removal, or gitignore by any review agent:
+The following paths are magical-gazelle pipeline artifacts and must never be flagged for deletion, removal, or gitignore by any review agent:
 
 - `docs/plans/*.md` — Plan files created by `/mg:plan`. These are living documents that track implementation progress (checkboxes are checked off by `/mg:work`).
 - `docs/solutions/*.md` — Solution documents created during the pipeline.
@@ -61,7 +61,7 @@ If a review agent flags any file in these directories for cleanup or removal, di
 
 #### Load Review Agents
 
-Read `compound-engineering.local.md` in the project root. If found, use `review_agents` from YAML frontmatter. If the markdown body contains review context, pass it to each agent as additional instructions.
+Read `magical-gazelle.local.md` in the project root. If found, use `review_agents` from YAML frontmatter. If the markdown body contains review context, pass it to each agent as additional instructions.
 
 If no settings file exists, invoke the `setup` skill to create one. Then read the newly created file and continue.
 
@@ -90,8 +90,7 @@ These agents are run ONLY when the PR matches specific criteria. Check the PR fi
 
 **MIGRATIONS: If PR contains database migrations or data backfills:**
 
-- Task data-migration-expert(PR content) - Validates ID mappings match production, checks for swapped values, verifies rollback safety
-- Task deployment-verification-agent(PR content) - Creates Go/No-Go deployment checklist with SQL verification queries
+- Task data-reviewer(PR content) - Validates migration safety, ID mappings, rollback plans, and produces Go/No-Go deployment checklists
 
 **When to run:**
 
@@ -100,10 +99,11 @@ These agents are run ONLY when the PR matches specific criteria. Check the PR fi
 - PR includes data backfill or transformation scripts
 - PR title/body mentions: migration, backfill, data transformation, ID mapping
 
-**What these agents check:**
+**What this agent checks:**
 
-- `data-migration-expert`: Verifies hard-coded mappings match production reality (prevents swapped IDs), checks for orphaned associations, validates dual-write patterns
-- `deployment-verification-agent`: Produces executable pre/post-deploy checklists with SQL queries, rollback procedures, and monitoring plans
+- Migration safety: reversibility, data loss, NULL handling, locking, idempotency
+- Mapping validation: verifies hard-coded mappings match production reality, checks for swapped IDs, orphaned associations
+- Deployment verification: produces executable pre/post-deploy checklists with SQL queries, rollback procedures, and monitoring plans
 
 </conditional_agents>
 
@@ -315,7 +315,7 @@ After presenting the Summary Report, offer browser testing:
 
 ```markdown
 **"Want to run browser tests on the affected pages?"**
-1. Yes - run `/test-browser`
+1. Yes - run `/smoke-test`
 2. No - skip
 ```
 
@@ -323,22 +323,22 @@ After presenting the Summary Report, offer browser testing:
 
 #### If User Accepts Testing:
 
-Spawn a subagent to run browser tests (preserves main context):
+Spawn a subagent to run smoke tests (preserves main context):
 
 ```
-Task general-purpose("Run /test-browser for PR #[number]. Test all affected pages, check for console errors, handle failures by fixing.")
+Task general-purpose("Run /smoke-test for the affected pages. Test all routes, check for console errors, handle failures by fixing.")
 ```
 
 The subagent will:
 
-1. Identify pages affected by the PR
-2. Navigate to each page and capture snapshots (using agent-browser CLI)
+1. Read `.claude/browser-flows.yml` if it exists, or auto-discover routes
+2. Navigate to each affected page and capture snapshots (using agent-browser CLI)
 3. Check for console errors
 4. Test critical interactions
-5. Pause for human verification on OAuth/email/payment flows
+5. Run user flows that touch modified components
 6. Fix any failures and retry until all tests pass
 
-**Standalone:** `/test-browser [PR number]`
+**Standalone:** `/smoke-test`
 
 ### 8. Important: P1 Findings Block Merge
 

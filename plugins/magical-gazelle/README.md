@@ -6,8 +6,8 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 | Component   | Count |
 | ----------- | ----- |
-| Agents      | 17    |
-| Commands    | 15    |
+| Agents      | 14    |
+| Commands    | 13    |
 | Skills      | 14    |
 | MCP Servers | 1     |
 
@@ -15,17 +15,15 @@ A personal fork of the [Compounding Engineering Plugin](https://github.com/Every
 
 Agents are organized into categories for easier discovery.
 
-### Review (7)
+### Review (5)
 
-| Agent                           | Description                                                               |
-| ------------------------------- | ------------------------------------------------------------------------- |
-| `python-reviewer`               | Python code review for simplicity, Pythonic patterns, and type safety     |
-| `typescript-reviewer`           | TypeScript code review for simplicity, type safety, and async correctness |
-| `data-integrity-guardian`       | Database migrations and data integrity                                    |
-| `data-migration-expert`        | Validate ID mappings match production, check for swapped values           |
-| `deployment-verification-agent` | Create Go/No-Go deployment checklists for risky data changes              |
-| `performance-oracle`            | Performance analysis and optimization                                     |
-| `security-sentinel`             | Security audits and vulnerability assessments                             |
+| Agent                  | Description                                                               |
+| ---------------------- | ------------------------------------------------------------------------- |
+| `python-reviewer`      | Python code review for simplicity, Pythonic patterns, and type safety     |
+| `typescript-reviewer`  | TypeScript code review for simplicity, type safety, and async correctness |
+| `data-reviewer`        | Database migrations, data safety, and deployment verification             |
+| `performance-oracle`   | Performance analysis and optimization                                     |
+| `security-sentinel`    | Security audits and vulnerability assessments                             |
 
 ### Research (3)
 
@@ -35,14 +33,13 @@ Agents are organized into categories for easier discovery.
 | `repo-research-analyst`     | Research repo structure, git history, conventions, and past solutions     |
 | `test-plan-analyst`         | Scan codebase to identify tests needed for proposed changes or review    |
 
-### Design (4)
+### Design (3)
 
-| Agent                            | Description                                                            |
-| -------------------------------- | ---------------------------------------------------------------------- |
-| `design-implementation-reviewer` | Verify UI implementations match Figma designs                          |
-| `design-iterator`                | Iteratively refine UI through systematic design iterations             |
-| `figma-design-sync`              | Synchronize web implementations with Figma designs                     |
-| `ui-auditor`                     | Audit running apps for UI inconsistencies against best practice rubric |
+| Agent             | Description                                                            |
+| ----------------- | ---------------------------------------------------------------------- |
+| `design-reviewer` | Compare UI implementations against Figma designs and fix discrepancies |
+| `design-iterator` | Iteratively refine UI through systematic design iterations             |
+| `ui-auditor`      | Audit running apps for UI inconsistencies against best practice rubric |
 
 ### Workflow (3)
 
@@ -77,7 +74,6 @@ Core workflow commands use `mg:` prefix to avoid collisions with built-in comman
 | `/reproduce-bug`         | Reproduce bugs using logs and console                           |
 | `/resolve_parallel`      | Resolve TODO comments in parallel                               |
 | `/smoke-test`            | Full regression test of every route and user flow               |
-| `/test-browser`          | Run browser tests on PR-affected pages                          |
 | `/feature-video`         | Record video walkthroughs and add to PR description             |
 
 ## Skills

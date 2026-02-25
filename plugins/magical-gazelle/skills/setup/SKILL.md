@@ -1,16 +1,16 @@
 ---
 name: setup
-description: Configure which review agents run for your project. Auto-detects stack and writes compound-engineering.local.md.
+description: Configure which review agents run for your project. Auto-detects stack and writes magical-gazelle.local.md.
 disable-model-invocation: true
 ---
 
-# Compound Engineering Setup
+# Magical Gazelle Setup
 
-Interactive setup for `compound-engineering.local.md` — configures which agents run during `/mg:review` and `/mg:work`.
+Interactive setup for `magical-gazelle.local.md` — configures which agents run during `/mg:review` and `/mg:work`.
 
 ## Step 1: Check Existing Config
 
-Read `compound-engineering.local.md` in the project root. If it exists, display current settings summary and use AskUserQuestion:
+Read `magical-gazelle.local.md` in the project root. If it exists, display current settings summary and use AskUserQuestion:
 
 ```
 question: "Settings file already exists. What would you like to do?"
@@ -89,7 +89,7 @@ options:
   - label: "Performance"
     description: "N+1 queries, memory leaks, complexity (performance-oracle)"
   - label: "Data integrity"
-    description: "Database migrations, data safety, transaction boundaries (data-integrity-guardian)"
+    description: "Database migrations, data safety, transaction boundaries (data-reviewer)"
 ```
 
 ## Step 4: Build Agent List and Write File
@@ -102,9 +102,9 @@ options:
 **Focus area agents:**
 - Security → `security-sentinel`
 - Performance → `performance-oracle`
-- Data integrity → `data-integrity-guardian`
+- Data integrity → `data-reviewer`
 
-Write `compound-engineering.local.md`:
+Write `magical-gazelle.local.md`:
 
 ```markdown
 ---
@@ -125,7 +125,7 @@ Examples:
 ## Step 5: Confirm
 
 ```
-Saved to compound-engineering.local.md
+Saved to magical-gazelle.local.md
 
 Stack:        {type}
 Agents:       {count} configured
