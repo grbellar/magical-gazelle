@@ -1,6 +1,7 @@
 import path from "path"
 import {
   backupFile,
+  cleanDir,
   copyDir,
   ensureDir,
   pathExists,
@@ -28,9 +29,9 @@ Compatibility notes:
 export async function writePiBundle(outputRoot: string, bundle: PiBundle): Promise<void> {
   const paths = resolvePiPaths(outputRoot)
 
-  await ensureDir(paths.skillsDir)
-  await ensureDir(paths.promptsDir)
-  await ensureDir(paths.extensionsDir)
+  await cleanDir(paths.skillsDir)
+  await cleanDir(paths.promptsDir)
+  await cleanDir(paths.extensionsDir)
 
   for (const prompt of bundle.prompts) {
     await writeText(path.join(paths.promptsDir, `${prompt.name}.md`), prompt.content + "\n")

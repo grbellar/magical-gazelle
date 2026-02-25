@@ -61,6 +61,12 @@ export async function walkFiles(root: string): Promise<string[]> {
   return results
 }
 
+export async function cleanDir(dirPath: string): Promise<void> {
+  if (!(await pathExists(dirPath))) return
+  await fs.rm(dirPath, { recursive: true, force: true })
+  await ensureDir(dirPath)
+}
+
 export async function copyDir(sourceDir: string, targetDir: string): Promise<void> {
   await ensureDir(targetDir)
   const entries = await fs.readdir(sourceDir, { withFileTypes: true })

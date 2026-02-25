@@ -1,5 +1,5 @@
 import path from "path"
-import { backupFile, copyDir, ensureDir, writeText } from "../utils/files"
+import { backupFile, cleanDir, copyDir, ensureDir, writeText } from "../utils/files"
 import type { CodexBundle } from "../types/codex"
 import type { ClaudeMcpServer } from "../types/claude"
 
@@ -9,23 +9,23 @@ export async function writeCodexBundle(outputRoot: string, bundle: CodexBundle):
 
   if (bundle.prompts.length > 0) {
     const promptsDir = path.join(codexRoot, "prompts")
+    await cleanDir(promptsDir)
     for (const prompt of bundle.prompts) {
       await writeText(path.join(promptsDir, `${prompt.name}.md`), prompt.content + "\n")
     }
   }
 
-  if (bundle.skillDirs.length > 0) {
-    const skillsRoot = path.join(codexRoot, "skills")
-    for (const skill of bundle.skillDirs) {
-      await copyDir(skill.sourceDir, path.join(skillsRoot, skill.name))
-    }
+  const skillsRoot = path.join(codexRoot, "skills")
+  if (bundle.skillDirs.length > 0 || bundle.generatedSkills.length > 0) {
+    await cleanDir(skillsRoot)
   }
 
-  if (bundle.generatedSkills.length > 0) {
-    const skillsRoot = path.join(codexRoot, "skills")
-    for (const skill of bundle.generatedSkills) {
-      await writeText(path.join(skillsRoot, skill.name, "SKILL.md"), skill.content + "\n")
-    }
+  for (const skill of bundle.skillDirs) {
+    await copyDir(skill.sourceDir, path.join(skillsRoot, skill.name))
+  }
+
+  for (const skill of bundle.generatedSkills) {
+    await writeText(path.join(skillsRoot, skill.name, "SKILL.md"), skill.content + "\n")
   }
 
   const config = renderCodexConfig(bundle.mcpServers)
